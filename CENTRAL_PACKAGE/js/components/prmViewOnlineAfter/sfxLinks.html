@@ -1,0 +1,14 @@
+<div ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">        
+    <p class="fulltext-item" style="padding-top: 15px !important; margin-left: 25px !important; font-weight: bold;">Campusnetz {{targetFacility}}</p>
+    <div ng-repeat="target in normalizedTargets">        
+        <p class="fulltext-item" style="margin-left: 25px !important;">Volltext via 
+            <a href="{{target.target_url}}" target="_blank">{{target.target_name}}</a>
+        </p>
+    </div>
+    <p class="fulltext-item" style="padding-top: 15px !important; margin-left: 25px !important; font-weight: bold;">Nicht am Campus? 
+            <span style="font-weight: normal !important;">
+                <a href="{{normalizedTargets[0].infoURL}}" target="_blank">Externer Zugriff für Campus-Angehörige</a>
+            </span>
+    </p>                
+
+</div>
