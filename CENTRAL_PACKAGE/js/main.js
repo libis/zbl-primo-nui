@@ -15,7 +15,7 @@ window.Primo = Primo;
 //load PrimoExplorer UI if angular.reloadWithDebugInfo() is ran
 window.setTimeout(function() {
   if (Primo.isDebugEnabled()) {
-    let uiURL = 'https://cdn.rawgit.com/mehmetc/primo-explore-dom-ui/fc0868df/js/custom.js';    
+    let uiURL = 'https://cdn.rawgit.com/mehmetc/primo-explore-dom-ui/fc0868df/js/custom.js';
 
     Helper.loadScript(uiURL).then(() => {
       console.log('Injecting UI');
@@ -32,16 +32,20 @@ let app = angular.module('centralCustom',['ngMaterial'])
                      '**'
                    ]);
                  })
-                 .run(($templateCache) => {                   
+                 .run(($templateCache) => {
                    Helper.loadScript('https://unpkg.com/hotkeys-js@2.0.8/dist/hotkeys.min.js').then(()=>{
                      console.log('hotkeys.js loaded');
                    });
-                   
-                  //  Helper.loadScript('https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js?' + Date.now()).then(function () {
-                  //     console.log('altmerics loaded');
-                  //  });
 
-                 });
+                   Helper.loadScript('https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js?' + Date.now()).then(function () {
+                      console.log('altmerics.js loaded');
+                   });
+                 }).filter('stripAndLimitHtml', function () {
+                     return function (text, limit) {
+                         var changedString = String(text).replace(/<[^>]+>/gm, '');
+                         var length = changedString.length;
+                         return changedString.length > limit ? changedString.substr(0, limit - 1) + '...' : changedString;
+                }});
 
 
 //Contains the after component selectors that will be injected
