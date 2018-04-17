@@ -1,0 +1,3 @@
+[submodule "CENTRAL_PACKAGE/js/primo-explore-dom"]
+	path = CENTRAL_PACKAGE/js/primo-explore-dom
+	url = https://github.com/mehmetc/primo-explore-dom
