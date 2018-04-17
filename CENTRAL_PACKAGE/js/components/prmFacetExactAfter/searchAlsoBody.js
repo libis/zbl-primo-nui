@@ -19,7 +19,7 @@ class SearchAlsoBodyController {
       "name": "Swissbib",
       "url": "https://www.swissbib.ch/search/results?&lookfor=",
       "img": "https://primo-direct-eu-sb.hosted.exlibrisgroup.com/primo-explore/custom/41ZBL/img/swissbib_icon.png",
-      "tooltip": "Bücher weitersuchen in schw. wiss. Bibliotheken, und Artikel aus schw. nat. Lizenzen",
+      "tooltip": "nui.customizing.idslu.search_also.tooltip.swissbib",
       mapping: function mapping(search) {
         var terms = search.split(",");
         return terms[2] || "";
@@ -28,7 +28,7 @@ class SearchAlsoBodyController {
       "name": "Google Scholar",
       "url": "https://scholar.google.com/scholar?q=",
       "img": "https://primo-direct-eu-sb.hosted.exlibrisgroup.com/primo-explore/custom/41ZBL/img/google_icon.png",
-      "tooltip": "Wiss. Artikel weitersuchen",
+      "tooltip": "nui.customizing.idslu.search_also.tooltip.google_scolar",
       mapping: function mapping(search) {
         var terms = search.split(",");
         return terms[2] || "";
@@ -37,7 +37,7 @@ class SearchAlsoBodyController {
       "name": "Worldcat",
       "url": "https://www.worldcat.org/search?q=",
       "img": "https://primo-direct-eu-sb.hosted.exlibrisgroup.com/primo-explore/custom/41ZBL/img/worldcat_icon.png",
-      "tooltip": "Bücher weitersuchen weltweit",
+      "tooltip": "nui.customizing.idslu.search_also.tooltip.worldcat",
       mapping: function mapping(search) {
         var type_mappings = {
           "any": "kw",

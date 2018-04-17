@@ -1,14 +1,19 @@
-<div ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">        
-    <p class="fulltext-item" style="padding-top: 15px !important; margin-left: 25px !important; font-weight: bold;">Campusnetz {{targetFacility}}</p>
-    <div ng-repeat="target in normalizedTargets">        
-        <p class="fulltext-item" style="margin-left: 25px !important;">Volltext via 
-            <a href="{{target.target_url}}" target="_blank">{{target.target_name}}</a>
-        </p>
-    </div>
-    <p class="fulltext-item" style="padding-top: 15px !important; margin-left: 25px !important; font-weight: bold;">Nicht am Campus? 
-            <span style="font-weight: normal !important;">
-                <a href="{{normalizedTargets[0].infoURL}}" target="_blank">Externer Zugriff für Campus-Angehörige</a>
-            </span>
-    </p>                
-
+<div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">
+  <p class="fulltext-item sfx-links-facility">
+    <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> {{targetFacility}}
+  </p>
+  <div ng-repeat="target in normalizedTargets">
+    <p class="fulltext-item sfx-links-target">
+      <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>
+      <a href="{{target.target_url}}" target="_blank">{{target.target_name}}</a>
+    </p>
+  </div>
+  <p class="fulltext-item sfx-links-on-campus">
+    <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>
+    <span class="sfx-links-on-campus-url">
+          <a href="{{normalizedTargets[0].infoURL}}" target="_blank">
+            <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>
+    </a>
+    </span>
+  </p>
 </div>

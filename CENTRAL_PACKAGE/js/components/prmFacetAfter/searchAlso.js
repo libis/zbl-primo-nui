@@ -1,8 +1,8 @@
 //facets.facet.facet_search_also
 class SearchAlsoController {
-  constructor(){
+  constructor($translate){
     this.parentCtrl.parentCtrl.facetService.results.unshift({
-      name: 'Weitersuchen in',
+      name: 'search_also',
       displayedType: 'exact',
       limitCount: 0,
       facetGroupCollapsed: false,
@@ -10,6 +10,8 @@ class SearchAlsoController {
     });
   }
 }
+
+SearchAlsoController.$inject = ['$translate'];
 
 export let searchAlsoConfig = {
   bindings:{parentCtrl:'<'},
