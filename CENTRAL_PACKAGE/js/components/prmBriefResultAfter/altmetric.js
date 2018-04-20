@@ -33,7 +33,8 @@ class AltMetricController {
       }
     }
 
-    $scope.$watch(() => {
+    //this is a watcher on the local scope and will trigger altmetric
+    let altmetricWatcher = $scope.$watch(() => {
       let altmetricLoaded = (typeof window._altmetric_embed_init) === 'function';
       let isbnExists = document.querySelector(`#altmetric-isbn-${self.id}`) != null;
       let doiExists = document.querySelector(`#altmetric-doi-${self.id}`) != null;
@@ -43,9 +44,10 @@ class AltMetricController {
       return runTrigger;
     }, (n, o) => {
       if (n == true) {
-        console.log("trigger altmetric for:", self.id);
+        console.log("trigger altmetric for:", self.recordid);
         $window._altmetric_embed_init(`#altmetric-isbn-${self.id}`);
         $window._altmetric_embed_init(`#altmetric-doi-${self.id}`);
+        altmetricWatcher(); //deregister watcher
       }
     }, false);
   }

@@ -18,6 +18,9 @@ import {locationLinksConfig} from './components/general/locationLinks'
 import {searchAlsoConfig} from './components/prmFacetAfter/searchAlso'
 import {searchAlsoBodyConfig} from './components/prmFacetExactAfter/searchAlsoBody'
 import {browseButtonConfig} from './components/prmSearchBarAfter/browseButton'
+import {finesMessageConfig} from './components/prmTopBarBefore/finesMessage'
+import {alertMessageConfig} from './components/prmTopBarBefore/alertMessage'
+
 
 export default class AfterComponents {
 
@@ -89,6 +92,20 @@ export default class AfterComponents {
         config: browseButtonConfig,
         enabled: true,
         appendTo: 'prm-search-bar-after',
+        enableInView: '.*'
+      },
+      {
+        name: 'zbl-alert-message',
+        config: alertMessageConfig,
+        enabled: true,
+        appendTo: 'prm-top-bar-before',
+        enableInView: '.*'
+      },
+      {
+        name: 'zbl-fines-message',
+        config: finesMessageConfig,
+        enabled: true,
+        appendTo: 'prm-top-bar-before',
         enableInView: '.*'
       }
     ].filter((component) => (component.enabled && new RegExp(component.enableInView).test(window.appConfig.vid)));

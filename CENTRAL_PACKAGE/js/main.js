@@ -10,6 +10,8 @@ import Primo from './primo-explore-dom/js/primo'
 import Helper from './primo-explore-dom/js/primo/explore/helper'
 import Components from './components'
 
+import MessageService from './factories/messageService'
+
 //make Primo public
 window.Primo = Primo;
 //load PrimoExplorer UI if angular.reloadWithDebugInfo() is ran
@@ -59,7 +61,8 @@ let app = angular.module('centralCustom',['ngMaterial'])
                    $rootScope.$on('$locationChangeSuccess', function (event) {
                      $window.ga('send', 'pageview', { location: $location.url() });
                    });
-                 }]);
+                 }])
+                 .service('MessageService', MessageService);
 
 
 //Contains the after component selectors that will be injected
