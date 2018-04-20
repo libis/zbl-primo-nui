@@ -1,5 +1,16 @@
 import altmetricHTML from './altmetric.html'
 
+/*
+//script needs to be loaded first. Can be put in the $onInit() function
+//or better in run method. 
+app.run(($templateCache) => {
+  Helper.loadScript('https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js?' + Date.now()).then(function () {
+    console.log('altmerics.js loaded');
+  });
+});
+*/
+
+
 class AltMetricController {
   constructor() {
     var self = this;

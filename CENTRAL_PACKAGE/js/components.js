@@ -17,6 +17,7 @@ import {linksConfig} from './components/general/links'
 import {locationLinksConfig} from './components/general/locationLinks'
 import {searchAlsoConfig} from './components/prmFacetAfter/searchAlso'
 import {searchAlsoBodyConfig} from './components/prmFacetExactAfter/searchAlsoBody'
+import {browseButtonConfig} from './components/prmSearchBarAfter/browseButton'
 
 export default class AfterComponents {
 
@@ -81,6 +82,13 @@ export default class AfterComponents {
         config: searchAlsoBodyConfig,
         enabled: true,
         appendTo: 'prm-facet-exact-after',
+        enableInView: '.*'
+      },
+      {
+        name: 'zbl-browse-button',
+        config: browseButtonConfig,
+        enabled: true,
+        appendTo: 'prm-search-bar-after',
         enableInView: '.*'
       }
     ].filter((component) => (component.enabled && new RegExp(component.enableInView).test(window.appConfig.vid)));

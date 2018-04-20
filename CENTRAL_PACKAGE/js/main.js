@@ -50,16 +50,16 @@ let app = angular.module('centralCustom',['ngMaterial'])
                    Helper.loadScript('https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js?' + Date.now()).then(function () {
                       console.log('altmerics.js loaded');
                    });
+
+                   Helper.loadScript('https://recommender.bibtip.de/js/bibtip_zhb_luzern.js').then(function () {
+                      console.log('bibtip.js loaded');
+                   });
                  }).run(['$rootScope', '$location', '$window', function ($rootScope, $location, $window) {
+                   //send to GA every time the URL changes
                    $rootScope.$on('$locationChangeSuccess', function (event) {
                      $window.ga('send', 'pageview', { location: $location.url() });
                    });
-                 }]).filter('stripAndLimitHtml', function () {
-                     return function (text, limit) {
-                         var changedString = String(text).replace(/<[^>]+>/gm, '');
-                         var length = changedString.length;
-                         return changedString.length > limit ? changedString.substr(0, limit - 1) + '...' : changedString;
-                }});
+                 }]);
 
 
 //Contains the after component selectors that will be injected
