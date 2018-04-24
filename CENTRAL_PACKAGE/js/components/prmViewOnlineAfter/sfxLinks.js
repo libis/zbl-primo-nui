@@ -2,42 +2,60 @@ import sfxLinksHTML from './sfxLinks.html'
 import Helper from '../../primo-explore-dom/js/primo/explore/helper'
 
 class SfxLinksController {
-  constructor($scope){
+  constructor($scope) {
     let self = this;
     self.scope = $scope;
-    self.item = self.parentCtrl.parentCtrl.item;
+    //self.item = self.parentCtrl.parentCtrl.item;
+    let containers = Primo.explore.components.get('prm-full-view-service-container');
+    if (containers && containers.length > 0) {
+      self.item = containers[0].ctrl().item;
+      console.log(self.item);
+    } else {
+      self.item = self.parentCtrl.parentCtrl.item;
+      console.log(self.item);
+    }
     self.targets = {};
-    window.lastItem = self.item;
     self.updateTargetsWhenOpenURLAvailable();
   }
 
   updateTargetsWhenOpenURLAvailable() {
-    let self = this;    
-    self.scope.$watch(() => {
+    let self = this;
+    let watcher = self.scope.$watch(() => {
       try {
         if (self.openurl && self.openurl.length > 0) {
-          return self.openurl;
+          return true;
         } else {
-          return '';
+          return false;
         }
-        
-      } catch(e) {
-        return '';
+
+      } catch (e) {
+        return false;
       }
-    }, (n,o) =>{
-      if (n && n.length > 0) {
-        Helper.http.get(self.targetsUrl).then(targets => {
-          self.targets = self.normalizeTargets(targets.data);
-          //console.log(self.targets);
+    }, (n, o) => {
+      if (n == true) {
+        console.log(self.targetsUrls);
+        self.targetsUrls.forEach(targetsUrl => {
+          Helper.http.get(targetsUrl).then(rawTargets => {
+            if (rawTargets.data && rawTargets.data.length > 0) {
+              let data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
+              console.log(data);
+              if (data) {
+                self.targets = data;
+              }
+
+            }
+          });
         });
+        watcher();
       }
-    });    
+    });
   }
 
-  normalizeTargets(targets){
+  normalizeTargets(targets) {
+    let self = this;
     let normalizedTargets = {};
 
-    targets.reduce((t, c)=> {       
+    targets.reduce((t, c) => {
       let d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
       d.push(c);
       t[c.facility] = d;
@@ -47,33 +65,30 @@ class SfxLinksController {
     return normalizedTargets;
   }
 
-  get targetsUrl() {
-    return (`${this.lookupURL}?type=targets&sourceURL=${encodeURIComponent(this.openurl)}&proxySuffix=${encodeURIComponent(this.proxySuffix)}`);
-  }
-
-  get sfxLinksUrl() {
-    return `${this.lookupURL}?type=targets&sourceURL=${encodeURIComponent(this.openurl)}&proxySuffix=${encodeURIComponent(this.proxySuffix)}&noProxy=1`;
+  get targetsUrls() {
+    return this.openurl.map(m => (`${this.lookupURL}?type=targets&sourceURL=${encodeURIComponent(m)}&proxySuffix=${encodeURIComponent(this.proxySuffix)}`));
   }
 
   get openurl() {
     let self = this;
-
+    let list = [];
     if (self.item && self.item.delivery) {
+      console.log('1111111');
       let openUrlList = self.item.delivery.link.filter(f => /^openurl/.test(f.displayLabel)).map(m => m.linkURL);
       if (openUrlList.length > 0) {
-        return openUrlList[0];
+        list.push(openUrlList[0]);
       }
     }
 
     if (self.item && self.item.linkElement) {
-        let openUrlList = self.item.linkElement.links.filter(f => /^openurl/.test(f.displayText)).map(m => m.link);
-        if (openUrlList.length > 0) {
-          return openUrlList[0];
-        }
-      
+      console.log('2222222');
+      let openUrlList = self.item.linkElement.links.filter(f => /^openurl/.test(f.displayText)).map(m => m.link);
+      if (openUrlList.length > 0) {
+        list.push(openUrlList[0]);
+      }
     }
 
-    return '';
+    return list;
   }
 
   get proxySuffix() {
@@ -94,7 +109,9 @@ class SfxLinksController {
 SfxLinksController.$inject = ['$scope'];
 
 export let sfxLinksConfig = {
-  bindings: {parentCtrl: '<'},
+  bindings: {
+    parentCtrl: '<'
+  },
   controller: SfxLinksController,
   template: sfxLinksHTML
 }
