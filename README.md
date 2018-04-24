@@ -26,5 +26,7 @@ gulp run --view CENTRAL_PACKAGE --browserify --proxy https://primo-direct-eu-sb.
 - __prmFacetExactAfter/searchAlsoBody__: renders search also data in the facets
 - __prmSearchResultThumbnailContainerAfter/pnx-xml__: creates a hotspot in the bottom right corner. When clicked adds a xml and pnx button to every loaded record. Makes use of jQuery.PRIMO.jar available in the August release. People with access to their environment can upgrade today.
 - __prmViewOnlineAfter/sfxLinks__: lookup and show sfx links
-- __general/google__:
-- __general/bibtip__:
+- __prmSearchBarAfter/browseButton__: adds a browse button under the advanced search
+External widgets:
+- bibtip.de
+- Google analytics
