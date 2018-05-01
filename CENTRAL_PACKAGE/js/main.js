@@ -12,6 +12,8 @@ import Components from './components'
 
 import MessageService from './factories/messageService'
 
+import locationItemsHTML from 'components/prmLocationItems/location-items.html'
+
 //make Primo public
 window.Primo = Primo;
 //load PrimoExplorer UI if angular.reloadWithDebugInfo() is ran
@@ -62,7 +64,12 @@ let app = angular.module('centralCustom',['ngMaterial'])
                      $window.ga('send', 'pageview', { location: $location.url() });
                    });
                  }])
-                 .service('MessageService', MessageService);
+                 .service('MessageService', MessageService)
+                 .run(($templateCache) => {
+                   $templateCache.put('components/search/fullView/getit/opac/locations/location-items.html', locationItemsHTML);
+                 });
+
+
 
 
 //Contains the after component selectors that will be injected

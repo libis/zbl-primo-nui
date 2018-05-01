@@ -20,7 +20,8 @@ import {searchAlsoBodyConfig} from './components/prmFacetExactAfter/searchAlsoBo
 import {browseButtonConfig} from './components/prmSearchBarAfter/browseButton'
 import {finesMessageConfig} from './components/prmTopBarBefore/finesMessage'
 import {alertMessageConfig} from './components/prmTopBarBefore/alertMessage'
-
+import {vScoutConfig} from './components/general/vScout'
+import {libInfoConfig} from './components/general/libInfo'
 
 export default class AfterComponents {
 
@@ -106,6 +107,20 @@ export default class AfterComponents {
         config: finesMessageConfig,
         enabled: true,
         appendTo: 'prm-top-bar-before',
+        enableInView: '.*'
+      },
+      {
+        name: 'zbl-vscout',
+        config: vScoutConfig,
+        enabled: true,
+        appendTo: null,
+        enableInView: '.*'
+      },
+      {
+        name: 'zbl-lib-info',
+        config: libInfoConfig,
+        enabled: true,
+        appendTo: null,
         enableInView: '.*'
       }
     ].filter((component) => (component.enabled && new RegExp(component.enableInView).test(window.appConfig.vid)));

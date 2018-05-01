@@ -73,15 +73,13 @@ class SfxLinksController {
     let self = this;
     let list = [];
     if (self.item && self.item.delivery) {
-      console.log('1111111');
       let openUrlList = self.item.delivery.link.filter(f => /^openurl/.test(f.displayLabel)).map(m => m.linkURL);
       if (openUrlList.length > 0) {
         list.push(openUrlList[0]);
       }
     }
 
-    if (self.item && self.item.linkElement) {
-      console.log('2222222');
+    if (self.item && self.item.linkElement) {      
       let openUrlList = self.item.linkElement.links.filter(f => /^openurl/.test(f.displayText)).map(m => m.link);
       if (openUrlList.length > 0) {
         list.push(openUrlList[0]);
