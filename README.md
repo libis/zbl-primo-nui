@@ -10,11 +10,11 @@ git submodule update --init
 
 # Compile and run the CENTRAL_PACKAGE
 ```bash
-gulp run --view CENTRAL_PACKAGE --browserify --proxy https://iluplus.hosted.exlibrisgroup.com
+gulp run --view 41ZBL --browserify --proxy https://iluplus.hosted.exlibrisgroup.com
 ```
 or for the development environment
 ```bash
-gulp run --view CENTRAL_PACKAGE --browserify --proxy https://primo-direct-eu-sb.hosted.exlibrisgroup.com
+gulp run --view 41ZBL --browserify --proxy https://primo-direct-eu-sb.hosted.exlibrisgroup.com
 ```
 
 ## Available Components
