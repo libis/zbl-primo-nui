@@ -641,6 +641,10 @@ min-height: 25px;
     margin-top: 20px;
 }
 
+zbl-lib-info > a > img {
+  width: 20px;
+}
+
 
 /*Uncomment the following lines to move facets to the left*/
 
@@ -1298,4 +1302,12 @@ min-height: 25px;
 
 .sfx-links-on-campus-url {
   font-weight: normal !important;
+}
+
+prm-view-online > div:nth-child(1) {
+  display:none;
+}
+
+zbl-vscout > a > img {
+  width: 25px;
 }

@@ -1,6 +1,6 @@
 <div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">
   <p class="fulltext-item sfx-links-facility">
-    <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> {{targetFacility}}
+      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> {{targetFacility}}
   </p>
   <div ng-repeat="target in normalizedTargets">
     <p class="fulltext-item sfx-links-target">
@@ -9,11 +9,15 @@
     </p>
   </div>
 </div>
+
 <p class="fulltext-item sfx-links-on-campus">
   <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>
   <span class="sfx-links-on-campus-url">
         <a href="{{normalizedTargets[0].infoURL}}" target="_blank">
-          <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>
+        <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>
   </a>
   </span>
+
+  <zbl-link class="idslu-ehelp" url="{{('nui.customizing.idslu.ehelpurl' | translate)}}" text="{{('-	nui.customizing.idslu.ehelptext' | translate)}}"></zbl-link>
+  <zbl-link class="idslu-feedback" url="{{('nui.customizing.idslu.feedbackurl' | translate)}}" text="{{('nui.customizing.idslu.feedbacktext' | translate)}}"></zbl-link>
 </p>

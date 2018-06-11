@@ -13,6 +13,7 @@ import Components from './components'
 import MessageService from './factories/messageService'
 
 import locationItemsHTML from 'components/prmLocationItems/location-items.html'
+import locationHTML from 'components/prmLocation/location.html'
 
 //make Primo public
 window.Primo = Primo;
@@ -67,6 +68,7 @@ let app = angular.module('viewCustom',['ngMaterial'])
                  .service('MessageService', MessageService)
                  .run(($templateCache) => {
                    $templateCache.put('components/search/fullView/getit/opac/locations/location-items.html', locationItemsHTML);
+                   $templateCache.put('components/search/fullView/getit/opac/locations/location/location.html', locationHTML);
                  });
 
 

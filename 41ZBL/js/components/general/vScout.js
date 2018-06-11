@@ -1,7 +1,16 @@
 import {vScoutHTML} from './vScout.html'
 
 class VScoutController {
-  constructor(){
+  constructor($translate){
+    let self = this;    
+    self.translate = $translate;
+    self.iconUrl = `/custom/${window.appConfig.vid}/img/map-marker.png`
+    self.translate('nui.customizing.idslu.vscouticon').then((iconUrl) => {
+      if (iconUrl !== 'vscouticon'){
+          self.iconUrl = iconUrl;
+      }
+    });
+
   }
 
   get url() {
@@ -22,6 +31,8 @@ class VScoutController {
     return ['41ZBL_LUPHL'].includes(this.libraryCode);
   }
 }
+
+VScoutController.$inject = ['$translate'];
 
 export let vScoutConfig = {
   bindings: {locationCode: '<', libraryCode:'<'},

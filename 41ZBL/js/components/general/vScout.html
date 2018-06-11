@@ -1,3 +1,3 @@
 <a ng-if="$ctrl.showVScout" href="{{$ctrl.url}}" target="_blank">
-  <img src="http://ilu.zhbluzern.ch{{$ctrl.proxySuffix}}/local/primo/plan_symbol.jpg" border="0" title="Lageplan anzeigen" />
+  <img ng-src={{$ctrl.iconUrl}} border="0" title="{{('nui.customizing.idslu.vscouttooltip' | translate)}}" />
 </a>

@@ -87,7 +87,7 @@ export default class AfterComponents {
         enabled: true,
         appendTo: 'prm-facet-exact-after',
         enableInView: '.*'
-      },      
+      },
       {
         name: 'zbl-browse-button',
         config: browseButtonConfig,

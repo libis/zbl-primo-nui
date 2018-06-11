@@ -18,3 +18,7 @@
 .sfx-links-on-campus-url {
   font-weight: normal !important;
 }
+
+prm-view-online > div:nth-child(1) {
+  display:none;
+}

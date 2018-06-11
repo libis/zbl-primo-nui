@@ -9,10 +9,8 @@ class SfxLinksController {
     let containers = Primo.explore.components.get('prm-full-view-service-container');
     if (containers && containers.length > 0) {
       self.item = containers[0].ctrl().item;
-      console.log(self.item);
     } else {
       self.item = self.parentCtrl.parentCtrl.item;
-      console.log(self.item);
     }
     self.targets = {};
     self.updateTargetsWhenOpenURLAvailable();
@@ -33,14 +31,17 @@ class SfxLinksController {
       }
     }, (n, o) => {
       if (n == true) {
-        console.log(self.targetsUrls);
+        //console.log(self.targetsUrls);
         self.targetsUrls.forEach(targetsUrl => {
+          //console.log(targetsUrl);
           Helper.http.get(targetsUrl).then(rawTargets => {
+            //console.log(rawTargets);
             if (rawTargets.data && rawTargets.data.length > 0) {
               let data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
-              console.log(data);
+              //console.log(data);
               if (data) {
                 self.targets = data;
+                //console.log('-----> targets', self.targets);
               }
 
             }
@@ -75,14 +76,14 @@ class SfxLinksController {
     if (self.item && self.item.delivery) {
       let openUrlList = self.item.delivery.link.filter(f => /^openurl/.test(f.displayLabel)).map(m => m.linkURL);
       if (openUrlList.length > 0) {
-        list.push(openUrlList[0]);
+        list = list.concat(openUrlList);
       }
     }
 
-    if (self.item && self.item.linkElement) {      
+    if (self.item && self.item.linkElement) {
       let openUrlList = self.item.linkElement.links.filter(f => /^openurl/.test(f.displayText)).map(m => m.link);
       if (openUrlList.length > 0) {
-        list.push(openUrlList[0]);
+        list = list.concat(openUrlList);
       }
     }
 
