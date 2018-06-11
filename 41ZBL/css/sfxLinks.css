@@ -19,6 +19,7 @@
   font-weight: normal !important;
 }
 
-prm-view-online > div:nth-child(1) {
+
+prm-view-online > div:nth-child(1) > a[href*=sfx] {
   display:none;
 }

@@ -105,7 +105,7 @@ export default class AfterComponents {
       {
         name: 'zbl-fines-message',
         config: finesMessageConfig,
-        enabled: true,
+        enabled: false,
         appendTo: 'prm-top-bar-before',
         enableInView: '.*'
       },
