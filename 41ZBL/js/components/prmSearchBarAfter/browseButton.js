@@ -9,7 +9,7 @@ class BrowseButtonController {
 
   $onInit() {
     angular.element(document.querySelector('.search-switch-buttons'))
-                              .append(this.compile(browseButtonHTML)(this.scope));    
+                              .append(this.compile(browseButtonHTML)(this.scope));
   }
 
   switchBrowse() {
