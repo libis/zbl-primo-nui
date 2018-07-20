@@ -13,7 +13,10 @@ class SfxLinksController {
       self.item = self.parentCtrl.parentCtrl.item;
     }
     self.targets = {};
-    self.updateTargetsWhenOpenURLAvailable();
+    Primo.view.then(v => {
+      self.ipAddress = v.ip.address;
+      self.updateTargetsWhenOpenURLAvailable();
+    });
   }
 
   updateTargetsWhenOpenURLAvailable() {
@@ -35,13 +38,13 @@ class SfxLinksController {
         self.targetsUrls.forEach(targetsUrl => {
           //console.log(targetsUrl);
           Helper.http.get(targetsUrl).then(rawTargets => {
-            //console.log(rawTargets);
+            //console.log("=======> ",rawTargets.data);
             if (rawTargets.data && rawTargets.data.length > 0) {
               let data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
               //console.log(data);
               if (data) {
                 self.targets = data;
-                //console.log('-----> targets', self.targets);
+               // console.log('-----> targets', self.targets);
               }
 
             }
@@ -56,13 +59,16 @@ class SfxLinksController {
     let self = this;
     let normalizedTargets = {};
 
-    targets.reduce((t, c) => {
-      let d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
-      d.push(c);
-      t[c.facility] = d;
-      return t;
-    }, normalizedTargets);
+    if (targets) {
+      targets.reduce((t, c) => {
+        let d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
+        c['target_url_proxy'] = this.proxyUrl(c['target_url'], c.facility);
+        d.push(c);
+        t[c.facility] = d;
 
+        return t;
+      }, normalizedTargets);
+    }
     return normalizedTargets;
   }
 
@@ -80,14 +86,27 @@ class SfxLinksController {
       }
     }
 
-    if (self.item && self.item.linkElement) {
+    if (self.item && self.item.linkElement) {      
       let openUrlList = self.item.linkElement.links.filter(f => /^openurl/.test(f.displayText)).map(m => m.link);
       if (openUrlList.length > 0) {
         list = list.concat(openUrlList);
       }
     }
 
+    // list = list.map(m => m.replace('http:','https:'));
+    // console.log("====>", list);
     return list;
+  }
+
+  proxyUrl(url, facility) {
+    let currentHost = window.location.host;
+    let ip = this.ipAddress.split('.')
+    let inRange = (ip[0] == '147' && ip[1] == '88' && parseInt(ip[2], 10) >= 207 && parseInt(ip[2], 10) <= 254) ? true : false;
+
+    if (!/ezproxy.unilu.ch/.test(currentHost) && /zhb|uni|ph/.test(facility.toLowerCase()) && !inRange) {
+      return `https://ezproxy.unilu.ch/login?url=${url}`
+    }
+    return url;
   }
 
   get proxySuffix() {
