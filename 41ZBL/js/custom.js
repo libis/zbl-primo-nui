@@ -1,5 +1,4 @@
-(function(){
-"use strict";
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46,32 +45,6 @@ var _vScout = require('./components/general/vScout');
 
 var _libInfo = require('./components/general/libInfo');
 
-var _primo = require('./primo-explore-dom/js/primo');
-
-var _primo2 = _interopRequireDefault(_primo);
-
-var _helper = require('./primo-explore-dom/js/primo/explore/helper');
-
-var _helper2 = _interopRequireDefault(_helper);
-
-var _components = require('./components');
-
-var _components2 = _interopRequireDefault(_components);
-
-var _messageService = require('./factories/messageService');
-
-var _messageService2 = _interopRequireDefault(_messageService);
-
-var _locationItems = require('components/prmLocationItems/location-items.html');
-
-var _locationItems2 = _interopRequireDefault(_locationItems);
-
-var _location = require('components/prmLocation/location.html');
-
-var _location2 = _interopRequireDefault(_location);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var AfterComponents = function () {
@@ -109,7 +82,7 @@ var AfterComponents = function () {
       }, {
         name: 'altmetric',
         config: _altmetric.altmetricConfig,
-        enabled: false,
+        enabled: true,
         appendTo: 'prm-brief-result-after',
         enableInView: '.*'
       }, {
@@ -177,20 +150,2123 @@ var AfterComponents = function () {
 
 exports.default = AfterComponents;
 
+},{"./components/general/libInfo":2,"./components/general/links":3,"./components/general/locationLinks":4,"./components/general/vScout":5,"./components/prmBriefResultAfter/altmetric":6,"./components/prmFacetAfter/searchAlso":7,"./components/prmFacetExactAfter/searchAlsoBody":8,"./components/prmSearchBarAfter/browseButton":9,"./components/prmSearchResultThumbnailContainerAfter/pnxXml":10,"./components/prmTopBarBefore/alertMessage":11,"./components/prmTopBarBefore/finesMessage":12,"./components/prmViewOnlineAfter/sfxLinks.js":13,"./utils":24}],2:[function(require,module,exports){
+'use strict';
 
-angular.module('centralCustom').run(['$templateCache', function ($templateCache) {
-  $templateCache.put('cookie_policy_en_US.html', '<md-dialog aria-label="Disclaimer">\n\t\t<md-dialog-content id="disclaimerDialog">\n\t\t\t<md-toolbar md-autofocus >\n\t\t\t\t<div class="md-toolbar-tools">\n\t\t\t\t\t<h2>LIMO COOKIE POLICY</h2>\n\t\t\t\t\t<span flex></span>\n\t\t\t\t\t<md-button  class="md-icon-button" ng-click="closeDialog()">\n\t\t\t\t\t\t<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>\n\t\t\t\t\t</md-button>\n\t\t\t\t</div>\n\t\t\t</md-toolbar>\n\t\t\t<md-content>\n\t\t\t\t\tLimo uses cookies that facilitate the use of the search engine.\n\t\n\t\t\t\t<h3>WHAT IS A COOKIE?</h3>\n\t\t\t\tCookies are small text files that record your preferences during your browser activities and are saved on your own computer or device.\n\t\n\t\t\t\t<h3>USE OF COOKIES IN LIMO</h3>\n\t\t\t\t<p>\n\t\t\t\t\t\tCookies can on the one hand be <u>functional</u>. These cookies record certain of the choices and settings made on your first visit to allow you to navigate more efficiently, quickly and simply on subsequent visits. These cookies record for example preference settings.\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\t\tFor users of the KU Leuven Association, login names can be recorded when logging in via the Central Login page.\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\t\tOn the other hand, cookies can also be used to record <u>visit and click activity</u>. This can be used to make anonimised reports of the user of Limo.\n\t\t\t\t</p>\n\t\t\t\t<!--                \n\t\t\t\t\tKU Leuven gebruikt onder andere volgende cookies op de centraal beheerde websites:\n\t\t\t\t\t<ul>\n\t\t\t\t\t\t<li>\n\t\t\t\t\t\tNSC_* : Deze cookies worden gebruikt door de netscaler om de loadbalancing te sturen\n\t\t\t\t\t\t</li>\n\t\t\t\t\t<li>_ga* en _utm*: Dit zijn Google Analytics cookies, gebruikt voor user-tracking (meer info over Google Analytics)\n\t\t\t\t\t </li>\n\t\t\t\t\t<li>\t_pk_id* : piwik cookies die gebruikt worden door de user-tracking omgeving van KU Leuven\n\t\t\t\t\t </li>\n\t\t\t\t\t<li>\tJSESSIONID: cookies die gebruikt worden in toledo en kuloket\n\t\t\t\t\t </li>\n\t\t\t\t\t<li>\tPHPSESSID: cookies die gebruikt voor de lamp omgeving (php)\n\t\t\t\t\t </li>\n\t\t\t\t\t<li>\t_shibsession* en _saml*: cookies die nodig zijn voor de centrale login van KU Leuven\n\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t-->\n\t\t\t\t<h3>CHANGING BROWSER SETTINGS</h3>\n\t\t\t\t<p>\n\t\t\t\t\t\tYou can enable or delete cookies on your computer through your browser settings. \n\t\t\t\t\t\tThe way in which this works varies from browser to browser. Consult your browser\u2019s help function if necessary. You must always make this adjustment per browser and per computer!\n\t\t\t\t</p>\n\t\t\t\n\n\t\t\t\t<ul>\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a href="http://windows.microsoft.com/en-US/internet-explorer/delete-manage-cookies#ie=ie-10-win-7" target="_blank">Cookie settings in Internet Explorer</a>\n\t\t\t\t\t</li>\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a href="https://support.google.com/chrome/bin/answer.py?hl=en&amp;answer=95647" target="_blank">Cookie settings in Chrome</a>\n\t\t\t\t\t</li>\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a href="http://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer?redirectlocale=en-US&amp;redirectslug=Cookies"\n\t\t\t\t\t\t\ttarget="_blank">Cookie settings in Firefox</a>\n\t\t\t\t\t</li>\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a href="https://support.apple.com/kb/PH19214?locale=nl_BE" target="_blank">Cookie settings in Safari</a>\n\t\t\t\t\t</li>\n\t\t\t\t</ul>\n\t\t\t\t<p>\n\t\t\t\t\t\tNot accepting, disabling or deleting cookies may result in certain functionalities of the Limo website being no longer accessible or operating normally. \n\t\t\t\t\t\tThis may make your website experience unsatisfactory.\n\t\t\t\t</p>\n\t\t\t\t<h3>SOCIAL MEDIA AND THE CORRESPONDING PLUG-INS</h3>\n\t\t\t\t<p>\n\t\t\t\t\t\tMany social media (such as, Facebook, Linkedin, Twitter, Google+, Tumblr, etc.) \n\t\t\t\t\t\treceive a lot of information on your browsing habits through social plug-ins on their websites (for example by way of the Like or Share buttons).\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\t\tThese buttons may also be found on the web pages of the Limo results list.\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\t\tIf you want to protect yourself from these, then you are advised (by, among other agencies, the Belgian Commission for the Protection of Privacy) to take one of the steps below.\n\t\t\t\t</p>\n\t\n\t\t\t\t<ol>\n\t\t\t\t\t<li>Install a browser that blocks add-on tracking. Examples of such browser add-ons are:\n\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t<li>Privacy Badger (\n\t\t\t\t\t\t\t\t<a href="http://www.eff.org/privacybadger" target="_blank">http://www.eff.org/privacybadger</a>)</li>\n\t\t\t\t\t\t\t<li>Ghostery (\n\t\t\t\t\t\t\t\t<a href="https://www.ghostery.com/" target="_blank">https://www.ghostery.com</a>)</li>\n\t\t\t\t\t\t\t<li>Disconnect (\n\t\t\t\t\t\t\t\t<a href="https://disconnect.me/disconnect" target="_blank">https://disconnect.me/disconnect</a>)</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</li>\n\t\n\t\t\t\t\t<li>Make use of your browser\u2019s incognito or private navigation mode. \n\t\t\t\t\t\tRecent versions of the most popular browsers provide such a private navigation mode:\n\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t<li><a href="https://support.microsoft.com/en-us/products/windows?os=windows-10">Internet Explorer</a></li>\n\t\t\t\t\t\t\t<li><a href="https://support.mozilla.org/nl/kb/privenavigatie-firefox-gebruiken-zonder-geschiedenis">Firefox</a></li>\n\t\t\t\t\t\t\t<li><a href="https://support.google.com/chrome/answer/95464?hl=nl">Chrome</a></li>\n\t\t\t\t\t\t\t<li><a href="https://support.apple.com/kb/PH19216?locale=nl_NL">Safari</a></li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</li>\n\t\t\t\t</ol>\n\t\n\t\n\t\t\t\t<p>\n\t\t\t\t\t\tThis function forces your browser to erase all tracks of your browsing activity (cookies, history, etc.) after you have closed the window and therefore protects you from being tracked by third parties (please note: this function does not make you anonymous on the web). \n\t\t\t\t\t\tThere are also special browsers that protect privacy, such as Privacy Browser  \n\t\t\t\t\t\t(<a href="http://www.epicbrowser.com/" target="_blank">www.epicbrowser.com</a>).</p>\n\t\n\t\t\t\t<p>\n\t\t\t\t\t\tSocial media and other websites use information about the browsing activity of its users to provide them with targeted advertising. If you no longer want to be tracked by targeted advertising, \n\t\t\t\t\t\tyou can choose to opt out of targeted advertisements via the opt-out website of the European Interactive Digital Advertising Alliance \n\t\t\t\t\t (<a href="http://www.youronlinechoices.eu/" target="_blank">www.youronlinechoices.eu</a>).\n\t\t\t\t</p>\n\t\t\t\t\t<p>\n\t\t\t\t\t\t\tOpting out of targeted advertisements does not mean that information is no longer collected on your browsing activities. If you also want to protect yourself from the collection of this information, \n\t\t\t\t\t\t\tyou are advised to also use the incognito mode of your browser or one of the above-mentioned browser add-ons..</p>\n\t\n\t\t\t\t<h3>WANT MORE INFORMATION?</h3>\n\t\n\t\t\t\t<p>You will find more information on the following websites: \n\t\t\t\t\t<a href="http://www.allaboutcookies.org/" target="_blank">www.allaboutcookies.org</a> and \n\t\t\t\t\t<a href="http://www.youronlinechoices.com/be-nl/" target="_blank">www.youronlinechoices.com/be-nl</a>\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\tLIBIS reserves the right to amend this policy at any time. You will always find the most recent version of the Cookie Statement on this page.\n\t\t\t</p>\n\n\t\t\t\t<md-dialog-actions>\n\t\t\t\t\t<div layout="row" class="demo-dialog-button">\n\t\t\t\t\t\t<md-button class="md-primary" ng-click="closeDialog()">\n\t\t\t\t\t\t\tClose\n\t\t\t\t\t\t</md-button>\n\t\t\t\t\t</div>\n\t\t\t\t</md-dialog-actions>\n\t\t\t\t\n\t\t\t</md-content>\n\t\t</md-dialog-content>\n\t</md-dialog>');
-  $templateCache.put('cookie_policy_nl_BE.html', '<md-dialog aria-label="Disclaimer">\n\t\t<md-dialog-content id="disclaimerDialog">\n\t\t\t<md-toolbar md-autofocus >\n\t\t\t\t<div class="md-toolbar-tools">\n\t\t\t\t\t<h2>Cookiebeleid Limo</h2>\n\t\t\t\t\t<span flex></span>\n\t\t\t\t\t<md-button class="md-icon-button" ng-click="closeDialog()">\n\t\t\t\t\t\t<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>\n\t\t\t\t\t</md-button>\n\t\t\t\t</div>\n\t\t\t</md-toolbar>\n\t\t\t<md-content>\n\t\t\t\tLimo gebruikt cookies die het gebruik van de zoekmachine vergemakkelijken.\n\t\n\t\t\t\t<h3>WAT IS EEN COOKIE?</h3>\n\t\t\t\tCookies zijn kleine tekstbestanden die je voorkeuren tijdens het surfen onthouden en opslaan op je eigen computer of toestel.\n\t\n\t\t\t\t<h3>COOKIEGEBRUIK IN LIMO</h3>\n\t\t\t\t<p>\n\t\t\t\t\tEnerzijds zijn er functionele cookies. Deze cookies onthouden bepaalde keuzes en instellingen die je een eerste keer hebt\n\t\t\t\t\tgekozen om bij volgende bezoeken effici\xEBnter, sneller en eenvoudiger te kunnen zoeken in Limo. Deze cookies\n\t\t\t\t\tonthouden ondermeer voorkeursinstellingen.\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\tVoor gebruikers van de KU Leuven Associatie kunnen loginnamen onthouden worden bij het aanmelden via de Centrale login.\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\tAnderzijds worden cookies ook gebruikt om bezoek- en klikgedrag te onthouden. Hiermee worden geanonimiseerde rapporten gemaakt\n\t\t\t\t\tvan het gebruik van Limo.\n\t\t\t\t</p>\n\t\t\t\t<!--                \n\t\t\t\t\tKU Leuven gebruikt onder andere volgende cookies op de centraal beheerde websites:\n\t\t\t\t\t<ul>\n\t\t\t\t\t\t<li>\n\t\t\t\t\t\tNSC_* : Deze cookies worden gebruikt door de netscaler om de loadbalancing te sturen\n\t\t\t\t\t\t</li>\n\t\t\t\t\t<li>_ga* en _utm*: Dit zijn Google Analytics cookies, gebruikt voor user-tracking (meer info over Google Analytics)\n\t\t\t\t\t </li>\n\t\t\t\t\t<li>\t_pk_id* : piwik cookies die gebruikt worden door de user-tracking omgeving van KU Leuven\n\t\t\t\t\t </li>\n\t\t\t\t\t<li>\tJSESSIONID: cookies die gebruikt worden in toledo en kuloket\n\t\t\t\t\t </li>\n\t\t\t\t\t<li>\tPHPSESSID: cookies die gebruikt voor de lamp omgeving (php)\n\t\t\t\t\t </li>\n\t\t\t\t\t<li>\t_shibsession* en _saml*: cookies die nodig zijn voor de centrale login van KU Leuven\n\t\t\t\t\t</li>\n\t\t\t\t\t</ul>\n\t\t\t\t-->\n\t\t\t\t<h3>WIJZIGINGEN VAN BROWSERINSTELLINGEN</h3>\n\t\t\t\t<p>\n\t\t\t\t\tCookies kan je via de browserinstellingen op je computer weigeren of verwijderen. De wijze waarop dit kan gebeuren verschilt\n\t\t\t\t\tvan browser tot browser. Raadpleeg indien nodig de helpfunctie van je browser. Deze instellingen moet je\n\t\t\t\t\tsteeds per browser en per computer apart instellen!\n\t\t\t\t</p>\n\t\t\t\t<ul>\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a href="http://windows.microsoft.com/en-US/internet-explorer/delete-manage-cookies#ie=ie-10-win-7" target="_blank">Cookie-instellingen in Internet Explorer</a>\n\t\t\t\t\t</li>\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a href="https://support.google.com/chrome/bin/answer.py?hl=en&amp;answer=95647" target="_blank">Cookie-instellingen in Chrome</a>\n\t\t\t\t\t</li>\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a href="http://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer?redirectlocale=en-US&amp;redirectslug=Cookies"\n\t\t\t\t\t\t\ttarget="_blank">Cookie-instellingen in Firefox</a>\n\t\t\t\t\t</li>\n\t\t\t\t\t<li>\n\t\t\t\t\t\t<a href="https://support.apple.com/kb/PH19214?locale=nl_BE" target="_blank">Cookie-instellingen in Safari</a>\n\t\t\t\t\t</li>\n\t\t\t\t</ul>\n\t\t\t\t<p>\n\t\t\t\t\tHet niet-aanvaarden of verwijderen of uitzetten van cookies kan tot gevolg hebben dat bepaalde functionaliteiten van Limo\n\t\t\t\t\tniet meer toegankelijk zijn of slecht functioneren. Daardoor kan de beleving van de site tegenvallen.\n\t\t\t\t</p>\n\t\t\t\t<h3>SOCIALE MEDIA EN DE BIJHORENDE PLUG-INS</h3>\n\t\t\t\t<p>\n\t\t\t\t\tFacebook ontvangt heel wat informatie over je surfgedrag via deze social plug-in op hun websites (via bijvoorbeeld de knoppen\n\t\t\t\t\t\u201CVind ik leuk\u201D of \u201CDelen\u201D).\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\tDeze knoppen kunnen zich ook bevinden op de resultatenpagina van Limo.\n\t\t\t\t</p>\n\t\t\t\t<p>\n\t\t\t\t\tIndien je je hiertegen wilt beschermen, dan wordt er (door onder meer het Centrum voor de Bescherming van de Persoonlijke\n\t\t\t\t\tLevenssfeer) aangeraden om \xE9\xE9n van de onderstaande maatregelen te nemen.\n\t\t\t\t</p>\n\t\n\t\t\t\t<ol>\n\t\t\t\t\t<li>Installeer een browser add-on die tracking blokkeert. Voorbeelden van dergelijke browser add-ons zijn:\n\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t<li>Privacy Badger (\n\t\t\t\t\t\t\t\t<a href="http://www.eff.org/privacybadger" target="_blank">http://www.eff.org/privacybadger</a>)</li>\n\t\t\t\t\t\t\t<li>Ghostery (\n\t\t\t\t\t\t\t\t<a href="https://www.ghostery.com/" target="_blank">https://www.ghostery.com</a>)</li>\n\t\t\t\t\t\t\t<li>Disconnect (\n\t\t\t\t\t\t\t\t<a href="https://disconnect.me/disconnect" target="_blank">https://disconnect.me/disconnect</a>)</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</li>\n\t\n\t\t\t\t\t<li>Maak gebruik van de incognito of \u201Cprivate nagivation\u201D-modus van uw browser. Recente versies van de meest\n\t\t\t\t\t\tcourante browsers bieden zo\u2019n priv\xE9-modus als functionaliteit aan:\n\t\t\t\t\t\t<ul>\n\t\t\t\t\t\t\t<li> Internet Explorer </li>\n\t\t\t\t\t\t\t<li>Firefox</li>\n\t\t\t\t\t\t\t<li>Chrome</li>\n\t\t\t\t\t\t\t<li> Safari</li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t</li>\n\t\t\t\t</ol>\n\t\n\t\n\t\t\t\t<p>Deze functie dwingt de browser om sporen van je surfgedrag (cookies, historiek, enz.) te wissen nadat het venster\n\t\t\t\t\twordt gesloten en beschermt je aldus om door derden gevolgd te worden (opgelet: deze functie maakt jou niet\n\t\t\t\t\tanoniem op het web). Er bestaan ook speciale privacybeschermende browsers, zoals Epic Privacy Browser (\n\t\t\t\t\t<a href="http://www.epicbrowser.com/" target="_blank">www.epicbrowser.com</a>).</p>\n\t\n\t\t\t\t<p>Sociale media en andere websites gebruiken informatie over het surfgedrag van hun gebruikers om hen gerichte\n\t\t\t\t\treclame aan te bieden. Wil je niet meer gevolgd worden voor gerichte reclame dan kan je je\n\t\t\t\t\t<strong>uitschrijven voor gerichte advertenties</strong> via de opt-out website van de European Interactive Digital\n\t\t\t\t\tAdvertising Alliance (\n\t\t\t\t\t<a href="http://www.youronlinechoices.eu/" target="_blank">www.youronlinechoices.eu</a>).\n\t\t\t\t</p>\n\t\t\t\t\t<p>\n\t\t\t\t\t<br> Uitschrijven voor gerichte advertenties betekent niet dat er geen informatie meer verzameld wordt over je\n\t\t\t\t\tsurfgedrag. Indien je je ook wil beschermen tegen de inzameling van deze informatie wordt er geadviseerd\n\t\t\t\t\tom daarnaast ook gebruik te maken van de incognito-modus van uw browser of \xE9\xE9n van de bovenvermelde browser\n\t\t\t\t\tadd-ons te gebruiken..</p>\n\t\n\t\t\t\t<h3>MEER WETEN?</h3>\n\t\n\t\t\t\t<p>Meer info vind je onder andere op volgende websites:\n\t\t\t\t\t<a href="http://www.allaboutcookies.org/" target="_blank">www.allaboutcookies.org</a>&nbsp;en\n\t\t\t\t\t<a href="http://www.youronlinechoices.com/be-nl/" target="_blank">www.youronlinechoices.com/be-nl</a>\n\t\t\t\t</p>\n<p>\n\t\t\t\tLIBIS behoudt zich het recht voor om deze cookieverklaring op ieder moment te wijzigen. De meest recente versie van de cookieverklaring vind je altijd op deze pagina.\n\t\t\t</p>\n\t\t\t\t<md-dialog-actions>\n\t\t\t\t\t<div layout="row" class="demo-dialog-button">\n\t\t\t\t\t\t<md-button class="md-primary" ng-click="closeDialog()">\n\t\t\t\t\t\t\tSluiten\n\t\t\t\t\t\t</md-button>\n\t\t\t\t\t</div>\n\t\t\t\t</md-dialog-actions>\n\t\t\t</md-content>\n\t\t</md-dialog-content>\n\t</md-dialog>');
-  $templateCache.put('disclaimerDialog.html', '<md-dialog aria-label="Disclaimer">\n    <md-dialog-content id="disclaimerDialog">\n        <md-toolbar md-autofocus >\n            <div class="md-toolbar-tools">\n                <h2>Cookiebeleid Limo</h2>\n                <span flex></span>\n                <md-button class="md-icon-button" ng-click="closeDialog()">\n                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>\n                </md-button>\n            </div>\n        </md-toolbar>\n        <md-content>\n            Limo gebruikt cookies die het gebruik van de zoekmachine vergemakkelijken.\n\n            <h3>WAT IS EEN COOKIE?</h3>\n            Cookies zijn kleine tekstbestanden die je voorkeuren tijdens het surfen onthouden en opslaan op je eigen computer of toestel.\n\n            <h3>COOKIEGEBRUIK IN LIMO</h3>\n            <p>\n                Enerzijds zijn er functionele cookies. Deze cookies onthouden bepaalde keuzes en instellingen die je een eerste keer hebt\n                gekozen om bij volgende bezoeken effici\xEBnter, sneller en eenvoudiger te kunnen zoeken in Limo. Deze cookies\n                onthouden voorkeursinstellingen,\u2026\n            </p>\n            <p>\n                Voor gebruikers van de de KU Leuven Associatie kunnen loginnamen onthouden worden bij het aanmelden via de Centrale login.\n            </p>\n            <p>\n                Anderzijds worden cookies ook gebruikt om bezoek- en klikgedrag te onthouden. Hiermee worden geanonimiseerde rapporten gemaakt\n                van het gebruik van Limo.\n            </p>\n            <!--                \n                KU Leuven gebruikt onder andere volgende cookies op de centraal beheerde websites:\n                <ul>\n                    <li>\n                    NSC_* : Deze cookies worden gebruikt door de netscaler om de loadbalancing te sturen\n                    </li>\n                <li>_ga* en _utm*: Dit zijn Google Analytics cookies, gebruikt voor user-tracking (meer info over Google Analytics)\n                 </li>\n                <li>\t_pk_id* : piwik cookies die gebruikt worden door de user-tracking omgeving van KU Leuven\n                 </li>\n                <li>\tJSESSIONID: cookies die gebruikt worden in toledo en kuloket\n                 </li>\n                <li>\tPHPSESSID: cookies die gebruikt voor de lamp omgeving (php)\n                 </li>\n                <li>\t_shibsession* en _saml*: cookies die nodig zijn voor de centrale login van KU Leuven\n                </li>\n                </ul>\n            -->\n            <h3>WIJZIGINGEN VAN BROWSERINSTELLINGEN</h3>\n            <p>\n                Cookies kan je via de browserinstellingen op je computer weigeren of verwijderen. De wijze hoe dit kan gebeuren verschilt\n                van browser tot browser. Raadpleeg indien nodig de helpfunctie van je browser. Deze instellingen moet je\n                steeds per browser en per computer apart instellen!\n            </p>\n            <ul>\n                <li>\n                    <a href="http://windows.microsoft.com/en-US/internet-explorer/delete-manage-cookies#ie=ie-10-win-7" target="_blank">Cookie-instellingen in Internet Explorer</a>\n                </li>\n                <li>\n                    <a href="https://support.google.com/chrome/bin/answer.py?hl=en&amp;answer=95647" target="_blank">Cookie-instellingen in Chrome</a>\n                </li>\n                <li>\n                    <a href="http://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer?redirectlocale=en-US&amp;redirectslug=Cookies"\n                        target="_blank">Cookie-instellingen in Firefox</a>\n                </li>\n                <li>\n                    <a href="https://support.apple.com/kb/PH19214?locale=nl_BE" target="_blank">Cookie-instellingen in Safari</a>\n                </li>\n            </ul>\n            <p>\n                Het niet-aanvaarden of verwijderen of uitzetten van cookies kan tot gevolg hebben dat bepaalde functionaliteiten van Limo\n                niet meer toegankelijk zijn of slecht functioneren. Daardoor kan de beleving van de site tegenvallen.\n            </p>\n            <h3>SOCIALE MEDIA EN DE BIJHORENDE PLUG-INS</h3>\n            <p>\n                Facebook ontvangt heel wat informatie over je surfgedrag via deze social plug-in op hun websites (via bijvoorbeeld de knoppen\n                \u201CVind ik leuk\u201D of \u201CDelen\u201D).\n            </p>\n            <p>\n                Deze knoppen kunnen zich ook bevinden op de resultatenpagina van Limo.\n            </p>\n            <p>\n                Indien je je hiertegen wilt beschermen, dan wordt er (door onder meer het Centrum voor de Bescherming van de Persoonlijke\n                Levenssfeer) aangeraden om \xE9\xE9n van de onderstaande maatregelen te nemen.\n            </p>\n\n            <ol>\n                <li>Installeer een browser add-on die tracking blokkeert. Voorbeelden van dergelijke browser add-ons zijn:\n                    <ul>\n                        <li>Privacy Badger (\n                            <a href="http://www.eff.org/privacybadger" target="_blank">http://www.eff.org/privacybadger</a>)</li>\n                        <li>Ghostery (\n                            <a href="https://www.ghostery.com/" target="_blank">https://www.ghostery.com</a>)</li>\n                        <li>Disconnect (\n                            <a href="https://disconnect.me/disconnect" target="_blank">https://disconnect.me/disconnect</a>)</li>\n                    </ul>\n                </li>\n\n                <li>Maak gebruik van de incognito of \u201Cprivate nagivation\u201D-modus van uw browser. Recente versies van de meest\n                    courante browsers bieden zo\u2019n priv\xE9-modus als functionaliteit aan:\n                    <ul>\n                        <li> Internet Explorer </li>\n                        <li>Firefox</li>\n                        <li>Chrome</li>\n                        <li> Safari</li>\n                    </ul>\n                </li>\n            </ol>\n\n\n            <p>Deze functie dwingt de browser om sporen van je surfgedrag (cookies, historiek, enz.) te wissen nadat het venster\n                wordt gesloten en beschermt je aldus om door derden gevolgd te worden (opgelet: deze functie maakt jou niet\n                anoniem op het web). Er bestaan ook speciale privacybeschermende browsers, zoals Epic Privacy Browser (\n                <a href="http://www.epicbrowser.com/" target="_blank">www.epicbrowser.com</a>).</p>\n\n            <p>Sociale media en andere websites gebruiken informatie over het surfgedrag van zijn gebruikers om hen gerichte\n                reclame aan te bieden. Wil je niet meer gevolgd worden voor gerichte reclame dan kan je je\n                <strong>uitschrijven voor gerichte advertenties</strong> via de opt-out website van de European Interactive Digital\n                Advertising Alliance (\n                <a href="http://www.youronlinechoices.eu/" target="_blank">www.youronlinechoices.eu</a>).\n            </p>\n                <p>\n                <br> Uitschrijven voor gerichte advertenties betekent niet dat er geen informatie meer verzameld wordt over je\n                surfgedrag. Indien je je ook wil beschermen tegen de inzameling van deze informatie wordt er geadviseerd\n                om daarnaast ook gebruik te maken van de incognito-modus van uw browser of \xE9\xE9n van de bovenvermelde browser\n                add-ons te gebruiken..</p>\n\n            <h3>MEER WETEN?</h3>\n\n            <p>Meer info vind je onder andere op volgende websites:\n                <a href="http://www.allaboutcookies.org/" target="_blank">www.allaboutcookies.org</a>&nbsp;en\n                <a href="http://www.youronlinechoices.com/be-nl/" target="_blank">www.youronlinechoices.com/be-nl</a>\n            </p>.\n\n            <md-dialog-actions>\n                <div layout="row" class="demo-dialog-button">\n                    <md-button class="md-primary" ng-click="closeDialog()">\n                        Sluiten\n                    </md-button>\n                </div>\n            </md-dialog-actions>\n        </md-content>\n    </md-dialog-content>\n</md-dialog>');
-  $templateCache.put('footer_ECB_en_US.html', '<style>\n\nprm-facet [sticky].is-stuck {\n    max-height: calc(100% - 65px);\n}\n\n.__gt-md prm-page-nav-menu {\n    bottom: 55px\n}\n\n\n    div#footer,\n    div#footer a {\n        color: #fff;\n    }\n/*\n    div#footer {\n        height: 35px;\n        width: 100%;\n\n        background-color: #0053A0;\n        background-color: #003299\n\n        padding: 0 1em;\n        font-size: small;\n       align-items: center;\n    }\n*/\n    div#footer div#disclaimer {\n        display:flex;\n        flex-direction: row;\n        justify-content: space-around;\n    }\n\n    div#lbs-promote-login {\n        text-align: right;\n        align-items: center;\n    }\n\n    div#lbs-promote-login md-checkbox ._md-icon {\n        transform: scale(.7);\n    }\n\n    div#lbs-promote-login md-checkbox ._md-container {\n        top: 0px\n    }\n</style>\n\n<div id="footer" class="layout-row">\n    <div class="hide-xs layout-row" style="align-items: center"  style=\'flex:1 auto\'>\n        <div class="hide-xs" style="flex: 0 1 auto; margin-right:1em">\n            <a href="http://www.libis.be" target="libis">Copyright \xA9 LIBIS</a>\n\n        </div>\n        <div style="flex: 0 1 auto;">\n            <img id="limo_logo" src="https://limo.libis.be/primo_library/libweb/libis/images/limo.png" alt="Limo" height="30px" \n            style="padding-top:4px; padding-left:6px; display:inline-block;">\n            <!--\n            <br>\n            <span style="font-size: xx-small">\n                Based on Primo from\n                \n                <a href="http://www.exlibrisgroup.com/"  target="exl">Ex Libris</a>\n            </span>\n        -->                \n   \n        </div>\n    </div>\n    <div style=\'flex:1 auto\'>\n        <div id="disclaimer">\n                <a href="/primo-explore/custom/ECB/html/cookie_policy_onesearch.htm" target="cookie">Cookie policy</a>\n            <!--\n            <a href="http://www.kuleuven.be/kuleuven/disclaimer.html" target="kuleuven">Disclaimer</a>\n            <a href="https://admin.kuleuven.be/icts/cookiebeleid/" target="kuleuven">Cookiebeleid</a>\n            <prm-disclaimer parent-Ctrl=\'$ctrl\'></prm-disclaimer>\n           -->\n        </div>\n\n    </div>\n    <div class="hide-xs" id="lbs-promote-login"  style=\'flex:2 auto\'>\n        <lbs-promote-login></lbs-promote-login>\n    </div>\n\n\n</div>');
-  $templateCache.put('footer_Lirias_en_US.html', '<style>\n\n        prm-facet [sticky].is-stuck {\n            max-height: calc(100% - (30px + 60px) );\n        }\n        \n        .__gt-md prm-page-nav-menu {\n            bottom: 55px\n        }\n        \n        /*\n        div#footer,\n        div#footer a {\n             color: #a9cdd6;\n         }\n        */\n            div#footer {\n                height: 60px;\n                width: 100%;\n                border-top: 5px solid #1d8db0;\n                /* background-color: #4d6b82; */\n        /*\n                padding: 0 1em;\n                font-size: small;\n               align-items: center;\n               */\n            }\n        \n            div#footer .navbar{\n                zoom: 1;\n                padding: 10px 0;\n                position: relative;\n                font-family: "Open Sans",sans-serif;\n                font-weight: 400;\n                line-height: 1.625;\n                width: 100%;    \n            }\n      \n            div#footer a:hover {\n                background-color: none !important; \n                box-shadow: none !important;\n            }\n\n</style>\n\n\n\n<svg xmlns="http://www.w3.org/2000/svg" class="superhidden"><symbol id="facebook" viewBox="0 0 1792 1792"><path d="M1376 128q119 0 203.5 84.5T1664 416v960q0 119-84.5 203.5T1376 1664h-188v-595h199l30-232h-229V689q0-56 23.5-84t91.5-28l122-1V369q-63-9-178-9-136 0-217.5 80T948 666v171H748v232h200v595H416q-119 0-203.5-84.5T128 1376V416q0-119 84.5-203.5T416 128h960z"/></symbol><symbol id="twitter" viewBox="0 0 1792 1792"><path d="M1408 610q-56 25-121 34 68-40 93-117-65 38-134 51-61-66-153-66-87 0-148.5 61.5T883 722q0 29 5 48-129-7-242-65T454 550q-29 50-29 106 0 114 91 175-47-1-100-26v2q0 75 50 133.5t123 72.5q-29 8-51 8-13 0-39-4 21 63 74.5 104t121.5 42q-116 90-261 90-26 0-50-3 148 94 322 94 112 0 210-35.5t168-95 120.5-137 75-162T1304 746q0-18-1-27 63-45 105-109zm256-194v960q0 119-84.5 203.5T1376 1664H416q-119 0-203.5-84.5T128 1376V416q0-119 84.5-203.5T416 128h960q119 0 203.5 84.5T1664 416z"/></symbol><symbol id="linkedin" viewBox="0 0 1792 1792"><path d="M365 1414h231V720H365v694zm246-908q-1-52-36-86t-93-34-94.5 34-36.5 86q0 51 35.5 85.5T479 626h1q59 0 95-34.5t36-85.5zm585 908h231v-398q0-154-73-233t-193-79q-136 0-209 117h2V720H723q3 66 0 694h231v-388q0-38 7-56 15-35 45-59.5t74-24.5q116 0 116 157v371zm468-998v960q0 119-84.5 203.5T1376 1664H416q-119 0-203.5-84.5T128 1376V416q0-119 84.5-203.5T416 128h960q119 0 203.5 84.5T1664 416z"/></symbol><symbol id="youtube" viewBox="0 0 1792 1792"><path d="M1047 1303v-157q0-50-29-50-17 0-33 16v224q16 16 33 16 29 0 29-49zm184-122h66v-34q0-51-33-51t-33 51v34zM660 915v70h-80v423h-74V985h-78v-70h232zm201 126v367h-67v-40q-39 45-76 45-33 0-42-28-6-16-6-54v-290h66v270q0 24 1 26 1 15 15 15 20 0 42-31v-280h67zm252 111v146q0 52-7 73-12 42-53 42-35 0-68-41v36h-67V915h67v161q32-40 68-40 41 0 53 42 7 21 7 74zm251 129v9q0 29-2 43-3 22-15 40-27 40-80 40-52 0-81-38-21-27-21-86v-129q0-59 20-86 29-38 80-38t78 38q21 28 21 86v76h-133v65q0 51 34 51 24 0 30-26 0-1 .5-7t.5-16.5V1281h68zM913 457v156q0 51-32 51t-32-51V457q0-52 32-52t32 52zm533 713q0-177-19-260-10-44-43-73.5t-76-34.5q-136-15-412-15-275 0-411 15-44 5-76.5 34.5T366 910q-20 87-20 260 0 176 20 260 10 43 42.5 73t75.5 35q137 15 412 15t412-15q43-5 75.5-35t42.5-73q20-84 20-260zM691 519l90-296h-75l-51 195-53-195h-78l24 69 23 69q35 103 46 158v201h74V519zm289 81V470q0-58-21-87-29-38-78-38-51 0-78 38-21 29-21 87v130q0 58 21 87 27 38 78 38 49 0 78-38 21-27 21-87zm181 120h67V350h-67v283q-22 31-42 31-15 0-16-16-1-2-1-26V350h-67v293q0 37 6 55 11 27 43 27 36 0 77-45v40zm503-304v960q0 119-84.5 203.5T1376 1664H416q-119 0-203.5-84.5T128 1376V416q0-119 84.5-203.5T416 128h960q119 0 203.5 84.5T1664 416z"/></symbol><symbol id="instagram" viewBox="754 -754.5 1792 1792"><path d="M1651.1-490c205.5 0 229.8.7 310.9 4.6 75.2 3.5 115.6 15.8 143 26.4 35.8 14.1 61.5 30.6 88.5 57.6 27.1 27.1 43.6 52.7 57.6 88.5 10.5 27.1 23.2 67.8 26.4 143 3.9 81.2 4.6 105.4 4.6 310.9s-.7 229.8-4.6 310.9c-3.5 75.2-15.8 115.6-26.4 143-14.1 35.8-30.6 61.5-57.6 88.5-27.1 27.1-52.7 43.6-88.5 57.6-27.1 10.5-67.8 23.2-143 26.4-81.2 3.9-105.4 4.6-310.9 4.6s-229.8-.7-310.9-4.6c-75.2-3.5-115.6-15.8-143-26.4-35.8-14.1-61.5-30.6-88.5-57.6-27.1-27.1-43.6-52.7-57.6-88.5-10.5-27.1-23.2-67.8-26.4-143-3.9-81.2-4.6-105.4-4.6-310.9s.7-229.8 4.6-310.9c3.5-75.2 15.8-115.6 26.4-143 14.1-35.8 30.6-61.5 57.6-88.5 27.1-27.1 52.7-43.6 88.5-57.6 27.1-10.5 67.8-23.2 143-26.4 81.1-3.9 105.3-4.6 310.9-4.6m0-138.7c-209.1 0-235.1 1.1-317.3 4.6-81.9 3.9-137.7 16.9-186.9 35.8-50.6 19.7-93.5 46-136.3 88.9s-68.9 85.7-88.5 136.3c-19 48.8-32 104.7-35.8 186.9-3.5 81.9-4.6 107.9-4.6 316.9s1.1 235.1 4.6 317.3C890 539.8 903 595.7 922 644.9c19.7 50.6 46 93.5 88.9 136.3 42.9 42.9 85.7 69.2 136.3 88.9 48.8 19 104.7 32 186.9 35.8 82.2 3.9 108.2 4.6 317.3 4.6s235.1-1.1 317.3-4.6c81.9-3.9 137.7-16.9 186.9-35.8 50.6-19.7 93.5-46 136.3-88.9 42.9-42.9 69.2-85.7 88.9-136.3 19-48.8 32-104.7 35.8-186.9 3.9-82.2 4.6-108.2 4.6-317.3s-1.1-235.1-4.6-317.3c-3.9-81.9-16.9-137.7-35.8-186.9-19.7-50.6-46-93.5-88.9-136.3s-86.1-68.9-136.7-88.5c-48.8-19-104.7-32-186.9-35.8-82.2-3.6-108.2-4.6-317.2-4.6zm0 374.5c-218.2 0-395.3 177.1-395.3 395.3S1432.9 536 1651.1 536s395.3-177.1 395.3-395.3-177.2-394.9-395.3-394.9zm0 651.4c-141.6 0-256.5-114.9-256.5-256.5s114.9-256.5 256.5-256.5S1907.6-.9 1907.6 140.7s-114.9 256.5-256.5 256.5zM2154.2-270c0 50.9-41.5 92.4-92.4 92.4-50.9 0-92.4-41.5-92.4-92.4s41.5-92.4 92.4-92.4 92.4 41.4 92.4 92.4z"/></symbol></svg>\n\n\n\n<div id="footer" class="layout-row">\n\n        <div class="navbar navbar--footer">\n                <div class="container">\n                    <div class="pull--bp-med--left clearfix">\n                        <a href="http://www.kuleuven.be" class="logo logo--xsm pull--left" title="KU Leuven"></a>\n                        <nav class="nav nav--inline pull--left">\n                            <ul>\n                                <li>2016 \xA9 KU&nbsp;Leuven</li>\n                                <li><a href="http://www.kuleuven.be/kuleuven/disclaimer.html">Disclaimer</a></li>\n                                <li><a href="https://admin.kuleuven.be/icts/cookiebeleid/">Cookiebeleid</a></li>\n                            </ul>\n                        </nav>\n                    </div>\n                    <div class="inline inline--share pull--bp-med--right clearfix">\n                        <div class="inline__item">Volg KU Leuven via</div>\n                        <div class="inline__item">\n                            <a href="https://www.facebook.com/KULeuven">\n                                <svg role="img" title="facebook" width="30" height="30">\n                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#facebook"></use>\n                                </svg>\n                            </a>\n                        </div>\n                        <div class="inline__item">\n                            <a href="https://twitter.com/KU_Leuven"><svg role="img" title="twitter" width="30" height="30">\n                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#twitter"></use>\n                            </svg></a>\n                        </div>\n                                        <div class="inline__item">\n                                                <a href="https://www.instagram.com/kuleuven"><svg role="img" title="instagram" width="30" height="30">\n                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#instagram"></use>\n                                                </svg></a>\n                                        </div>\n                        <div class="inline__item">\n                            <a href="https://www.linkedin.com/company/ku_leuven">\n                                <svg role="img" title="linkedin" width="30" height="30">\n                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#linkedin"></use>\n                                </svg>\n                            </a>\n                        </div>\n                        <div class="inline__item">\n                            <a href="https://www.youtube.com/user/kuleuven">\n                                <svg role="img" title="youtube" width="30" height="30">\n                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#youtube"></use>\n                                </svg>\n                            </a>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n</div>');
-  $templateCache.put('footer_Lirias_nl_BE.html', '<style>\n\n                prm-facet [sticky].is-stuck {\n                    max-height: calc(100% - (30px + 60px) );\n                }\n                \n                .__gt-md prm-page-nav-menu {\n                    bottom: 55px\n                }\n                \n                /*\n                div#footer,\n                div#footer a {\n                     color: #a9cdd6;\n                 }\n                */\n                    div#footer {\n                        height: 60px;\n                        width: 100%;\n                        border-top: 5px solid #1d8db0;\n                        /* background-color: #4d6b82; */\n                /*\n                        padding: 0 1em;\n                        font-size: small;\n                       align-items: center;\n                       */\n                    }\n                \n                    div#footer .navbar{\n                        zoom: 1;\n                        padding: 10px 0;\n                        position: relative;\n                        font-family: "Open Sans",sans-serif;\n                        font-weight: 400;\n                        line-height: 1.625;\n                        width: 100%;    \n                    }\n              \n                    div#footer a:hover {\n                        background-color: none !important; \n                        box-shadow: none !important;\n                    }\n        \n        </style>\n        \n        \n        \n        <svg xmlns="http://www.w3.org/2000/svg" class="superhidden"><symbol id="facebook" viewBox="0 0 1792 1792"><path d="M1376 128q119 0 203.5 84.5T1664 416v960q0 119-84.5 203.5T1376 1664h-188v-595h199l30-232h-229V689q0-56 23.5-84t91.5-28l122-1V369q-63-9-178-9-136 0-217.5 80T948 666v171H748v232h200v595H416q-119 0-203.5-84.5T128 1376V416q0-119 84.5-203.5T416 128h960z"/></symbol><symbol id="twitter" viewBox="0 0 1792 1792"><path d="M1408 610q-56 25-121 34 68-40 93-117-65 38-134 51-61-66-153-66-87 0-148.5 61.5T883 722q0 29 5 48-129-7-242-65T454 550q-29 50-29 106 0 114 91 175-47-1-100-26v2q0 75 50 133.5t123 72.5q-29 8-51 8-13 0-39-4 21 63 74.5 104t121.5 42q-116 90-261 90-26 0-50-3 148 94 322 94 112 0 210-35.5t168-95 120.5-137 75-162T1304 746q0-18-1-27 63-45 105-109zm256-194v960q0 119-84.5 203.5T1376 1664H416q-119 0-203.5-84.5T128 1376V416q0-119 84.5-203.5T416 128h960q119 0 203.5 84.5T1664 416z"/></symbol><symbol id="linkedin" viewBox="0 0 1792 1792"><path d="M365 1414h231V720H365v694zm246-908q-1-52-36-86t-93-34-94.5 34-36.5 86q0 51 35.5 85.5T479 626h1q59 0 95-34.5t36-85.5zm585 908h231v-398q0-154-73-233t-193-79q-136 0-209 117h2V720H723q3 66 0 694h231v-388q0-38 7-56 15-35 45-59.5t74-24.5q116 0 116 157v371zm468-998v960q0 119-84.5 203.5T1376 1664H416q-119 0-203.5-84.5T128 1376V416q0-119 84.5-203.5T416 128h960q119 0 203.5 84.5T1664 416z"/></symbol><symbol id="youtube" viewBox="0 0 1792 1792"><path d="M1047 1303v-157q0-50-29-50-17 0-33 16v224q16 16 33 16 29 0 29-49zm184-122h66v-34q0-51-33-51t-33 51v34zM660 915v70h-80v423h-74V985h-78v-70h232zm201 126v367h-67v-40q-39 45-76 45-33 0-42-28-6-16-6-54v-290h66v270q0 24 1 26 1 15 15 15 20 0 42-31v-280h67zm252 111v146q0 52-7 73-12 42-53 42-35 0-68-41v36h-67V915h67v161q32-40 68-40 41 0 53 42 7 21 7 74zm251 129v9q0 29-2 43-3 22-15 40-27 40-80 40-52 0-81-38-21-27-21-86v-129q0-59 20-86 29-38 80-38t78 38q21 28 21 86v76h-133v65q0 51 34 51 24 0 30-26 0-1 .5-7t.5-16.5V1281h68zM913 457v156q0 51-32 51t-32-51V457q0-52 32-52t32 52zm533 713q0-177-19-260-10-44-43-73.5t-76-34.5q-136-15-412-15-275 0-411 15-44 5-76.5 34.5T366 910q-20 87-20 260 0 176 20 260 10 43 42.5 73t75.5 35q137 15 412 15t412-15q43-5 75.5-35t42.5-73q20-84 20-260zM691 519l90-296h-75l-51 195-53-195h-78l24 69 23 69q35 103 46 158v201h74V519zm289 81V470q0-58-21-87-29-38-78-38-51 0-78 38-21 29-21 87v130q0 58 21 87 27 38 78 38 49 0 78-38 21-27 21-87zm181 120h67V350h-67v283q-22 31-42 31-15 0-16-16-1-2-1-26V350h-67v293q0 37 6 55 11 27 43 27 36 0 77-45v40zm503-304v960q0 119-84.5 203.5T1376 1664H416q-119 0-203.5-84.5T128 1376V416q0-119 84.5-203.5T416 128h960q119 0 203.5 84.5T1664 416z"/></symbol><symbol id="instagram" viewBox="754 -754.5 1792 1792"><path d="M1651.1-490c205.5 0 229.8.7 310.9 4.6 75.2 3.5 115.6 15.8 143 26.4 35.8 14.1 61.5 30.6 88.5 57.6 27.1 27.1 43.6 52.7 57.6 88.5 10.5 27.1 23.2 67.8 26.4 143 3.9 81.2 4.6 105.4 4.6 310.9s-.7 229.8-4.6 310.9c-3.5 75.2-15.8 115.6-26.4 143-14.1 35.8-30.6 61.5-57.6 88.5-27.1 27.1-52.7 43.6-88.5 57.6-27.1 10.5-67.8 23.2-143 26.4-81.2 3.9-105.4 4.6-310.9 4.6s-229.8-.7-310.9-4.6c-75.2-3.5-115.6-15.8-143-26.4-35.8-14.1-61.5-30.6-88.5-57.6-27.1-27.1-43.6-52.7-57.6-88.5-10.5-27.1-23.2-67.8-26.4-143-3.9-81.2-4.6-105.4-4.6-310.9s.7-229.8 4.6-310.9c3.5-75.2 15.8-115.6 26.4-143 14.1-35.8 30.6-61.5 57.6-88.5 27.1-27.1 52.7-43.6 88.5-57.6 27.1-10.5 67.8-23.2 143-26.4 81.1-3.9 105.3-4.6 310.9-4.6m0-138.7c-209.1 0-235.1 1.1-317.3 4.6-81.9 3.9-137.7 16.9-186.9 35.8-50.6 19.7-93.5 46-136.3 88.9s-68.9 85.7-88.5 136.3c-19 48.8-32 104.7-35.8 186.9-3.5 81.9-4.6 107.9-4.6 316.9s1.1 235.1 4.6 317.3C890 539.8 903 595.7 922 644.9c19.7 50.6 46 93.5 88.9 136.3 42.9 42.9 85.7 69.2 136.3 88.9 48.8 19 104.7 32 186.9 35.8 82.2 3.9 108.2 4.6 317.3 4.6s235.1-1.1 317.3-4.6c81.9-3.9 137.7-16.9 186.9-35.8 50.6-19.7 93.5-46 136.3-88.9 42.9-42.9 69.2-85.7 88.9-136.3 19-48.8 32-104.7 35.8-186.9 3.9-82.2 4.6-108.2 4.6-317.3s-1.1-235.1-4.6-317.3c-3.9-81.9-16.9-137.7-35.8-186.9-19.7-50.6-46-93.5-88.9-136.3s-86.1-68.9-136.7-88.5c-48.8-19-104.7-32-186.9-35.8-82.2-3.6-108.2-4.6-317.2-4.6zm0 374.5c-218.2 0-395.3 177.1-395.3 395.3S1432.9 536 1651.1 536s395.3-177.1 395.3-395.3-177.2-394.9-395.3-394.9zm0 651.4c-141.6 0-256.5-114.9-256.5-256.5s114.9-256.5 256.5-256.5S1907.6-.9 1907.6 140.7s-114.9 256.5-256.5 256.5zM2154.2-270c0 50.9-41.5 92.4-92.4 92.4-50.9 0-92.4-41.5-92.4-92.4s41.5-92.4 92.4-92.4 92.4 41.4 92.4 92.4z"/></symbol></svg>\n        \n        \n        \n        <div id="footer" class="layout-row">\n        \n                <div class="navbar navbar--footer">\n                        <div class="container">\n                            <div class="pull--bp-med--left clearfix">\n                                <a href="http://www.kuleuven.be" class="logo logo--xsm pull--left" title="KU Leuven"></a>\n                                <nav class="nav nav--inline pull--left">\n                                    <ul>\n                                        <li>2016 \xA9 KU&nbsp;Leuven</li>\n                                        <li><a href="http://www.kuleuven.be/kuleuven/disclaimer.html">Disclaimer</a></li>\n                                        <li><a href="https://admin.kuleuven.be/icts/cookiebeleid/">Cookiebeleid</a></li>\n                                    </ul>\n                                </nav>\n                            </div>\n                            <div class="inline inline--share pull--bp-med--right clearfix">\n                                <div class="inline__item">Volg KU Leuven via</div>\n                                <div class="inline__item">\n                                    <a href="https://www.facebook.com/KULeuven">\n                                        <svg role="img" title="facebook" width="30" height="30">\n                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#facebook"></use>\n                                        </svg>\n                                    </a>\n                                </div>\n                                <div class="inline__item">\n                                    <a href="https://twitter.com/KU_Leuven"><svg role="img" title="twitter" width="30" height="30">\n                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#twitter"></use>\n                                    </svg></a>\n                                </div>\n                                                <div class="inline__item">\n                                                        <a href="https://www.instagram.com/kuleuven"><svg role="img" title="instagram" width="30" height="30">\n                                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#instagram"></use>\n                                                        </svg></a>\n                                                </div>\n                                <div class="inline__item">\n                                    <a href="https://www.linkedin.com/company/ku_leuven">\n                                        <svg role="img" title="linkedin" width="30" height="30">\n                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#linkedin"></use>\n                                        </svg>\n                                    </a>\n                                </div>\n                                <div class="inline__item">\n                                    <a href="https://www.youtube.com/user/kuleuven">\n                                        <svg role="img" title="youtube" width="30" height="30">\n                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#youtube"></use>\n                                        </svg>\n                                    </a>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n        \n        </div>');
-  $templateCache.put('footer_en_US.html', '<style>\n\nprm-facet [sticky].is-stuck {\n    max-height: calc(100% - 65px);\n}\n\n.__gt-md prm-page-nav-menu {\n    bottom: 55px\n}\n\n\n    div#footer,\n    div#footer a {\n        color: #a9cdd6;\n    }\n\n    div#footer {\n        height: 35px;\n        width: 100%;\n        background-color: #4d6b82;\n\n        padding: 0 1em;\n        font-size: small;\n       align-items: center;\n    }\n\n    div#footer div#disclaimer {\n        display:flex;\n        flex-direction: row;\n        justify-content: space-around;\n    }\n\n    div#lbs-promote-login {\n        text-align: right;\n        align-items: center;\n    }\n\n    div#lbs-promote-login md-checkbox ._md-icon {\n        transform: scale(.7);\n    }\n\n    div#lbs-promote-login md-checkbox ._md-container {\n        top: 0px\n    }\n</style>\n\n<div id="footer" class="layout-row">\n    <div class="hide-xs layout-row" style="align-items: center"  style=\'flex:1 auto\'>\n        <div class="hide-xs" style="flex: 0 1 auto; margin-right:1em">\n            <a href="http://www.libis.be" target="libis">Copyright \xA9 LIBIS</a>\n\n        </div>\n        <div style="flex: 0 1 auto;">\n            <img id="limo_logo" src="https://limo.libis.be/primo_library/libweb/libis/images/limo.png" alt="Limo" height="30px" \n            style="padding-top:4px; padding-left:6px; display:inline-block;">\n            <!--\n            <br>\n            <span style="font-size: xx-small">\n                Based on Primo from\n                \n                <a href="http://www.exlibrisgroup.com/"  target="exl">Ex Libris</a>\n            </span>\n        -->                \n   \n        </div>\n    </div>\n    <div style=\'flex:1 auto\'>\n        <div id="disclaimer">\n            <!--\n            <a href="http://www.kuleuven.be/kuleuven/disclaimer.html" target="kuleuven">Disclaimer</a>\n            <a href="https://admin.kuleuven.be/icts/cookiebeleid/" target="kuleuven">Cookiebeleid</a>\n            -->\n            <prm-disclaimer parent-Ctrl=\'$ctrl\'></prm-disclaimer>\n           \n        </div>\n\n    </div>\n    <div class="hide-xs" id="lbs-promote-login"  style=\'flex:2 auto\'>\n        <lbs-promote-login></lbs-promote-login>\n    </div>\n\n\n</div>');
-  $templateCache.put('footer_nl_BE.html', '<style>\n\nprm-facet [sticky].is-stuck {\n    max-height: calc(100% - 65px);\n}\n\n.__gt-md prm-page-nav-menu {\n    bottom: 55px\n}\n\n\n    div#footer,\n    div#footer a {\n        color: #a9cdd6;\n    }\n\n    div#footer {\n        height: 35px;\n        width: 100%;\n        background-color: #4d6b82;\n        padding: 0 1em;\n        font-size: small;\n       align-items: center;\n    }\n\n\n        div#footer div#disclaimer {\n            display:flex;\n            flex-direction: row;\n            justify-content: space-around;\n        }\n    \n        div#lbs-promote-login {\n            text-align: right;\n            align-items: center;\n        }\n    \n        div#lbs-promote-login md-checkbox ._md-icon {\n            transform: scale(.7);\n        }\n    \n        div#lbs-promote-login md-checkbox ._md-container {\n            top: 0px\n        }\n    </style>\n    \n    <div id="footer" class="layout-row">\n        <div class="hide-xs layout-row" style="align-items: center"  style=\'flex:1 auto\'>\n            <div class="hide-xs" style="flex: 0 1 auto; margin-right:1em">\n                <a href="http://www.libis.be" target="libis">Copyright \xA9 LIBIS</a>\n            </div>\n            <div style="flex: 0 1 auto;">\n                <img id="limo_logo" src="https://limo.libis.be/primo_library/libweb/libis/images/limo.png" alt="Limo" height="30px" \n                style="padding-top:4px; padding-left:6px; display:inline-block;">\n                <!--\n                <br>\n                <span style="font-size: xx-small">\n                    Based on Primo from\n                    \n                    <a href="http://www.exlibrisgroup.com/"  target="exl">Ex Libris</a>\n                </span>\n            -->                \n            </div>\n        </div>\n        <div style=\'flex:1 auto\'>\n                <div id="disclaimer">\n                        <!--\n                        <a href="http://www.kuleuven.be/kuleuven/disclaimer.html" target="kuleuven">Disclaimer</a>\n                        <a href="https://admin.kuleuven.be/icts/cookiebeleid/" target="kuleuven">Cookiebeleid</a>\n                    -->\n                        <prm-disclaimer parent-Ctrl=\'$ctrl\'></prm-disclaimer>\n\n                    </div>\n    \n        </div>\n        <div class="hide-xs" id="lbs-promote-login"  style=\'flex:2 auto\'>\n            <lbs-promote-login></lbs-promote-login>\n        </div>\n    \n    \n    </div>');
-  $templateCache.put('footer_wereldwijzer_nl_BE.html', '<style>\n\n        prm-facet [sticky].is-stuck {\n            max-height: calc(100% - 65px);\n        }\n        \n        .__gt-md prm-page-nav-menu {\n            bottom: 55px\n        }\n        \n        \n            div#footer,\n            div#footer a {\n                color: #a9cdd6;\n            }\n        \n                div#footer div#disclaimer {\n                    display:flex;\n                    flex-direction: row;\n                    justify-content: space-around;\n                }\n            \n                div#lbs-promote-login {\n                    text-align: right;\n                    align-items: center;\n                }\n            \n                div#lbs-promote-login md-checkbox ._md-icon {\n                    transform: scale(.7);\n                }\n            \n                div#lbs-promote-login md-checkbox ._md-container {\n                    top: 0px\n                }\n            </style>\n            \n            <div id="footer" class="layout-row">\n                <div class="hide-xs layout-row" style="align-items: center"  style=\'flex:1 auto\'>\n                    <div class="hide-xs" style="flex: 0 1 auto; margin-right:1em">\n                        <a href="http://www.libis.be" target="libis">Copyright \xA9 LIBIS</a>\n            \n                    </div>\n                    <div style="flex: 0 1 auto;">\n                        <img id="limo_logo" src="https://limo.libis.be/primo_library/libweb/libis/images/limo.png" alt="Limo" height="30px" \n                        style="padding-top:4px; padding-left:6px; display:inline-block;">\n                        <!--\n                        <br>\n                        <span style="font-size: xx-small">\n                            Based on Primo from\n                            \n                            <a href="http://www.exlibrisgroup.com/"  target="exl">Ex Libris</a>\n                        </span>\n                    -->                \n               \n                    </div>\n                </div>\n                <div style=\'flex:1 auto\'>\n                    <div id="disclaimer">\n                        <a href="http://www.kuleuven.be/kuleuven/disclaimer.html" target="kuleuven">Disclaimer</a>\n                        <a href="https://admin.kuleuven.be/icts/cookiebeleid/" target="kuleuven">Cookiebeleid</a>\n                    </div>\n            \n                </div>\n                <div class="hide-xs" id="lbs-promote-login"  style=\'flex:2 auto\'>\n                    <lbs-promote-login></lbs-promote-login>\n                </div>\n            \n            \n            </div>');
-  $templateCache.put('promote_login_en_US.html', '\n<md-dialog aria-label=Aanmelden">\n    <md-dialog-content id="Aanmelden">\n\n        <md-toolbar md-autofocus >\n            <div class="md-toolbar-tools">\n                <h2>Sign in</h2>\n                <span flex></span>\n                <md-button class="md-icon-button" ng-click="closeDialog()">\n                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>\n                </md-button>\n            </div>\n        </md-toolbar>\n\n        <md-content style="padding:1em;">\n\n            <div class="flexbox-parent">\n                <div layout="row" layout-align="left center">\n                    <div class="md-title">\n                        <md-button md-autofocus class="md-raised md-primary"\n                        ng-click="loginDialog()"\n                        id="mimic_signin" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,.26); margin-right: 0;">Sign In</md-button>\n                    to get complete results and to request items </div>\n                </div>\n\n                <div layout="row" layout-align="left center" style="padding:14px;">\n                    <!--\n                    <md-radio-group ng-model="primoPromoteLogin" ng-change="changePromoteOption()">\n                        <md-radio-button value="alwaysSignin" aria-label="Always Sign In automaticaly">\n                            Next time, bring me to the Sign In page and do not show this message again\n                            (I will be automatically signed in when I am already logged in via the KU Leuven Central Login.) \n                        </md-radio-button>\n                    </md-radio-group>\n                -->\n\n                    <md-checkbox ng-change="changePromoteOption()" ng-model="primoPromoteLogin" ng-true-value="\'alwaysSignin\'" aria-label="Always Sign In automaticaly?">\n                        Next time, bring me to the Sign In page and do not show this message again.<br/>\n                        (I will be automatically signed in when I am already logged in via the KU Leuven Central Login.) \n                    </md-checkbox>\n\n\n\n                      </div>\n                          <div>\n                    <md-button   flex class="md-primary" ng-click="closeDialog()"    style="box-shadow: 0 2px 5px 0 rgba(0,0,0,.26); margin-right: 0;">\n                      Continue as guest\n                    </md-button>\n                     \u2013 Limited access for non-KU Leuven users\n                </div>\n\n                <md-dialog-actions>\n                    <div layout="row" class="demo-dialog-button">\n                        <md-button class="md-primary" ng-click="closeDialog()">\n                            Close\n                        </md-button>\n                    </div>\n                </md-dialog-actions>\n        </md-content>\n    </md-dialog-content>\n</md-dialog>\n');
-  $templateCache.put('promote_login_nl_BE.html', '\n<md-dialog aria-label=Aanmelden">\n    <md-dialog-content id="Aanmelden">\n\n        <md-toolbar md-autofocus >\n            <div class="md-toolbar-tools">\n                <h2>Aanmelden</h2>\n                <span flex></span>\n                <md-button class="md-icon-button" ng-click="closeDialog()">\n                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>\n                </md-button>\n            </div>\n        </md-toolbar>\n\n        <md-content style="padding:1em;">\n\n            <div class="flexbox-parent">\n                <div layout="row" layout-align="left center">\n                    <div class="md-title">\n                        <md-button md-autofocus class="md-raised md-primary"\n                        ng-click="loginDialog()"\n                        id="mimic_signin" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,.26); margin-right: 0;">Meld aan</md-button>\n om volledige resultaten te vinden en om documenten aan te vragen.\n\n</div>\n\n                </div>\n\n                <div layout="row" layout-align="left center" style="padding:14px;">\n\n                        <md-checkbox ng-change="changePromoteOption()" ng-model="primoPromoteLogin" ng-true-value="\'alwaysSignin\'" aria-label="Always Sign In automaticaly?">\n                                Breng me volgende keer onmiddellijk naar de login pagina en toon deze boodschap niet meer.<br/>\n                                (Ik zal automatisch aangemeld zijn als ik reed ben ingelogd via de KU Leuven Central Login.)\n                        </md-checkbox>\n\n                </div>\n                <div>\n                  <md-button  flex class="md-primary" ng-click="closeDialog()"    style="box-shadow: 0 2px 5px 0 rgba(0,0,0,.26); margin-right: 0;">\n                    Gebruik Limo als gast\n                  </md-button>\n                    - Beperkte toegang voor niet-KU Leuvengebruikers\n                </div>\n\n                <md-dialog-actions>\n                    <div layout="row" class="demo-dialog-button">\n                        <md-button  class="md-primary" ng-click="closeDialog()">\n                            Sluiten\n                        </md-button>\n                    </div>\n                </md-dialog-actions>\n\n\n\n        </md-content>\n    </md-dialog-content>\n</md-dialog>\n');
-}]);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var libInfoHTML = '<a href="http://primo.advesta.com/index.php?type=getLibURL&sourceURL={{$ctrl.sourceURL}}" target="_blank">\n  <img ng-src="{{$ctrl.iconUrl}}" title="{{(\'nui.customizing.idslu.informationtooltip\' | translate)}}" border="0">\n</a>\n';
+
+var LibInfoController = function () {
+  function LibInfoController($translate) {
+    _classCallCheck(this, LibInfoController);
+
+    var self = this;
+    self.translate = $translate;
+    self.iconUrl = '/custom/' + window.appConfig.vid + '/img/information.png';
+
+    self.translate('nui.customizing.idslu.informationicon').then(function (iconUrl) {
+      if (iconUrl !== 'informationicon') {
+        self.iconUrl = iconUrl;
+      }
+    });
+  }
+
+  _createClass(LibInfoController, [{
+    key: 'sourceURL',
+    get: function get() {
+      return encodeURIComponent('http://ilu.zhbluzern.ch/F?func=library&sub_library=' + this.locationCode);
+    }
+  }]);
+
+  return LibInfoController;
+}();
+
+LibInfoController.$inject = ['$translate'];
+
+var libInfoConfig = exports.libInfoConfig = {
+  bindings: { locationCode: '<' },
+  controller: LibInfoController,
+  template: libInfoHTML
+};
+
+},{}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var linksHMTL = '<div class="prm-notice {{$ctrl.linkClass}}">\n  <a class="arrow-link" ng-href="{{$ctrl.linkUrl}}" target="_blank">\n    <span>{{$ctrl.linkText}}</span>\n    <prm-icon external-link icon-type="svg" svg-icon-set="primo-ui" icon-definition="open-in-new"></prm-icon>\n    <prm-icon external-link link-arrow icon-type="svg" svg-icon-set="primo-ui" icon-definition="chevron-right"></prm-icon>\n  </a>\n</div>\n';
+
+var LinksController = function () {
+  function LinksController() {
+    _classCallCheck(this, LinksController);
+
+    var self = this;
+
+    Primo.user.then(function (user) {
+      self.isOnCampus = user.isOnCampus();
+      self.isLoggedIn = user.isLoggedIn();
+      self.allFines = {
+        count: user.fines.length,
+        sum: user.fines ? user.fines.map(function (f) {
+          return parseFloat(f.finesum);
+        }).reduce(function (p, c) {
+          return p + c;
+        }, 0) : 0
+      };
+    });
+  }
+
+  _createClass(LinksController, [{
+    key: 'onCampus',
+    get: function get() {
+      return this.isOnCampus;
+    }
+  }, {
+    key: 'loggedIn',
+    get: function get() {
+      return this.isLoggedIn;
+    }
+  }, {
+    key: 'fines',
+    get: function get() {
+      return this.allFines;
+    }
+  }, {
+    key: 'linkClass',
+    get: function get() {
+      return this.class || '';
+    }
+  }, {
+    key: 'linkText',
+    get: function get() {
+      return this.text || '';
+    }
+  }, {
+    key: 'linkUrl',
+    get: function get() {
+      return this.url || '';
+    }
+  }]);
+
+  return LinksController;
+}();
+
+var linksConfig = exports.linksConfig = {
+  bindings: {
+    class: '@',
+    text: '@',
+    url: '@'
+  },
+  controller: LinksController,
+  template: linksHMTL
+};
+
+},{}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var locationLinksHTML = '<zbl-link class="idslu-p-help" url="{{(\'nui.customizing.idslu.phelpurl\' | translate)}}" text="{{(\'nui.customizing.idslu.phelptext\' | translate)}}"></zbl-link>\n<zbl-link class="idslu-libraries" url="{{(\'nui.customizing.idslu.librariesurl\' | translate)}}" text="{{(\'nui.customizing.idslu.librariestext\' | translate)}}"></zbl-link>\n<zbl-link class="idslu-closures" url="{{(\'nui.customizing.idslu.closuresurl\' | translate)}}" text="{{(\'nui.customizing.idslu.closurestext\' | translate)}}"></zbl-link>\n';
+var locationLinksConfig = exports.locationLinksConfig = {
+  template: locationLinksHTML
+};
+
+},{}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var vScoutHTML = '<a ng-if="$ctrl.showVScout" href="{{$ctrl.url}}" target="_blank">\n  <img ng-src={{$ctrl.iconUrl}} border="0" title="{{(\'nui.customizing.idslu.vscouttooltip\' | translate)}}" />\n</a>\n';
+
+var VScoutController = function () {
+  function VScoutController($translate) {
+    _classCallCheck(this, VScoutController);
+
+    var self = this;
+    self.translate = $translate;
+    self.iconUrl = '/custom/' + window.appConfig.vid + '/img/map-marker.png';
+    self.translate('nui.customizing.idslu.vscouticon').then(function (iconUrl) {
+      if (iconUrl !== 'vscouticon') {
+        self.iconUrl = iconUrl;
+      }
+    });
+  }
+
+  _createClass(VScoutController, [{
+    key: 'url',
+    get: function get() {
+      return 'http://rauminfo-upg.zhbluzern.ch' + this.proxySuffix + '/?sig=' + encodeURIComponent(this.locationCode);
+    }
+  }, {
+    key: 'proxySuffix',
+    get: function get() {
+      var currentHost = window.location.host;
+      var proxySuffix = '';
+      if (currentHost.match(/exlibrisgroup.com/g) != null) {
+        proxySuffix = currentHost.replace(/.+\.exlibrisgroup\.com/g, '');
+      }
+
+      return proxySuffix;
+    }
+  }, {
+    key: 'showVScout',
+    get: function get() {
+      return ['41ZBL_LUPHL'].includes(this.libraryCode);
+    }
+  }]);
+
+  return VScoutController;
+}();
+
+VScoutController.$inject = ['$translate'];
+
+var vScoutConfig = exports.vScoutConfig = {
+  bindings: { locationCode: '<', libraryCode: '<' },
+  controller: VScoutController,
+  template: vScoutHTML
+};
+
+},{}],6:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var altmetricHTML = '<div id="altmetric-doi-{{$ctrl.id}}" class="eth-altmetric-container layout-row">\n  <div aria-label="Altmetric" ng-if="$ctrl.doi != \'\'"  ng-click="$event.stopPropagation();"\n        data-link-target="_blank"\n        rel="noopener"\n        class="altmetric-embed"\n        data-hide-no-mentions="true"\n        data-badge-type="4" data-badge-popover="right" data-doi="{{$ctrl.doi}}">\n </div>\n <div id="altmetric-isbn-{{$ctrl.id}}" aria-label="Altmetric" ng-if="$ctrl.isbn != \'\'"\n      ng-click="$event.stopPropagation();"\n      data-link-target="_blank" rel="noopener"\n      class="altmetric-embed" data-hide-no-mentions="true" data-badge-type="4"\n      data-badge-popover="right" data-isbn="{{$ctrl.isbn}}">\n </div>\n</div>\n';
+
+/*
+//script needs to be loaded first. Can be put in the $onInit() function
+//or better in run method.
+app.run(($templateCache) => {
+  Helper.loadScript('https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js?' + Date.now()).then(function () {
+    console.log('altmerics.js loaded');
+  });
+});
+*/
+
+var AltMetricController = function () {
+  function AltMetricController($element, $window, $scope) {
+    _classCallCheck(this, AltMetricController);
+
+    var self = this;
+    var item = self.parentCtrl.parentCtrl.item;
+
+    self.doi = '';
+    self.isbn = '';
+    self.id = self.guid();
+    self.recordid = '';
+
+    if (item && item.pnx && item.pnx.addata) {
+      self.recordid = item.pnx.control.recordid[0];
+      if (item.pnx.addata.doi) {
+        self.doi = item.pnx.addata.doi[0];
+      }
+
+      if (item.pnx.addata.isbn) {
+        self.isbn = item.pnx.addata.isbn[0];
+      }
+    }
+
+    //this is a watcher on the local scope and will trigger altmetric
+    var altmetricWatcher = $scope.$watch(function () {
+      var altmetricLoaded = typeof window._altmetric_embed_init === 'function';
+      var isbnExists = document.querySelector('#altmetric-isbn-' + self.id) != null;
+      var doiExists = document.querySelector('#altmetric-doi-' + self.id) != null;
+      var runTrigger = altmetricLoaded && (isbnExists || doiExists);
+
+      //console.log(self.id, altmetricLoaded, isbnExists, doiExists, runTrigger);
+      return runTrigger;
+    }, function (n, o) {
+      if (n == true) {
+        console.log("trigger altmetric for:", self.recordid);
+        $window._altmetric_embed_init('#altmetric-isbn-' + self.id);
+        $window._altmetric_embed_init('#altmetric-doi-' + self.id);
+        altmetricWatcher(); //deregister watcher
+      }
+    }, false);
+  }
+
+  _createClass(AltMetricController, [{
+    key: 'guid',
+    value: function guid() {
+      var s4 = function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+      };
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
+  }]);
+
+  return AltMetricController;
+}();
+
+AltMetricController.$inject = ['$element', '$window', '$scope'];
+
+var altmetricConfig = exports.altmetricConfig = {
+  bindings: {
+    parentCtrl: '<'
+  },
+  controller: AltMetricController,
+  template: altmetricHTML
+};
+
+},{}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//facets.facet.facet_search_also
+var SearchAlsoController = function SearchAlsoController($translate, $scope) {
+  var _this = this;
+
+  _classCallCheck(this, SearchAlsoController);
+
+  $scope.$watch(function () {
+    return _this.parentCtrl.parentCtrl.facetService.results;
+  }, function (n, o) {
+    if (n != o) {
+      if (_this.parentCtrl.parentCtrl.facetService.results.filter(function (f) {
+        return f.name == 'search_also';
+      }).length == 0) {
+        _this.parentCtrl.parentCtrl.facetService.results.unshift({
+          name: 'search_also',
+          displayedType: 'exact',
+          limitCount: 0,
+          facetGroupCollapsed: false,
+          values: undefined
+        });
+      }
+    }
+  });
+};
+
+SearchAlsoController.$inject = ['$translate', '$scope'];
+
+var searchAlsoConfig = exports.searchAlsoConfig = {
+  bindings: { parentCtrl: '<' },
+  controller: SearchAlsoController
+};
+
+},{}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var searchAlsoBodyHTML = "<div ng-if=\"$ctrl.name === 'search_also'\" class=\"idslu-furthersearch\">\n  <div ng-hide=\"$ctrl.parentCtrl.parentCtrl.facetGroup.facetGroupCollapsed\">\n    <div class=\"section-content animate-max-height-variable\">\n      <div class=\"md-chips md-chips-wrap\">\n        <div ng-repeat=\"target in $ctrl.targets\" aria-live=\"polite\" class=\"md-chip animate-opacity-and-scale facet-element-marker-local4\">\n          <div class=\"md-chip-content layout-row\" role=\"button\" tabindex=\"9\">\n            <strong dir=\"auto\" title=\"{{ target.name }}\">\n              <a ng-href=\"{{ target.url + target.mapping($ctrl.search) }}\" target=\"_blank\"  title=\"{{ (target.tooltip | translate )}}\">\n                <img ng-src=\"{{ target.img }}\" width=\"22\" height=\"22\" style=\"vertical-align:middle;padding-right:2px;\"> {{ target.name }}\n              </a>\n            </strong>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
+
+var SearchAlsoBodyController = function () {
+  function SearchAlsoBodyController($location) {
+    _classCallCheck(this, SearchAlsoBodyController);
+
+    this.location = $location;
+    this.targets = this._targets();
+  }
+
+  _createClass(SearchAlsoBodyController, [{
+    key: "_targets",
+    value: function _targets() {
+      return [{
+        "name": "Swissbib",
+        "url": "https://www.swissbib.ch/search/results?&lookfor=",
+        "img": "https://primo-direct-eu-sb.hosted.exlibrisgroup.com/primo-explore/custom/41ZBL/img/swissbib_icon.png",
+        "tooltip": "nui.customizing.idslu.search_also.tooltip.swissbib",
+        mapping: function mapping(search) {
+          var terms = search.split(",");
+          return terms[2] || "";
+        }
+      }, {
+        "name": "Google Scholar",
+        "url": "https://scholar.google.com/scholar?q=",
+        "img": "https://primo-direct-eu-sb.hosted.exlibrisgroup.com/primo-explore/custom/41ZBL/img/google_icon.png",
+        "tooltip": "nui.customizing.idslu.search_also.tooltip.google_scolar",
+        mapping: function mapping(search) {
+          var terms = search.split(",");
+          return terms[2] || "";
+        }
+      }, {
+        "name": "Worldcat",
+        "url": "https://www.worldcat.org/search?q=",
+        "img": "https://primo-direct-eu-sb.hosted.exlibrisgroup.com/primo-explore/custom/41ZBL/img/worldcat_icon.png",
+        "tooltip": "nui.customizing.idslu.search_also.tooltip.worldcat",
+        mapping: function mapping(search) {
+          var type_mappings = {
+            "any": "kw",
+            "title": "ti",
+            "creator": "au",
+            "subject": "su"
+          };
+          var terms = search.split(",");
+          var type = type_mappings[terms[0]] || "kw";
+          var query = terms[2] || "";
+          return type + ':' + query;
+        }
+      }];
+    }
+  }, {
+    key: "search",
+    get: function get() {
+      return this.location.search().query;
+    }
+  }, {
+    key: "name",
+    get: function get() {
+      return this.parentCtrl.parentCtrl.facetGroup.name;
+    }
+  }]);
+
+  return SearchAlsoBodyController;
+}();
+
+SearchAlsoBodyController.$inject = ['$location'];
+
+var searchAlsoBodyConfig = exports.searchAlsoBodyConfig = {
+  bindings: { parentCtrl: '<' },
+  controller: SearchAlsoBodyController,
+  template: searchAlsoBodyHTML
+};
+
+},{}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var browseButtonHTML = '<md-button aria-label="Browse"\n           class="zbl-browse-button zero-margin button-with-icon md-button md-primoExplore-theme md-ink-ripple"\n           ng-click="$ctrl.switchBrowse()">\n           <span layout="row" layout-align="start center">\n             <span translate=\'nui.customizing.idslu.browse\'></span>\n           </span>\n</md-button>\n';
+
+var BrowseButtonController = function () {
+  function BrowseButtonController($state, $compile, $scope) {
+    _classCallCheck(this, BrowseButtonController);
+
+    this.state = $state;
+    this.scope = $scope;
+    this.compile = $compile;
+  }
+
+  _createClass(BrowseButtonController, [{
+    key: '$onInit',
+    value: function $onInit() {
+      angular.element(document.querySelector('.search-switch-buttons')).append(this.compile(browseButtonHTML)(this.scope));
+    }
+  }, {
+    key: 'switchBrowse',
+    value: function switchBrowse() {
+      this.state.go('exploreMain.browseSearch', { vid: window.appConfig.vid });
+    }
+  }]);
+
+  return BrowseButtonController;
+}();
+
+BrowseButtonController.$inject = ['$state', '$compile', '$scope'];
+
+var browseButtonConfig = exports.browseButtonConfig = {
+  bindings: {
+    parentCtrl: '<'
+  },
+  controller: BrowseButtonController,
+  template: ''
+};
+
+},{}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var pnxXmlHTML = '<style>\n  .pnx-xml {\n    font-size:0.5em;\n    display:none;\n    justify-content:space-around;    \n  }\n</style>\n\n<div class=\'pnx-xml\'>\n  <a target="_blank" ng-href="/primo_library/libweb/jqp/record/{{ $ctrl.recordid }}.xml?needSession=0">XML</a> |\n  <a target="_blank" ng-href="/primo_library/libweb/jqp/record/{{ $ctrl.recordid }}.pnx?needSession=0">PNX</a>\n</div>\n';
+
+var PnxXmlController = function () {
+  function PnxXmlController() {
+    _classCallCheck(this, PnxXmlController);
+
+    try {
+      this.recordid = this.parentCtrl.parentCtrl.item.pnx.control.recordid[0];
+    } catch (e) {
+      this.recordid = null;
+    }
+  }
+
+  _createClass(PnxXmlController, [{
+    key: '$onInit',
+    value: function $onInit() {
+      var self = this;
+      if (hotkeys) {
+        hotkeys("ctrl+enter", function (e) {
+          self.visible = !self.visible;
+
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = Array.from(document.querySelectorAll('.pnx-xml'))[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var element = _step.value;
+
+              element.style.display = self.visible ? 'flex' : 'none';
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+        });
+      }
+
+      if (document.querySelectorAll('pnx-xml-trigger').length == 0) {
+        var div = document.createElement('pnx-xml-trigger');
+        div.setAttribute('style', 'position:fixed;left:0;bottom:0;height:20px;width:20px;z-index:1000;background-color:black;opacity:.03');
+        div.onclick = function (event) {
+          self.visible = !self.visible;
+
+          var _iteratorNormalCompletion2 = true;
+          var _didIteratorError2 = false;
+          var _iteratorError2 = undefined;
+
+          try {
+            for (var _iterator2 = Array.from(document.querySelectorAll('.pnx-xml'))[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var element = _step2.value;
+
+              element.style.display = self.visible ? 'flex' : 'none';
+            }
+          } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+              }
+            } finally {
+              if (_didIteratorError2) {
+                throw _iteratorError2;
+              }
+            }
+          }
+        };
+        document.body.appendChild(div);
+      }
+    }
+  }]);
+
+  return PnxXmlController;
+}();
+
+var pnxXmlConfig = exports.pnxXmlConfig = {
+  bindings: {
+    parentCtrl: '<'
+  },
+  controller: PnxXmlController,
+  template: pnxXmlHTML
+};
+
+},{}],11:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var AlertMessageController = function AlertMessageController($scope, MessageService) {
+  _classCallCheck(this, AlertMessageController);
+
+  MessageService.show('', $scope);
+};
+
+AlertMessageController.$inject = ['$scope', 'MessageService'];
+
+var alertMessageConfig = exports.alertMessageConfig = {
+  bindings: { parentCtrl: '<' },
+  controller: AlertMessageController,
+  template: ''
+};
+
+},{}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var FinesMessageController = function FinesMessageController(MessageService, $translate, $rootScope) {
+  _classCallCheck(this, FinesMessageController);
+
+  var self = this;
+  Primo.user.then(function (user) {
+    self.user = user;
+    if (user.fines.length > 0) {
+      //TODO:extract html to its own file. find out how to resolve {{}}
+
+      var message = $translate.instant('nui.customizing.idslu.youHaveFines');
+      message = message.replace(/\$0/, user.fines.length);
+
+      var pay = $translate.instant('nui.customizing.idslu.youHaveFines.pay');
+
+      MessageService.show('\n            <span style="align-self:center;">' + message + '</span>\n            <a style="background-color: tomato;color: white;"\n               class="md-button md-raised md-secundary" target=\'_blank\'\n               href=\'#\'>' + pay + '</a>\n          ');
+    }
+  });
+};
+
+FinesMessageController.$inject = ['MessageService', '$translate', '$rootScope'];
+
+var finesMessageConfig = exports.finesMessageConfig = {
+  bindings: {
+    parentCtrl: '<'
+  },
+  controller: FinesMessageController,
+  template: ''
+};
+
+},{}],13:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sfxLinksConfig = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _helper = require('../../primo-explore-dom/js/primo/explore/helper');
+
+var _helper2 = _interopRequireDefault(_helper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var sfxLinksHTML = '<div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">\n  <p class="fulltext-item sfx-links-facility">\n      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> {{targetFacility}}\n  </p>\n  <div ng-repeat="target in normalizedTargets">\n    <p class="fulltext-item sfx-links-target">\n      <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>\n      <a href="{{target.target_url_proxy}}" target="_blank">{{(target.target_name | translate)}}</a>\n    </p>\n  </div>\n</div>\n\n<p class="fulltext-item sfx-links-on-campus">\n  <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>\n  <span class="sfx-links-on-campus-url">\n        <a href="http://www.zhbluzern.ch/index.php?id=3992" target="_blank">\n        <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>\n  </a>\n  </span>\n\n  <zbl-link class="idslu-ehelp" url="{{(\'nui.customizing.idslu.ehelpurl\' | translate)}}" text="{{(\'nui.customizing.idslu.ehelptext\' | translate)}}"></zbl-link>\n  <zbl-link class="idslu-feedback" url="{{(\'nui.customizing.idslu.feedbackurl\' | translate)}}" text="{{(\'nui.customizing.idslu.feedbacktext\' | translate)}}"></zbl-link>\n</p>\n';
+
+var SfxLinksController = function () {
+  function SfxLinksController($scope, $translate) {
+    _classCallCheck(this, SfxLinksController);
+
+    var self = this;
+    self.scope = $scope;
+    self.translate = $translate;
+
+    var containers = Primo.explore.components.get('prm-full-view-service-container');
+    if (containers && containers.length > 0) {
+      self.item = containers[0].ctrl().item;
+    } else {
+      self.item = self.parentCtrl.parentCtrl.item;
+    }
+
+    self.targets = {};
+    Primo.view.then(function (v) {
+      self.ipAddress = v.ip.address;
+      self.updateTargetsWhenOpenURLAvailable();
+    });
+  }
+
+  _createClass(SfxLinksController, [{
+    key: 'updateTargetsWhenOpenURLAvailable',
+    value: function updateTargetsWhenOpenURLAvailable() {
+      var self = this;
+      var watcher = self.scope.$watch(function () {
+        try {
+          if (self.openurl && self.openurl.length > 0) {
+            return true;
+          } else {
+            return false;
+          }
+        } catch (e) {
+          return false;
+        }
+      }, function (n, o) {
+        if (n == true) {
+          //console.log(self.targetsUrls);
+          self.targetsUrls.forEach(function (targetsUrl) {
+            //console.log(targetsUrl);
+            _helper2.default.http.get(targetsUrl).then(function (rawTargets) {
+              //console.log("=======> ",rawTargets.data);
+              if (rawTargets.data && rawTargets.data.length > 0) {
+                var data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
+                //console.log(data);
+                if (data) {
+                  self.targets = data;
+                  //console.log('-----> targets', self.targets);
+                }
+              }
+            });
+          });
+
+          var gi = self.item.delivery.GetIt1.filter(function (f) {
+            return (/^online resource|remote search resource/i.test(f.category.toLowerCase())
+            );
+          }).map(function (m) {
+            return m.links;
+          })[0].map(function (m) {
+            var targetName = m.displayText;
+            var facility = m.hyperlinkText;
+            if (/\$\$E/.test(targetName)) {
+              targetName = 'fulldisplay.' + targetName.match(/\$\$E(.*)/)[1].trim();
+            }
+
+            if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
+              targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
+            }
+
+            if (/Campusnetz (.*?):/.test(facility)) {
+              facility = facility.match(/Campusnetz (.*?):/)[1].trim();
+            }
+
+            if (/nicht am campus/i.test(targetName)) {
+              return null;
+            }
+
+            return { target_url: m.link, facility: facility, target_name: targetName };
+          }).filter(function (f) {
+            return f !== null;
+          });
+          if (gi) {
+
+            var data = Object.assign({}, self.targets, self.normalizeTargets(gi));
+            self.targets = data;
+          }
+
+          watcher();
+        }
+      });
+    }
+  }, {
+    key: 'normalizeTargets',
+    value: function normalizeTargets(targets) {
+      var _this = this;
+
+      var self = this;
+      var normalizedTargets = {};
+
+      if (targets) {
+        targets.reduce(function (t, c) {
+          var d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
+          c['target_url_proxy'] = _this.proxyUrl(c['target_url'], c.facility);
+          d.push(c);
+          t[c.facility] = d;
+
+          return t;
+        }, normalizedTargets);
+      }
+      return normalizedTargets;
+    }
+  }, {
+    key: 'proxyUrl',
+    value: function proxyUrl(url, facility) {
+      var currentHost = window.location.host;
+      var ip = this.ipAddress.split('.');
+      var inRange = ip[0] == '147' && ip[1] == '88' && parseInt(ip[2], 10) >= 207 && parseInt(ip[2], 10) <= 254 ? true : false;
+
+      url = url.replace(/^https:\/\/ezproxy.unilu.chhttp/, 'https://ezproxy.unilu.ch/login?url=http');
+
+      //if (!/ezproxy.unilu.ch/.test(currentHost) && /zhb|uni|ph/.test(facility.toLowerCase()) && !inRange) {
+      if (!/ezproxy.unilu.ch/.test(url) && /zhb|uni|ph/.test(facility.toLowerCase()) && !inRange) {
+        return 'https://ezproxy.unilu.ch/login?url=' + url;
+      }
+
+      return url;
+    }
+  }, {
+    key: 'targetsUrls',
+    get: function get() {
+      var _this2 = this;
+
+      return this.openurl.map(function (m) {
+        return _this2.lookupURL + '?type=targets&sourceURL=' + encodeURIComponent(m) + '&proxySuffix=' + encodeURIComponent(_this2.proxySuffix);
+      });
+    }
+  }, {
+    key: 'openurl',
+    get: function get() {
+      var self = this;
+      var list = [];
+      if (self.item && self.item.delivery) {
+        var openUrlList = self.item.delivery.link.filter(function (f) {
+          return (/^openurl/.test(f.displayLabel)
+          );
+        }).map(function (m) {
+          return m.linkURL;
+        });
+        if (openUrlList.length > 0) {
+          list = list.concat(openUrlList);
+        }
+      }
+
+      if (self.item && self.item.linkElement) {
+        var _openUrlList = self.item.linkElement.links.filter(function (f) {
+          return (/^openurl/.test(f.displayText)
+          );
+        }).map(function (m) {
+          return m.link;
+        });
+        if (_openUrlList.length > 0) {
+          list = list.concat(_openUrlList);
+        }
+      }
+
+      return list;
+    }
+  }, {
+    key: 'proxySuffix',
+    get: function get() {
+      var currentHost = window.location.host;
+      var proxySuffix = '';
+      if (currentHost.match(/exlibrisgroup.com/g) != null) {
+        proxySuffix = currentHost.replace(/.+\.exlibrisgroup\.com/g, '');
+      }
+
+      return proxySuffix;
+    }
+  }, {
+    key: 'lookupURL',
+    get: function get() {
+      return document.location.protocol + '//primo.advesta.com/index.php';
+    }
+  }]);
+
+  return SfxLinksController;
+}();
+
+SfxLinksController.$inject = ['$scope', '$translate'];
+
+var sfxLinksConfig = exports.sfxLinksConfig = {
+  bindings: {
+    parentCtrl: '<'
+  },
+  controller: SfxLinksController,
+  template: sfxLinksHTML
+};
+
+},{"../../primo-explore-dom/js/primo/explore/helper":18}],14:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var messageServiceHTML = '<div layout="row" class="bar alert-bar lbs-message-service" layout-align="center center">\n  <span class="bar-text" ng-bind-html="ctrl.message" style="display:flex"></span>\n  <md-button ng-show="ctrl.onAction" (click)="ctrl.onAction()" class="dismiss-alert-button zero-margin" ng-class="md-icon-button">\n    <span hide-xs>{{ctrl.actionLabel}}</span>\n  </md-button>\n  <md-divider></md-divider>\n  <md-button aria-label="{{::(\'nui.message.dismiss\' | translate)}}" (click)="ctrl.onClose()" class="dismiss-alert-button zero-margin" ng-class="md-icon-button">\n    <span translate="nui.message.dismiss" hide-xs></span>\n  </md-button>\n</div>\n';
+
+var MessageService = function () {
+  function MessageService($rootScope, $compile, $mdToast, $sce, $translate, $timeout) {
+    _classCallCheck(this, MessageService);
+
+    this.mdToast = $mdToast;
+    this.sce = $sce;
+    this.translate = $translate;
+    this.timeout = $timeout;
+    this.compile = $compile;
+    this.rootScope = $rootScope;
+  }
+
+  _createClass(MessageService, [{
+    key: 'show',
+    value: function show() {
+      var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      var self = this;
+      var scope = options.scope || null;
+      var hideDelay = options.hideDelay || 0;
+      var action = options.action || null;
+      var actionLabel = options.actionLabel || 'unknown';
+
+      this.timeout(function () {
+        if (message.length == 0) {
+          // code table entries can not have empty descriptions.
+          // message <= 1 will not be displayed!!!!
+          var messageKey = 'nui.customizing.idslu.alertMessage';
+          message = self.translate.instant(messageKey);
+          message = message == messageKey || message <= 1 ? '' : message;
+        }
+
+        if (message.length > 0) {
+          var toastConfig = {
+            parent: document.body,
+            controllerAs: 'ctrl',
+            controller: function controller() {
+              var _this = this;
+
+              this.actionLabel = actionLabel;
+
+              this.onClose = function () {
+                self.mdToast.hide();
+              };
+
+              if (action) {
+                this.onAction = function () {
+                  var $event = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+                  action.call(_this);
+                  self.mdToast.hide();
+                };
+              }
+
+              if (scope) {
+                //this.message = self.sce.trustAsHtml(self.compile(`<span>${message}</span>`)(self.rootScope).html());
+                this.message = self.sce.trustAsHtml(self.compile('<span>' + message + '</span>')(scope).html());
+              } else {
+                this.message = self.sce.trustAsHtml(message);
+              }
+            },
+            template: messageServiceHTML,
+            position: 'top center',
+            hideDelay: hideDelay
+          };
+
+          self.mdToast.show(toastConfig);
+        } else {
+          console.log('No message to display');
+        }
+      }, 2000);
+    }
+  }]);
+
+  return MessageService;
+}();
+
+exports.default = MessageService;
+
+
+MessageService.$inject = ['$rootScope', '$compile', '$mdToast', '$sce', '$translate', '$timeout'];
+
+},{}],15:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _explore = require('./primo/explore');
+
+var _explore2 = _interopRequireDefault(_explore);
+
+var _records = require('./primo/records');
+
+var _records2 = _interopRequireDefault(_records);
+
+var _facets = require('./primo/facets');
+
+var _facets2 = _interopRequireDefault(_facets);
+
+var _view = require('./primo/view');
+
+var _view2 = _interopRequireDefault(_view);
+
+var _user = require('./primo/user');
+
+var _user2 = _interopRequireDefault(_user);
+
+var _helper = require('./primo/explore/helper');
+
+var _helper2 = _interopRequireDefault(_helper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Primo main entry class
+ */
+var Primo = function () {
+  function Primo() {
+    _classCallCheck(this, Primo);
+  }
+
+  _createClass(Primo, null, [{
+    key: 'isDebugEnabled',
+
+
+    /**
+     * Check if angular.reloadWithDebugInfo() has ran
+     * @return {boolean}
+     */
+    value: function isDebugEnabled() {
+      return _helper2.default.isDebugEnabled();
+    }
+
+    /**
+     * Did the script ran on a Primo site
+     * @return {boolean}
+     */
+
+  }, {
+    key: 'isPrimoAvailable',
+    value: function isPrimoAvailable() {
+      return _helper2.default.isPrimoAvailable();
+    }
+
+    /**
+     * This is a proxy class
+     * @return {Explore}
+     */
+
+  }, {
+    key: 'version',
+
+    /**
+     * Return version information
+     * @return {string}
+     */
+    get: function get() {
+      var _version = "0.0.10";
+      return 'Library:' + _version + ' - Primo:' + window.appConfig['system-configuration'].Primo_Version_Number + ':' + window.appConfig['system-configuration'].Primo_HotFix_Number;
+    }
+  }, {
+    key: 'explore',
+    get: function get() {
+      return _explore2.default;
+    }
+
+    /**
+     * Get a pointer to available records
+     * @return {Records}
+     */
+
+  }, {
+    key: 'records',
+    get: function get() {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        resolve(new _records2.default(_this.explore.components));
+      });
+      //return new Records(this.explore.components);
+    }
+
+    /**
+     * Get a pointer to available facets
+     * @return {Facets}
+     */
+
+  }, {
+    key: 'facets',
+    get: function get() {
+      var _this2 = this;
+
+      return new Promise(function (resolve, reject) {
+        resolve(new _facets2.default(_this2.explore.components));
+      });
+      //return new Facets(this.explore.components);
+    }
+
+    /**
+     * Get a pointer to view related metadata
+     * @return {View}
+     */
+
+  }, {
+    key: 'view',
+    get: function get() {
+      return new Promise(function (resolve, reject) {
+        resolve(new _view2.default());
+      });
+      //return new View();
+    }
+
+    /**
+     * Get a pointer to user related metadata
+     * @return {User}
+     */
+
+  }, {
+    key: 'user',
+    get: function get() {
+      return new Promise(function (resolve, reject) {
+        _helper2.default.userDetailsHTTP().then(function (userDetails) {
+          _helper2.default.userFinesHTTP().then(function (userFines) {
+            _helper2.default.userLoansHTTP().then(function (userLoans) {
+              resolve(new _user2.default({ details: userDetails, fines: userFines, loans: userLoans }));
+            });
+          });
+        });
+      });
+    }
+  }]);
+
+  return Primo;
+}();
+
+exports.default = Primo;
+
+},{"./primo/explore":16,"./primo/explore/helper":18,"./primo/facets":19,"./primo/records":20,"./primo/user":21,"./primo/view":22}],16:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _components = require('./explore/components');
+
+var _components2 = _interopRequireDefault(_components);
+
+var _helper = require('./explore/helper');
+
+var _helper2 = _interopRequireDefault(_helper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//this is proxy class
+var Explore = function () {
+  function Explore() {
+    _classCallCheck(this, Explore);
+  }
+
+  _createClass(Explore, null, [{
+    key: 'components',
+    get: function get() {
+      var c = new _components2.default();
+      _helper2.default.componentNames.forEach(function (selector) {
+        c.add(selector);
+      });
+
+      return c;
+    }
+  }, {
+    key: 'ui',
+    get: function get() {
+      if (this._ui === undefined) {
+        console.error('This is a stub function call "angular.reloadWithDebugInfo()" to activate UI');
+      }
+      return this._ui;
+    }
+  }, {
+    key: 'helper',
+    get: function get() {
+      return _helper2.default;
+    }
+  }]);
+
+  return Explore;
+}();
+
+exports.default = Explore;
+
+},{"./explore/components":17,"./explore/helper":18}],17:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _helper = require('./helper');
+
+var _helper2 = _interopRequireDefault(_helper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var cssSelectorGenerator = new (require('../../vendor/css-selector-generator.js').CssSelectorGenerator)();
+
+var Component = function () {
+  function Component(element) {
+    _classCallCheck(this, Component);
+
+    this.element = element;
+  }
+
+  _createClass(Component, [{
+    key: 'blink',
+    value: function blink() {
+      _helper2.default.blink(this);
+    }
+  }, {
+    key: 'scope',
+    value: function scope() {
+      if (_helper2.default.isDebugEnabled()) {
+        return angular.element(this.element).scope();
+      } else {
+        console.error('Please run "angular.reloadWithDebugInfo()" first');
+      }
+    }
+  }, {
+    key: 'ctrl',
+    value: function ctrl() {
+      var c = angular.element(this.element).controller(this.name);
+      if (c) {
+        return c;
+      } else {
+        console.log('using alternative method to get controller');
+        var scope = this.scope();
+        if (scope) {
+          var scopeChild = scope.$$childTail;
+          if (Object.keys(scope).includes('$ctrl')) {
+            return scope.$ctrl;
+          } else if (Object.keys(scope).includes('ctrl')) {
+            return scope.ctrl;
+          } else if (scopeChild && Object.keys(scopeChild).includes('$ctrl')) {
+            return scopeChild.$ctrl;
+          } else if (scopeChild && Object.keys(scopeChild).includes('ctrl')) {
+            return scopeChild.ctrl;
+          } else {
+            console.error('No $ctrl defined');
+          }
+        }
+      }
+
+      return null;
+    }
+  }, {
+    key: 'cssPath',
+    get: function get() {
+      return cssSelectorGenerator.getSelector(this.element);
+    }
+  }, {
+    key: 'name',
+    get: function get() {
+      return this.element.localName;
+    }
+  }]);
+
+  return Component;
+}();
+
+var Components = function () {
+  function Components() {
+    _classCallCheck(this, Components);
+
+    this._components = {};
+  }
+
+  _createClass(Components, [{
+    key: 'add',
+    value: function add(selector) {
+      var elements = _helper2.default.querySelectorAll(selector);
+      var elementsArray = this._components[selector] || [];
+
+      elements.forEach(function (element) {
+        elementsArray.push(new Component(element));
+      });
+
+      this._components[selector] = elementsArray;
+
+      return elementsArray;
+    }
+  }, {
+    key: 'get',
+    value: function get(selector) {
+      return this._components[selector] || null;
+    }
+  }, {
+    key: 'keys',
+    value: function keys() {
+      return Object.keys(this._components);
+    }
+  }]);
+
+  return Components;
+}();
+
+exports.default = Components;
+
+},{"../../vendor/css-selector-generator.js":23,"./helper":18}],18:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Helper = function () {
+  function Helper() {
+    _classCallCheck(this, Helper);
+  }
+
+  _createClass(Helper, null, [{
+    key: 'isDebugEnabled',
+    value: function isDebugEnabled() {
+      return window.name === 'NG_ENABLE_DEBUG_INFO!' || typeof angular.element(document.querySelector('prm-logo')).scope() != 'undefined' ? true : false;
+    }
+  }, {
+    key: 'isPrimoAvailable',
+    value: function isPrimoAvailable() {
+      if ('undefined' !== typeof window.angular) {
+        if (document.querySelector('primo-explore') !== null) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }, {
+    key: 'querySelectorAll',
+    value: function querySelectorAll(selector) {
+      return Array.from(document.querySelectorAll(selector));
+    }
+  }, {
+    key: 'injector',
+    value: function injector() {
+      var c = Primo.explore.components.get('primo-explore');
+      if (c && c.length > 0) {
+        var primoExplore = angular.element(c[0].element);
+        var injector = primoExplore.injector();
+        if (injector) {
+          return injector;
+        }
+      }
+
+      return null;
+    }
+  }, {
+    key: 'loadScript',
+    value: function loadScript(scriptURL) {
+      if (window.angular) {
+        var appInjector = angular.injector(['ng', 'angularLoad']);
+        if (appInjector) {
+          var angularLoad = appInjector.get('angularLoad');
+          if (angularLoad) {
+            return angularLoad.loadScript(scriptURL);
+          }
+        }
+      }
+    }
+  }, {
+    key: 'rootScope',
+    value: function rootScope() {
+      var injector = this.injector();
+      if (injector) {
+        var rootScope = injector.get('$rootScope');
+        if (rootScope) {
+          return rootScope;
+        }
+      }
+
+      return null;
+    }
+  }, {
+    key: 'userSessionManagerService',
+    value: function userSessionManagerService() {
+      var rootScope = this.rootScope();
+      if (rootScope) {
+        return rootScope.$$childHead.$ctrl.userSessionManagerService;
+      }
+
+      return null;
+    }
+  }, {
+    key: 'jwtData',
+    value: function jwtData() {
+      var uSMS = this.userSessionManagerService();
+      if (uSMS) {
+        var jwtData = uSMS.jwtUtilService.getDecodedToken() || {};
+        return jwtData;
+      }
+    }
+  }, {
+    key: 'userDetails',
+    value: function userDetails() {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        _this.userSessionManagerService().$localForage.getItem('userDetails').then(function (userDetails) {
+          return resolve(userDetails);
+        });
+      });
+    }
+  }, {
+    key: 'userDetailsHTTP',
+    value: function userDetailsHTTP() {
+      var _this2 = this;
+
+      var viewCode = this.jwtData().viewId || window.appConfig['vid'];
+      return new Promise(function (resolve, reject) {
+        _this2.http.get('/primo_library/libweb/webservices/rest/v1/usersettings?vid=' + viewCode).then(function (userDetails) {
+          return resolve(userDetails.data);
+        });
+      });
+    }
+  }, {
+    key: 'userFinesHTTP',
+    value: function userFinesHTTP() {
+      var _this3 = this;
+
+      return new Promise(function (resolve, reject) {
+        _this3.http.get('/primo_library/libweb/webservices/rest/v1/myaccount/fines').then(function (userFines) {
+          try {
+            var data = userFines.data;
+            if (data.status == 'ok') {
+              var fines = data.data.fines;
+              resolve(fines.fine);
+            } else {
+              console.log('No fines');
+              resolve([]);
+            }
+          } catch (error) {
+            resolve([]);
+          }
+        });
+      });
+    }
+  }, {
+    key: 'userLoansHTTP',
+    value: function userLoansHTTP() {
+      var _this4 = this;
+
+      return new Promise(function (resolve, reject) {
+        _this4.http.get('/primo_library/libweb/webservices/rest/v1/myaccount/loans').then(function (userLoans) {
+          try {
+            var data = userLoans.data;
+            if (data.status == 'ok') {
+              var loans = data.data.loans;
+              resolve(loans.loan);
+            } else {
+              console.log('No loans');
+              resolve([]);
+            }
+          } catch (error) {
+            resolve([]);
+          }
+        });
+      });
+    }
+  }, {
+    key: 'blink',
+    value: function blink(component) {
+      var numberOfBlinks = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+
+      var intervalId = null;
+      var borderElement = null;
+      var index = Math.floor(Math.random() * (1000 - 1)) + 1;
+      var borderSelector = component.element.cssPath + index + 'Rect';
+
+      var createBorderElement = function createBorderElement() {
+        if (component && component.element) {
+          var elementRect = component.element.getBoundingClientRect();
+          var _borderElement = document.createElement('div');
+          var _index = Math.floor(Math.random() * (1000 - 1)) + 1;
+          _borderElement.setAttribute('id', borderSelector);
+          _borderElement.style.border = '3px solid red';
+          _borderElement.style.position = 'absolute';
+          _borderElement.style.top = elementRect.top + 'px';
+          _borderElement.style.height = elementRect.height + 'px';
+          _borderElement.style.width = elementRect.width + 'px';
+          _borderElement.style.left = elementRect.left + 'px';
+          document.body.appendChild(_borderElement);
+
+          return document.querySelector('#' + borderSelector);
+        }
+
+        return null;
+      };
+
+      var removeBorderElement = function removeBorderElement() {
+        if (borderElement) {
+          borderElement.remove();
+        }
+      };
+
+      var blinkBorderElement = function blinkBorderElement() {
+        var numberOfBlinks = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 4;
+
+        window.clearInterval(intervalId);
+
+        if (numberOfBlinks < 0) {
+          removeBorderElement();
+        } else {
+          borderElement.style.display = numberOfBlinks % 2 == 0 ? 'none' : 'block';
+          numberOfBlinks--;
+          intervalId = window.setInterval(blinkBorderElement, 1000, numberOfBlinks);
+        }
+      };
+
+      borderElement = createBorderElement();
+      blinkBorderElement(numberOfBlinks);
+    }
+  }, {
+    key: 'componentNames',
+    get: function get() {
+      var tags = Array.from(document.getElementsByTagName('*'));
+      var componentNames = [];
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = tags[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var tag = _step.value;
+
+          var tagName = tag.localName;
+          if (/^prm-/.test(tagName) || /^primo-/.test(tagName)) {
+            if (!componentNames.includes(tagName)) {
+              componentNames.push(tagName);
+            }
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      componentNames = componentNames.sort().filter(function (e, i, a) {
+        return i === a.findIndex(function (e2) {
+          return e === e2;
+        });
+      });
+      return componentNames;
+    }
+  }, {
+    key: 'http',
+    get: function get() {
+      var injector = this.injector();
+      if (injector) {
+        var h = injector.get('$http');
+        if (h) {
+          return h;
+        }
+      }
+
+      return null;
+    }
+  }]);
+
+  return Helper;
+}();
+
+exports.default = Helper;
+
+},{}],19:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _components = require('./explore/components');
+
+var _components2 = _interopRequireDefault(_components);
+
+var _helper = require('./explore/helper');
+
+var _helper2 = _interopRequireDefault(_helper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Facets = function () {
+    function Facets(components) {
+        _classCallCheck(this, Facets);
+
+        return this._facets(components);
+    }
+
+    _createClass(Facets, [{
+        key: '_facets',
+        value: function _facets(components) {
+            try {
+                if (components) {
+                    var c = components.get('prm-facet-after');
+                    if (c && c.length > 0) {
+                        var ctrl = c[0].ctrl;
+                        return ctrl.facetService.results;
+                    }
+                }
+            } catch (e) {
+                console.log('trying to get facets through the rootScope');
+                try {
+                    return _helper2.default.userSessionManagerService().searchStateService.resultObject.facets;
+                } catch (e) {
+                    console.error('unable to retrieve facets');
+                }
+            }
+
+            return [];
+        }
+    }]);
+
+    return Facets;
+}();
+
+exports.default = Facets;
+
+},{"./explore/components":17,"./explore/helper":18}],20:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _components = require('./explore/components');
+
+var _components2 = _interopRequireDefault(_components);
+
+var _helper = require('./explore/helper');
+
+var _helper2 = _interopRequireDefault(_helper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Records = function () {
+    function Records(components) {
+        _classCallCheck(this, Records);
+
+        return this._items(components);
+    }
+
+    _createClass(Records, [{
+        key: '_items',
+        value: function _items(components) {
+            try {
+                if (components) {
+                    var c = components.get('prm-search-result-list-after');
+                    if (c && c.length > 0) {
+                        var ctrl = c[0].ctrl();
+                        if (ctrl) {
+                            return ctrl.itemlist;
+                        }
+                        throw "try again";
+                    }
+                }
+            } catch (e) {
+                console.log('trying to get records through the rootScope');
+                try {
+                    return _helper2.default.userSessionManagerService().searchStateService.resultObject.data;
+                } catch (e) {
+                    console.error('unable to retrieve items');
+                }
+            }
+
+            return [];
+        }
+    }]);
+
+    return Records;
+}();
+
+exports.default = Records;
+
+},{"./explore/components":17,"./explore/helper":18}],21:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _helper = require('./explore/helper');
+
+var _helper2 = _interopRequireDefault(_helper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var User = function () {
+  function User() {
+    var user = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _skelUser;
+
+    _classCallCheck(this, User);
+
+    var uSms = _helper2.default.userSessionManagerService();
+    var jwtData = _helper2.default.jwtData();
+    var self = this;
+
+    return {
+      id: jwtData.user || '',
+      email: user.details.email || '',
+      name: jwtData.userName || 'Guest',
+      display_name: uSms.getUserNameForDisplay(),
+      isLoggedIn: function isLoggedIn() {
+        return uSms.getUserName().length > 0;
+      },
+      isOnCampus: function isOnCampus() {
+        return jwtData.onCampus == "true" ? true : false;
+      },
+      fines: user.fines,
+      loans: user.loans
+    };
+  }
+
+  _createClass(User, [{
+    key: '_skelUser',
+    get: function get() {
+      return {
+        details: {},
+        fines: {},
+        loans: {}
+      };
+    }
+  }]);
+
+  return User;
+}();
+
+exports.default = User;
+
+},{"./explore/helper":18}],22:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _helper = require('./explore/helper');
+
+var _helper2 = _interopRequireDefault(_helper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var View = function View() {
+  _classCallCheck(this, View);
+
+  var uSms = _helper2.default.userSessionManagerService();
+  var jwtData = _helper2.default.jwtData();
+
+  return {
+    code: jwtData.viewId || window.appConfig['vid'],
+    institution: {
+      code: jwtData.viewInstitutionCode,
+      name: window.appConfig['primo-view']['attributes-map'].institution
+    },
+    interfaceLanguage: uSms.getUserLanguage() || window.appConfig['primo-view']['attributes-map'].interfaceLanguage,
+    ip: {
+      address: jwtData.ip
+    }
+  };
+};
+
+exports.default = View;
+
+},{"./explore/helper":18}],23:[function(require,module,exports){
+'use strict';
+
+(function () {
+  var CssSelectorGenerator,
+      root,
+      indexOf = [].indexOf || function (item) {
+    for (var i = 0, l = this.length; i < l; i++) {
+      if (i in this && this[i] === item) return i;
+    }return -1;
+  };
+
+  CssSelectorGenerator = function () {
+    CssSelectorGenerator.prototype.default_options = {
+      selectors: ['id', 'class', 'tag', 'nthchild']
+    };
+
+    function CssSelectorGenerator(options) {
+      if (options == null) {
+        options = {};
+      }
+      this.options = {};
+      this.setOptions(this.default_options);
+      this.setOptions(options);
+    }
+
+    CssSelectorGenerator.prototype.setOptions = function (options) {
+      var key, results, val;
+      if (options == null) {
+        options = {};
+      }
+      results = [];
+      for (key in options) {
+        val = options[key];
+        if (this.default_options.hasOwnProperty(key)) {
+          results.push(this.options[key] = val);
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+
+    CssSelectorGenerator.prototype.isElement = function (element) {
+      return !!((element != null ? element.nodeType : void 0) === 1);
+    };
+
+    CssSelectorGenerator.prototype.getParents = function (element) {
+      var current_element, result;
+      result = [];
+      if (this.isElement(element)) {
+        current_element = element;
+        while (this.isElement(current_element)) {
+          result.push(current_element);
+          current_element = current_element.parentNode;
+        }
+      }
+      return result;
+    };
+
+    CssSelectorGenerator.prototype.getTagSelector = function (element) {
+      return this.sanitizeItem(element.tagName.toLowerCase());
+    };
+
+    CssSelectorGenerator.prototype.sanitizeItem = function (item) {
+      var characters;
+      characters = item.split('').map(function (character) {
+        if (character === ':') {
+          return "\\" + ':'.charCodeAt(0).toString(16).toUpperCase() + " ";
+        } else if (/[ !"#$%&'()*+,.\/;<=>?@\[\\\]^`{|}~]/.test(character)) {
+          return "\\" + character;
+        } else {
+          return escape(character).replace(/\%/g, '\\');
+        }
+      });
+      return characters.join('');
+    };
+
+    CssSelectorGenerator.prototype.getIdSelector = function (element) {
+      var id, sanitized_id;
+      id = element.getAttribute('id');
+      if (id != null && id !== '' && !/\s/.exec(id) && !/^\d/.exec(id)) {
+        sanitized_id = "#" + this.sanitizeItem(id);
+        if (element.ownerDocument.querySelectorAll(sanitized_id).length === 1) {
+          return sanitized_id;
+        }
+      }
+      return null;
+    };
+
+    CssSelectorGenerator.prototype.getClassSelectors = function (element) {
+      var class_string, item, result;
+      result = [];
+      class_string = element.getAttribute('class');
+      if (class_string != null) {
+        class_string = class_string.replace(/\s+/g, ' ');
+        class_string = class_string.replace(/^\s|\s$/g, '');
+        if (class_string !== '') {
+          result = function () {
+            var k, len, ref, results;
+            ref = class_string.split(/\s+/);
+            results = [];
+            for (k = 0, len = ref.length; k < len; k++) {
+              item = ref[k];
+              results.push("." + this.sanitizeItem(item));
+            }
+            return results;
+          }.call(this);
+        }
+      }
+      return result;
+    };
+
+    CssSelectorGenerator.prototype.getAttributeSelectors = function (element) {
+      var attribute, blacklist, k, len, ref, ref1, result;
+      result = [];
+      blacklist = ['id', 'class'];
+      ref = element.attributes;
+      for (k = 0, len = ref.length; k < len; k++) {
+        attribute = ref[k];
+        if (ref1 = attribute.nodeName, indexOf.call(blacklist, ref1) < 0) {
+          result.push("[" + attribute.nodeName + "=" + attribute.nodeValue + "]");
+        }
+      }
+      return result;
+    };
+
+    CssSelectorGenerator.prototype.getNthChildSelector = function (element) {
+      var counter, k, len, parent_element, sibling, siblings;
+      parent_element = element.parentNode;
+      if (parent_element != null) {
+        counter = 0;
+        siblings = parent_element.childNodes;
+        for (k = 0, len = siblings.length; k < len; k++) {
+          sibling = siblings[k];
+          if (this.isElement(sibling)) {
+            counter++;
+            if (sibling === element) {
+              return ":nth-child(" + counter + ")";
+            }
+          }
+        }
+      }
+      return null;
+    };
+
+    CssSelectorGenerator.prototype.testSelector = function (element, selector) {
+      var is_unique, result;
+      is_unique = false;
+      if (selector != null && selector !== '') {
+        result = element.ownerDocument.querySelectorAll(selector);
+        if (result.length === 1 && result[0] === element) {
+          is_unique = true;
+        }
+      }
+      return is_unique;
+    };
+
+    CssSelectorGenerator.prototype.getAllSelectors = function (element) {
+      var result;
+      result = {
+        t: null,
+        i: null,
+        c: null,
+        a: null,
+        n: null
+      };
+      if (indexOf.call(this.options.selectors, 'tag') >= 0) {
+        result.t = this.getTagSelector(element);
+      }
+      if (indexOf.call(this.options.selectors, 'id') >= 0) {
+        result.i = this.getIdSelector(element);
+      }
+      if (indexOf.call(this.options.selectors, 'class') >= 0) {
+        result.c = this.getClassSelectors(element);
+      }
+      if (indexOf.call(this.options.selectors, 'attribute') >= 0) {
+        result.a = this.getAttributeSelectors(element);
+      }
+      if (indexOf.call(this.options.selectors, 'nthchild') >= 0) {
+        result.n = this.getNthChildSelector(element);
+      }
+      return result;
+    };
+
+    CssSelectorGenerator.prototype.testUniqueness = function (element, selector) {
+      var found_elements, parent;
+      parent = element.parentNode;
+      found_elements = parent.querySelectorAll(selector);
+      return found_elements.length === 1 && found_elements[0] === element;
+    };
+
+    CssSelectorGenerator.prototype.testCombinations = function (element, items, tag) {
+      var item, k, l, len, len1, ref, ref1;
+      ref = this.getCombinations(items);
+      for (k = 0, len = ref.length; k < len; k++) {
+        item = ref[k];
+        if (this.testUniqueness(element, item)) {
+          return item;
+        }
+      }
+      if (tag != null) {
+        ref1 = items.map(function (item) {
+          return tag + item;
+        });
+        for (l = 0, len1 = ref1.length; l < len1; l++) {
+          item = ref1[l];
+          if (this.testUniqueness(element, item)) {
+            return item;
+          }
+        }
+      }
+      return null;
+    };
+
+    CssSelectorGenerator.prototype.getUniqueSelector = function (element) {
+      var found_selector, k, len, ref, selector_type, selectors;
+      selectors = this.getAllSelectors(element);
+      ref = this.options.selectors;
+      for (k = 0, len = ref.length; k < len; k++) {
+        selector_type = ref[k];
+        switch (selector_type) {
+          case 'id':
+            if (selectors.i != null) {
+              return selectors.i;
+            }
+            break;
+          case 'tag':
+            if (selectors.t != null) {
+              if (this.testUniqueness(element, selectors.t)) {
+                return selectors.t;
+              }
+            }
+            break;
+          case 'class':
+            if (selectors.c != null && selectors.c.length !== 0) {
+              found_selector = this.testCombinations(element, selectors.c, selectors.t);
+              if (found_selector) {
+                return found_selector;
+              }
+            }
+            break;
+          case 'attribute':
+            if (selectors.a != null && selectors.a.length !== 0) {
+              found_selector = this.testCombinations(element, selectors.a, selectors.t);
+              if (found_selector) {
+                return found_selector;
+              }
+            }
+            break;
+          case 'nthchild':
+            if (selectors.n != null) {
+              return selectors.n;
+            }
+        }
+      }
+      return '*';
+    };
+
+    CssSelectorGenerator.prototype.getSelector = function (element) {
+      var all_selectors, item, k, l, len, len1, parents, result, selector, selectors;
+      all_selectors = [];
+      parents = this.getParents(element);
+      for (k = 0, len = parents.length; k < len; k++) {
+        item = parents[k];
+        selector = this.getUniqueSelector(item);
+        if (selector != null) {
+          all_selectors.push(selector);
+        }
+      }
+      selectors = [];
+      for (l = 0, len1 = all_selectors.length; l < len1; l++) {
+        item = all_selectors[l];
+        selectors.unshift(item);
+        result = selectors.join(' > ');
+        if (this.testSelector(element, result)) {
+          return result;
+        }
+      }
+      return null;
+    };
+
+    CssSelectorGenerator.prototype.getCombinations = function (items) {
+      var i, j, k, l, ref, ref1, result;
+      if (items == null) {
+        items = [];
+      }
+      result = [[]];
+      for (i = k = 0, ref = items.length - 1; 0 <= ref ? k <= ref : k >= ref; i = 0 <= ref ? ++k : --k) {
+        for (j = l = 0, ref1 = result.length - 1; 0 <= ref1 ? l <= ref1 : l >= ref1; j = 0 <= ref1 ? ++l : --l) {
+          result.push(result[j].concat(items[i]));
+        }
+      }
+      result.shift();
+      result = result.sort(function (a, b) {
+        return a.length - b.length;
+      });
+      result = result.map(function (item) {
+        return item.join('');
+      });
+      return result;
+    };
+
+    return CssSelectorGenerator;
+  }();
+
+  if (typeof define !== "undefined" && define !== null ? define.amd : void 0) {
+    define([], function () {
+      return CssSelectorGenerator;
+    });
+  } else {
+    root = typeof exports !== "undefined" && exports !== null ? exports : this;
+    root.CssSelectorGenerator = CssSelectorGenerator;
+  }
+}).call(undefined);
+
+},{}],24:[function(require,module,exports){
+'use strict';
+
+/*
+  General 
+
+  KULeuven/LIBIS (c) 2017
+  Mehmet Celik
+*/
+String.prototype.toCamelCase = function () {
+  return this.split('-').map(function (d, i, a) {
+    return i > 0 ? d.charAt(0).toUpperCase() + d.slice(1) : d;
+  }).join('');
+};
+
+},{}],25:[function(require,module,exports){
+'use strict';
+
+var _primo = require('./primo-explore-dom/js/primo');
+
+var _primo2 = _interopRequireDefault(_primo);
+
+var _helper = require('./primo-explore-dom/js/primo/explore/helper');
+
+var _helper2 = _interopRequireDefault(_helper);
+
+var _components = require('./components');
+
+var _components2 = _interopRequireDefault(_components);
+
+var _messageService = require('./factories/messageService');
+
+var _messageService2 = _interopRequireDefault(_messageService);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /*
   Central Package Loader
 
@@ -199,9 +2275,11 @@ angular.module('centralCustom').run(['$templateCache', function ($templateCache)
   KULeuven/LIBIS (c) 2017
   Mehmet Celik
 */
-
+var locationItemsHTML = '<h3 class="section-title" style="margin-bottom: .75em !important;">\n  <span translate="nui.aria.locationItems.locationItems"></span>\n</h3>\n<div layout="row" layout-align="space-between center">\n  <md-button class="button-link link-alt-color zero-margin" ng-if="$ctrl.showRegisterUser()" (click)="$ctrl.reloadWithRegisterUser()" aria-label="{{\'fulldisplay.otherLocations.register\' | translate}}"><span class="bold-text padding-small" translate="fulldisplay.otherLocations.register"></span></md-button>\n</div>\n<div class="tab-content-header margin-bottom-small margin-left-medium" layout="row" layout-align="space-between end">\n  <div layout="column" flex>\n    <h4 ng-if="$ctrl.currLoc.location && $ctrl.getLibraryName($ctrl.currLoc.location)" class="md-title ng-binding zero-margin">\n      <span>{{$ctrl.currLoc.location.librarycodeTranslation}}</span>\n      <zbl-lib-info location-code="$ctrl.currLoc.location.mainLocation"></zbl-lib-info>\n    </h4>\n    <h5 ng-if="$ctrl.currLoc.location.relatedTitle != null && $ctrl.currLoc.location.relatedTitle !== \'\'" class="related-title">\n      <prm-icon icon-type="{{$ctrl.opacLocations.relatedArrow.type}}" svg-icon-set="{{$ctrl.opacLocations.relatedArrow.iconSet}}" icon-definition="{{$ctrl.opacLocations.relatedArrow.icon}}" class="related-title-icon h-flipped"></prm-icon>\n      <span translate="nui.location.related_title" class="related-title-label"></span>\n      <span class="related-title-name">{{$ctrl.currLoc.location.relatedTitle}}</span>\n    </h5>\n    <p ng-if="$ctrl.currLoc.location.availabilityStatus" class="ng-binding ng-scope zero-margin">\n      <span class="availability-status {{$ctrl.currLoc.location.availabilityStatus}}" translate="fulldisplay.availabilty.{{$ctrl.currLoc.location.availabilityStatus}}"></span>\n      <span ng-if="$ctrl.currLoc.location.subLocation">,</span>\n      <span ng-if="$ctrl.currLoc.location && $ctrl.currLoc.location.subLocation && $ctrl.getSubLibraryName($ctrl.currLoc.location)">{{$ctrl.currLoc.location.collectionTranslation}} </span>\n      <span ng-if="$ctrl.currLoc.location.callNumber"></span>\n      <span ng-if="$ctrl.currLoc.location.callNumber">{{$ctrl.currLoc.location.callNumber}}</span>\n      <zbl-vscout library-code=\'$ctrl.currLoc.location.libraryCode\'\n                  location-code="$ctrl.currLoc.location.callNumber">\n      </zbl-vscout>\n    </p>\n    <p ng-if="$ctrl.currLoc.location.availabilityStatement" class="ng-binding ng-scope zero-margin">{{$ctrl.currLoc.location.availabilityStatement}}</p>\n    <div ng-if="!$ctrl.currLoc.locationNoItems">\n      <div ng-if="!$ctrl.summaryLinesVisible" layout="row" layout-align="start start">\n        <div layout="column" style="max-width: calc(100% - 70px);">\n          <div class="weak-text text-trim-ellipsis" ng-repeat="line in $ctrl.currLoc.summaryHoldings.baseSummaryShort track by $index" layout="row">\n            <div translate="{{line.key}}" class="margin-right-small"></div><span class="summary-brief" class="" layout="row"><a ng-if="line.value.includes(\'http:\')" href="{{line.value}}">{{line.value}}</a> <span title="{{line.value}}" ng-if="!line.value.includes(\'http:\')">{{line.value}}</span></span>\n          </div>\n        </div>\n        <div>\n          <md-button class="button-as-link link-alt-color" (click)="$ctrl.summaryLinesVisible = true" ng-if="!$ctrl.summaryLinesVisible && $ctrl.currLoc.summaryHoldings.baseSummaryShort.length > 0 && $ctrl.currLoc.isHoldingExpandedData" aria-label="{{\'nui.locations.expand\' | translate}}"><span translate="nui.locations.expand" class="bold-text"></span></md-button>\n        </div>\n      </div>\n      <div ng-if="$ctrl.summaryLinesVisible" layout="row" layout-align="start start">\n        <div layout="column">\n          <div ng-repeat="line in $ctrl.currLoc.summaryHoldings.allLines track by $index">\n            <div class="margin-top-small"><span class="bold-text" translate="{{line.key}}"></span></div>\n            <div ng-repeat="lineItem in line.value track by $index" class="padding-left-medium"><span><a ng-if="lineItem.includes(\'http:\')" href="{{lineItem}}">{{lineItem}}</a> <span ng-if="!lineItem.includes(\'http:\')">{{lineItem}}</span></span>\n            </div>\n          </div>\n        </div>\n        <md-button class="button-as-link link-alt-color" (click)="$ctrl.summaryLinesVisible = false" ng-if="$ctrl.summaryLinesVisible && \t$ctrl.currLoc.summaryHoldings.baseSummaryShort.length > 0 && $ctrl.currLoc.isHoldingExpandedData"><span translate="nui.locations.collapse" class="bold-text"></span></md-button>\n      </div>\n    </div>\n    <div class="layout-column" ng-if="$ctrl.currLoc.locationNoItems" flex layout="row">\n      <div flex="70"><span class="weak-text text-trim-ellipsis" ng-if="$ctrl.summaryLinesVisible" ng-repeat="line in $ctrl.currLoc.summaryHoldings.baseSummaryShort track by $index"><div><div translate="{{line.key}}"></div><a class="text-trim-ellipsis" ng-if="line.value.includes(\'http:\')" href="{{line.value}}">{{line.value}}</a> <span class="text-trim-ellipsis" ng-if="!line.value.includes(\'http:\')">{{line.value}}<md-tooltip>{{line.value}}</md-tooltip></span></div>\n      </span>\n      <div ng-if="!$ctrl.summaryLinesVisible">\n        <div ng-repeat="line in $ctrl.currLoc.summaryHoldings.allLines track by $index">\n          <div class="margin-top-small"><span class="bold-text" translate="{{line.key}}"></span></div>\n          <div ng-repeat="lineItem in line.value track by $index" class="padding-left-medium"><span><a ng-if="lineItem.includes(\'http:\')" href="{{lineItem}}">{{lineItem}}</a> <span ng-if="!lineItem.includes(\'http:\')">{{lineItem}}</span></span>\n          </div>\n        </div>\n      </div>\n    </div>\n    <div flex><span class="text-link" (click)="$ctrl.summaryLinesVisible = !$ctrl.summaryLinesVisible"><span ng-if="!$ctrl.summaryLinesVisible && $ctrl.currLoc.summaryHoldings.baseSummaryShort.length > 0 && $ctrl.currLoc.isHoldingExpandedData" translate="nui.locations.collapse"></span>      <span ng-if="$ctrl.summaryLinesVisible && $ctrl.currLoc.summaryHoldings.baseSummaryShort.length > 0 && $ctrl.currLoc.isHoldingExpandedData" translate="nui.locations.expand"></span></span>\n    </div>\n  </div>\n</div>\n<div layout="row">\n  <prm-stack-map ng-if="$ctrl.isSuprima() && $ctrl.currLoc.location.stackMapUrl" [map-url]="$ctrl.currLoc.location.stackMapUrl"></prm-stack-map>\n</div>\n<div layout="row" ng-hide="$ctrl.currLoc.locationNoItems" layout-align="end center">\n  <md-button class="md-icon-button md-mini" aria-label="{{\'nui.aria.locationItems.filterButton\' | translate}}" ng-if="($ctrl.isFilter || $ctrl.isFiltered) && $ctrl.isAnyFilterFilled()" (click)="$ctrl.filterClick();">\n    <md-tooltip><span ng-if="$ctrl.isLocationsFilterVisible" translate="nui.aria.locationItems.filterOut"></span> <span ng-if="!$ctrl.isLocationsFilterVisible" translate="nui.aria.locationItems.filter"></span></md-tooltip>\n    <prm-icon ng-if="!$ctrl.isLocationsFilterVisible"\n      icon-type="{{$ctrl.opacLocations.filter.type}}" svg-icon-set="{{$ctrl.opacLocations.filter.iconSet}}" icon-definition="{{$ctrl.opacLocations.filter.icon}}"></prm-icon>\n    <prm-icon ng-if="$ctrl.isLocationsFilterVisible" icon-type="{{$ctrl.opacLocations.filterOut.type}}" svg-icon-set="{{$ctrl.opacLocations.filterOut.iconSet}}" icon-definition="{{$ctrl.opacLocations.filterOut.icon}}"></prm-icon>\n  </md-button>\n  <div class="vertical-divider transparent-divider"></div>\n  <md-button aria-label="{{\'nui.locItems.collapse\' | translate}}" class="md-icon-button header-action expand-collapse-button" (click)="$ctrl.toggleExpandAll($ctrl.currLoc)">\n    <md-tooltip md-autohide="true"><span ng-if="$ctrl.currLoc.isExpandAll" translate="nui.locItems.collapse"></span> <span ng-if="!$ctrl.currLoc.isExpandAll" translate="nui.locItems.expand"></span></md-tooltip><span ng-if="!$ctrl.currLoc.isExpandAll"><prm-icon icon-type="{{$ctrl.opacLocations.expandAllIcon.type}}" svg-icon-set="{{$ctrl.opacLocations.expandAllIcon.iconSet}}" icon-definition="{{$ctrl.opacLocations.expandAllIcon.icon}}"></prm-icon></span>\n    <span\n      ng-if="$ctrl.currLoc.isExpandAll">\n      <prm-icon icon-type="{{$ctrl.opacLocations.collapseAllIcon.type}}" svg-icon-set="{{$ctrl.opacLocations.collapseAllIcon.iconSet}}" icon-definition="{{$ctrl.opacLocations.collapseAllIcon.icon}}"></prm-icon>\n      </span>\n  </md-button>\n</div>\n</div>\n<prm-locations-filter ng-if="$ctrl.isLocationsFilterVisible && $ctrl.isAnyFilterFilled()" [item]="$ctrl.item" [is-disabled]="$ctrl.isItemsFilterDisable($ctrl.item)" (filter-event)="$ctrl.handleFilterEvent($event)" [is-after-filtering]="$ctrl.isFiltered"\n  [drop-down-options]="$ctrl.dropDownOptions" [filters]="$ctrl.filters" (clear-filters-event)="$ctrl.clearFilters(true)"></prm-locations-filter>\n<div ng-if="$ctrl.currLoc.locationNoItems" class="padding-left-medium">\n  <div class="bar alert-bar margin-bottom-medium" layout="row" layout-align="start center"><span flex ng-if="$ctrl.isLoggedIn();" translate="nui.locations.noitems.signin"></span> <span flex ng-if="!$ctrl.isLoggedIn();" translate="nui.locations.noitems.guest"></span></div>\n</div>\n<md-list layout="column" ng-hide="$ctrl.currLoc.locationNoItems" class="separate-list-items margin-left-medium">\n  <md-list-item ng-repeat="item in $ctrl.currLoc.items track by $index" class="md-2-line has-expand" ng-if="!$ctrl.currLoc.isMore || !$last" ng-class="item.isExpanded?\'item-expanded\':\'\'" (click)="item.isExpanded = !item.isExpanded">\n    <div layout="row" flex>\n      <div class="md-list-item-text" layout="row" layout-wrap flex>\n        <div flex flex-xs="100">\n          <div ng-if="item.itemFields[0]">\n            <h3><span translate="nui.item.brief.1"></span> {{item.itemFields[0]}}</h3>\n            <md-tooltip>{{item.itemFields[0]}}</md-tooltip>\n          </div>\n          <div ng-if="item.itemFields[1]">\n            <h4><span translate="nui.item.brief.2"></span> {{item.itemFields[1]}}</h4>\n            <md-tooltip>{{item.itemFields[1]}}</md-tooltip>\n          </div>\n        </div>\n        <div class="weak-text" flex flex-xs="100">\n          <div ng-if="item.itemFields[2]">\n            <p><span translate="nui.item.brief.3"></span> {{item.itemFields[2]}}</p>\n            <md-tooltip>{{item.itemFields[2]}}</md-tooltip>\n          </div>\n          <div ng-if="item.itemFields[3]">\n            <p><span translate="nui.item.brief.4"></span> {{item.itemFields[3]}}</p>\n            <md-tooltip>{{item.itemFields[3]}}</md-tooltip>\n          </div>\n          <div ng-if="item.isExpanded">\n            <div ng-repeat="full in item.fullItemFields track by $index">\n              <p>{{full}}</p>\n              <md-tooltip>{{item.fullItemValues[$index]}}</md-tooltip>\n            </div>\n          </div>\n        </div>\n        <div layout-align="end center" layout="row" layout-wrap flex-xs="100" flex-sm="30">\n          <div ng-if="!$ctrl.currLoc.location.isValidUser"><span translate="item.request.not_available"></span></div>\n          <div ng-if="$ctrl.currLoc.location.isValidUser && item.listOfServices.length === 0"><span translate="item.request.blocked"></span></div>\n          <div layout="row" layout-align="center center" ng-repeat="service in item.listOfServices track by $index" ng-if="$ctrl.isLoggedIn()">\n            <prm-service-button ng-if="$ctrl.allowService()" [service]="service" (change-tab-event)="::$ctrl.onChangeTabEvent($event)" [parent-tab]="::$ctrl.tabId" [request-parameters]="$ctrl.getServiceAdditionalParams(item, service)" method="GET"></prm-service-button>\n            <div class="skewed-divider" ng-if="!$last"></div>\n          </div>\n        </div>\n      </div>\n      <div class="align-self-stretch">\n        <md-button class="md-secondary item-expand-button" aria-label="{{\'nui.aria.locationItems.expandcollapse\' | translate}}">\n          <prm-icon ng-class="{\'rotate-180\': item.isExpanded}" icon-type="{{$ctrl.opacLocations.expandIcon.type}}" svg-icon-set="{{$ctrl.opacLocations.expandIcon.iconSet}}" icon-definition="{{$ctrl.opacLocations.expandIcon.icon}}"></prm-icon>\n        </md-button>\n      </div>\n    </div>\n    <prm-location-item-after parent-ctrl="$ctrl"></prm-location-item-after>\n  </md-list-item>\n  <prm-spinner ng-if="$ctrl.inProgress" class="inline-loader half-transparent no-text" layout="row" layout-align="center center"></prm-spinner>\n</md-list>\n<md-button ng-if="!$ctrl.currLoc.locationNoItems && $ctrl.currLoc.isMore" class="button-link link-alt-color zero-margin" (click)="$ctrl.getlocationsItems($ctrl.currLoc, true);" ng-hide="!$ctrl.currLoc.isMore" aria-label="{{\'fulldisplay.locations.showmore\' | translate}}"><span class="bold-text padding-small" translate="fulldisplay.locations.showmore"></span></md-button>\n<prm-location-items-after parent-ctrl="$ctrl"></prm-location-items-after>\n';
+var locationHTML = '<div class="neutralized-button layout-full-width layout-display-flex md-button" tabindex="0" layout="flex" ng-click="$ctrl.onClick()" aria-label="{{$ctrl.location.librarycodeTranslation}} {{$ctrl.location.subLocation | translate}},\n                        {{\'fulldisplay.availabilty.\' + $ctrl.location.availabilityStatus | translate}},\n                         {{$ctrl.getButtonActionLabel() | translate}}" md-ink-ripple="red">\n  <div layout="row" flex="100" layout-align="space-between center">\n    <div class="md-list-item-text" layout="row" layout-wrap flex>\n      <div flex flex-xs="100">\n        <h3 ng-if="$ctrl.location && $ctrl.getLibraryName($ctrl.location)">\n          <span>{{$ctrl.location.librarycodeTranslation}}</span>\n          <zbl-lib-info location-code="$ctrl.location.mainLocation"></zbl-lib-info>\n        </h3>\n        <h5 ng-if="$ctrl.location.relatedTitle != null && $ctrl.location.relatedTitle !== \'\'" class="related-title">\n          <prm-icon icon-type="{{$ctrl.opacLocations.relatedArrow.type}}" svg-icon-set="{{$ctrl.opacLocations.relatedArrow.iconSet}}" icon-definition="{{$ctrl.opacLocations.relatedArrow.icon}}" class="related-title-icon h-flipped"></prm-icon>\n          <span translate="nui.location.related_title" class="related-title-label"></span>\n          <span class="related-title-name">{{$ctrl.location.relatedTitle}}</span>\n        </h5>\n        <p>\n          <span class="availability-status {{$ctrl.location.availabilityStatus}}" translate="fulldisplay.availabilty.{{$ctrl.location.availabilityStatus}}"></span>\n          <span ng-if="$ctrl.location.subLocation">,</span>\n          <span ng-if="$ctrl.location && $ctrl.location.subLocation && $ctrl.getSubLibraryName($ctrl.location)">{{$ctrl.location.collectionTranslation}} </span>\n          <span ng-if="$ctrl.location.callNumber">;</span>\n          <span ng-if="$ctrl.location.callNumber">{{$ctrl.location.callNumber}}</span>\n          <zbl-vscout library-code=\'$ctrl.location.libraryCode\'\n                      location-code="$ctrl.location.callNumber">\n          </zbl-vscout>\n        </p>\n      </div>\n      <div layout-align="end center" layout="row" layout-wrap flex-xs="100" flex-sm="30" flex class="list-item-actions">\n        <prm-stack-map ng-if="$ctrl.isSuprima() && $ctrl.location.stackMapUrl" [map-url]="$ctrl.location.stackMapUrl"></prm-stack-map>\n      </div>\n    </div>\n    <prm-icon ng-if="!$ctrl.isOvp()" class="padding-right-small" icon-type="{{$ctrl.opacLocations.externalLinkIcon.type}}" svg-icon-set="{{$ctrl.opacLocations.externalLinkIcon.iconSet}}" icon-definition="{{$ctrl.opacLocations.externalLinkIcon.icon}}"></prm-icon>\n    <prm-icon ng-if="$ctrl.isOvp()" class="padding-right-small" icon-type="{{$ctrl.opacLocations.rightArrow.type}}" svg-icon-set="{{$ctrl.opacLocations.rightArrow.iconSet}}" icon-definition="{{$ctrl.opacLocations.rightArrow.icon}}"></prm-icon>\n  </div>\n</div>\n<prm-location-after parent-ctrl="$ctrl"></prm-location-after>\n';
 
 //make Primo public
+
 window.Primo = _primo2.default;
 //load PrimoExplorer UI if angular.reloadWithDebugInfo() is ran
 window.setTimeout(function () {
@@ -246,8 +2324,8 @@ var app = angular.module('viewCustom', ['ngMaterial']).constant('feedbackService
     $window.ga('send', 'pageview', { location: $location.url() });
   });
 }]).service('MessageService', _messageService2.default).run(function ($templateCache) {
-  $templateCache.put('components/search/fullView/getit/opac/locations/location-items.html', _locationItems2.default);
-  $templateCache.put('components/search/fullView/getit/opac/locations/location/location.html', _location2.default);
+  $templateCache.put('components/search/fullView/getit/opac/locations/location-items.html', locationItemsHTML);
+  $templateCache.put('components/search/fullView/getit/opac/locations/location/location.html', locationHTML);
 });
 
 //Contains the after component selectors that will be injected
@@ -284,15 +2362,7 @@ Object.keys(afterComponents).forEach(function (component, i) {
   });
 });
 
-/*
-  General 
+},{"./components":1,"./factories/messageService":14,"./primo-explore-dom/js/primo":15,"./primo-explore-dom/js/primo/explore/helper":18}]},{},[25])
 
-  KULeuven/LIBIS (c) 2017
-  Mehmet Celik
-*/
-String.prototype.toCamelCase = function () {
-  return this.split('-').map(function (d, i, a) {
-    return i > 0 ? d.charAt(0).toUpperCase() + d.slice(1) : d;
-  }).join('');
-};
-})();
+
+//# sourceMappingURL=custom.js.map

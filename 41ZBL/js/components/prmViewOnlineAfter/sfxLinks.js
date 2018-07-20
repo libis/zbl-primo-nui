@@ -2,16 +2,18 @@ import sfxLinksHTML from './sfxLinks.html'
 import Helper from '../../primo-explore-dom/js/primo/explore/helper'
 
 class SfxLinksController {
-  constructor($scope) {
+  constructor($scope, $translate) {
     let self = this;
     self.scope = $scope;
-    //self.item = self.parentCtrl.parentCtrl.item;
+    self.translate = $translate;
+    
     let containers = Primo.explore.components.get('prm-full-view-service-container');
     if (containers && containers.length > 0) {
       self.item = containers[0].ctrl().item;
     } else {
       self.item = self.parentCtrl.parentCtrl.item;
     }
+
     self.targets = {};
     Primo.view.then(v => {
       self.ipAddress = v.ip.address;
@@ -44,12 +46,39 @@ class SfxLinksController {
               //console.log(data);
               if (data) {
                 self.targets = data;
-               // console.log('-----> targets', self.targets);
+                //console.log('-----> targets', self.targets);
               }
-
             }
           });
         });
+
+        let gi = self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase())).map( m => m.links)[0].map(m => {
+          let targetName = m.displayText;
+          let facility = m.hyperlinkText;
+          if (/\$\$E/.test(targetName)){            
+            targetName = `fulldisplay.${targetName.match(/\$\$E(.*)/)[1].trim()}`;            
+          }
+
+          if(/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
+            targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
+          }
+
+          if(/Campusnetz (.*?):/.test(facility)) {
+            facility = facility.match(/Campusnetz (.*?):/)[1].trim();
+          }
+
+          if(/nicht am campus/i.test(targetName)){
+            return null;
+          }
+          
+          return {target_url: m.link, facility: facility, target_name:targetName}
+        }).filter(f => f !== null);
+        if (gi) {
+          
+          let data = Object.assign({}, self.targets, self.normalizeTargets(gi));
+          self.targets = data;
+        }
+
         watcher();
       }
     });
@@ -93,8 +122,6 @@ class SfxLinksController {
       }
     }
 
-    // list = list.map(m => m.replace('http:','https:'));
-    // console.log("====>", list);
     return list;
   }
 
@@ -103,9 +130,13 @@ class SfxLinksController {
     let ip = this.ipAddress.split('.')
     let inRange = (ip[0] == '147' && ip[1] == '88' && parseInt(ip[2], 10) >= 207 && parseInt(ip[2], 10) <= 254) ? true : false;
 
-    if (!/ezproxy.unilu.ch/.test(currentHost) && /zhb|uni|ph/.test(facility.toLowerCase()) && !inRange) {
+    url = url.replace(/^https:\/\/ezproxy.unilu.chhttp/, 'https://ezproxy.unilu.ch/login?url=http');
+
+    //if (!/ezproxy.unilu.ch/.test(currentHost) && /zhb|uni|ph/.test(facility.toLowerCase()) && !inRange) {
+    if (!/ezproxy.unilu.ch/.test(url) && /zhb|uni|ph/.test(facility.toLowerCase()) && !inRange) {
       return `https://ezproxy.unilu.ch/login?url=${url}`
     }
+    
     return url;
   }
 
@@ -124,7 +155,7 @@ class SfxLinksController {
   }
 }
 
-SfxLinksController.$inject = ['$scope'];
+SfxLinksController.$inject = ['$scope', '$translate'];
 
 export let sfxLinksConfig = {
   bindings: {

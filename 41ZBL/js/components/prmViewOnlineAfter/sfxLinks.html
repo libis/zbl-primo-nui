@@ -5,7 +5,7 @@
   <div ng-repeat="target in normalizedTargets">
     <p class="fulltext-item sfx-links-target">
       <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>
-      <a href="{{target.target_url_proxy}}" target="_blank">{{target.target_name}}</a>
+      <a href="{{target.target_url_proxy}}" target="_blank">{{(target.target_name | translate)}}</a>
     </p>
   </div>
 </div>
