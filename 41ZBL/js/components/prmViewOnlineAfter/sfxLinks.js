@@ -133,7 +133,7 @@ class SfxLinksController {
     url = url.replace(/^https:\/\/ezproxy.unilu.chhttp/, 'https://ezproxy.unilu.ch/login?url=http');
 
     //if (!/ezproxy.unilu.ch/.test(currentHost) && /zhb|uni|ph/.test(facility.toLowerCase()) && !inRange) {
-    if (!/ezproxy.unilu.ch/.test(url) && /zhb|uni|ph/.test(facility.toLowerCase()) && !inRange) {
+    if (/zhb|uni|ph/.test(facility.toLowerCase())) {
       return `https://ezproxy.unilu.ch/login?url=${url}`
     }
     

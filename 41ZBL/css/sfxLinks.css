@@ -23,3 +23,8 @@
 prm-view-online > div:nth-child(1) > a[href*=sfx] {
   display:none;
 }
+
+/*hide GetIt1*/
+prm-view-online > div {
+  display:none;
+}
