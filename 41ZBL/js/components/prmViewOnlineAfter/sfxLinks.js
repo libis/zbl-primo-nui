@@ -6,15 +6,20 @@ class SfxLinksController {
     let self = this;
     self.scope = $scope;
     self.translate = $translate;
-    
+    self.targets = {};    
+  }
+
+  $postLink() {
+    let self = this;
     let containers = Primo.explore.components.get('prm-full-view-service-container');
-    if (containers && containers.length > 0) {
-      self.item = containers[0].ctrl().item;
-    } else {
-      self.item = self.parentCtrl.parentCtrl.item;
+    if (!self.item && containers && containers.length > 0) {
+      self.item = containers[containers.length - 1].ctrl().item;
     }
 
-    self.targets = {};
+    if (!self.item && angular.element(document.querySelector('prm-full-view-service-container'))) {
+      self.item = angular.element(document.querySelector('prm-full-view-service-container')).controller('prm-full-view-service-container').item;
+    }
+    
     Primo.view.then(v => {
       self.ipAddress = v.ip.address;
       self.updateTargetsWhenOpenURLAvailable();
@@ -35,7 +40,7 @@ class SfxLinksController {
         return false;
       }
     }, (n, o) => {
-      if (n == true) {
+      if (n == true) {                
         //console.log(self.targetsUrls);
         self.targetsUrls.forEach(targetsUrl => {
           //console.log(targetsUrl);
@@ -52,7 +57,7 @@ class SfxLinksController {
           });
         });
 
-        let gi = self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase())).map( m => m.links)[0].map(m => {
+        let getItData = self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase())).map( m => m.links)[0].map(m => {
           let targetName = m.displayText;
           let facility = m.hyperlinkText;
           if (/\$\$E/.test(targetName)){            
@@ -73,10 +78,24 @@ class SfxLinksController {
           
           return {target_url: m.link, facility: facility, target_name:targetName}
         }).filter(f => f !== null);
-        if (gi) {
-          
-          let data = Object.assign({}, self.targets, self.normalizeTargets(gi));
-          self.targets = data;
+
+        if (getItData) {
+          getItData.forEach(gitIt => {
+            Helper.http.get("https://libis.celik.be",
+                          {headers: {'Access-Control-Allow-Origin': '*'},
+                           params: {ip: self.ipAddress, 
+                           url: gitIt.target_url}}).then(rawTargets => {
+              //console.log(rawTargets.data);
+              let data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
+              //console.log(data);
+              if (data) {
+                self.targets = data;
+                //console.log('-----> targets', self.targets);
+              }
+            });
+            //let data = Object.assign({}, self.targets, self.normalizeTargets(getItData));
+            //self.targets = data;
+          })
         }
 
         watcher();
@@ -88,7 +107,7 @@ class SfxLinksController {
     let self = this;
     let normalizedTargets = {};
 
-    if (targets) {
+    if (targets) {      
       targets.reduce((t, c) => {
         let d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
         c['target_url_proxy'] = this.proxyUrl(c['target_url'], c.facility);
@@ -133,8 +152,13 @@ class SfxLinksController {
     url = url.replace(/^https:\/\/ezproxy.unilu.chhttp/, 'https://ezproxy.unilu.ch/login?url=http');
 
     //if (!/ezproxy.unilu.ch/.test(currentHost) && /zhb|uni|ph/.test(facility.toLowerCase()) && !inRange) {
-    if (/zhb|uni|ph/.test(facility.toLowerCase())) {
+    //if (/zhb|uni|ph/.test(facility.toLowerCase())) {
+    if (/zhb|uni|ph/.test(facility.toLowerCase()) && /ezproxy.unilu.ch/.test(currentHost)) {
       return `https://ezproxy.unilu.ch/login?url=${url}`
+    }
+
+    if (/zhb|uni|ph/.test(facility.toLowerCase()) && /ezpublic.unilu.ch/.test(currentHost)) {
+      return `https://ezpublic.unilu.ch/login?url=${url}`
     }
     
     return url;

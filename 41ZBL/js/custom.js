@@ -800,22 +800,28 @@ var SfxLinksController = function () {
     var self = this;
     self.scope = $scope;
     self.translate = $translate;
-
-    var containers = Primo.explore.components.get('prm-full-view-service-container');
-    if (containers && containers.length > 0) {
-      self.item = containers[0].ctrl().item;
-    } else {
-      self.item = self.parentCtrl.parentCtrl.item;
-    }
-
     self.targets = {};
-    Primo.view.then(function (v) {
-      self.ipAddress = v.ip.address;
-      self.updateTargetsWhenOpenURLAvailable();
-    });
   }
 
   _createClass(SfxLinksController, [{
+    key: '$postLink',
+    value: function $postLink() {
+      var self = this;
+      var containers = Primo.explore.components.get('prm-full-view-service-container');
+      if (!self.item && containers && containers.length > 0) {
+        self.item = containers[containers.length - 1].ctrl().item;
+      }
+
+      if (!self.item && angular.element(document.querySelector('prm-full-view-service-container'))) {
+        self.item = angular.element(document.querySelector('prm-full-view-service-container')).controller('prm-full-view-service-container').item;
+      }
+
+      Primo.view.then(function (v) {
+        self.ipAddress = v.ip.address;
+        self.updateTargetsWhenOpenURLAvailable();
+      });
+    }
+  }, {
     key: 'updateTargetsWhenOpenURLAvailable',
     value: function updateTargetsWhenOpenURLAvailable() {
       var self = this;
@@ -847,7 +853,7 @@ var SfxLinksController = function () {
             });
           });
 
-          var gi = self.item.delivery.GetIt1.filter(function (f) {
+          var getItData = self.item.delivery.GetIt1.filter(function (f) {
             return (/^online resource|remote search resource/i.test(f.category.toLowerCase())
             );
           }).map(function (m) {
@@ -875,10 +881,23 @@ var SfxLinksController = function () {
           }).filter(function (f) {
             return f !== null;
           });
-          if (gi) {
 
-            var data = Object.assign({}, self.targets, self.normalizeTargets(gi));
-            self.targets = data;
+          if (getItData) {
+            getItData.forEach(function (gitIt) {
+              _helper2.default.http.get("https://libis.celik.be", { headers: { 'Access-Control-Allow-Origin': '*' },
+                params: { ip: self.ipAddress,
+                  url: gitIt.target_url } }).then(function (rawTargets) {
+                //console.log(rawTargets.data);
+                var data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
+                //console.log(data);
+                if (data) {
+                  self.targets = data;
+                  //console.log('-----> targets', self.targets);
+                }
+              });
+              //let data = Object.assign({}, self.targets, self.normalizeTargets(getItData));
+              //self.targets = data;
+            });
           }
 
           watcher();
@@ -915,8 +934,13 @@ var SfxLinksController = function () {
       url = url.replace(/^https:\/\/ezproxy.unilu.chhttp/, 'https://ezproxy.unilu.ch/login?url=http');
 
       //if (!/ezproxy.unilu.ch/.test(currentHost) && /zhb|uni|ph/.test(facility.toLowerCase()) && !inRange) {
-      if (/zhb|uni|ph/.test(facility.toLowerCase())) {
+      //if (/zhb|uni|ph/.test(facility.toLowerCase())) {
+      if (/zhb|uni|ph/.test(facility.toLowerCase()) && /ezproxy.unilu.ch/.test(currentHost)) {
         return 'https://ezproxy.unilu.ch/login?url=' + url;
+      }
+
+      if (/zhb|uni|ph/.test(facility.toLowerCase()) && /ezpublic.unilu.ch/.test(currentHost)) {
+        return 'https://ezpublic.unilu.ch/login?url=' + url;
       }
 
       return url;
