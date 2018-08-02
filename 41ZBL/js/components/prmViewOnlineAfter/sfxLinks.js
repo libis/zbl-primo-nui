@@ -6,7 +6,7 @@ class SfxLinksController {
     let self = this;
     self.scope = $scope;
     self.translate = $translate;
-    self.targets = {};    
+    self.targets = {};
   }
 
   $postLink() {
@@ -19,7 +19,7 @@ class SfxLinksController {
     if (!self.item && angular.element(document.querySelector('prm-full-view-service-container'))) {
       self.item = angular.element(document.querySelector('prm-full-view-service-container')).controller('prm-full-view-service-container').item;
     }
-    
+
     Primo.view.then(v => {
       self.ipAddress = v.ip.address;
       self.updateTargetsWhenOpenURLAvailable();
@@ -40,7 +40,7 @@ class SfxLinksController {
         return false;
       }
     }, (n, o) => {
-      if (n == true) {                
+      if (n == true) {
         //console.log(self.targetsUrls);
         self.targetsUrls.forEach(targetsUrl => {
           //console.log(targetsUrl);
@@ -57,44 +57,58 @@ class SfxLinksController {
           });
         });
 
-        let getItData = self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase())).map( m => m.links)[0].map(m => {
+        let getItData = self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase())).map(m => m.links)[0].map(m => {
           let targetName = m.displayText;
           let facility = m.hyperlinkText;
-          if (/\$\$E/.test(targetName)){            
-            targetName = `fulldisplay.${targetName.match(/\$\$E(.*)/)[1].trim()}`;            
+          if (/\$\$E/.test(targetName)) {
+            targetName = `fulldisplay.${targetName.match(/\$\$E(.*)/)[1].trim()}`;
           }
 
-          if(/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
+          if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
             targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
           }
 
-          if(/Campusnetz (.*?):/.test(facility)) {
+          if (/Campusnetz (.*?):/.test(facility)) {
             facility = facility.match(/Campusnetz (.*?):/)[1].trim();
           }
 
-          if(/nicht am campus/i.test(targetName)){
+          if (/nicht am campus/i.test(targetName)) {
             return null;
           }
-          
-          return {target_url: m.link, facility: facility, target_name:targetName}
+
+          return {
+            target_url: m.link,
+            facility: facility,
+            target_name: targetName
+          }
         }).filter(f => f !== null);
 
         if (getItData) {
-          getItData.forEach(gitIt => {
-            Helper.http.get("https://libis.celik.be",
-                          {headers: {'Access-Control-Allow-Origin': '*'},
-                           params: {ip: self.ipAddress, 
-                           url: gitIt.target_url}}).then(rawTargets => {
-              //console.log(rawTargets.data);
-              let data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
-              //console.log(data);
-              if (data) {
-                self.targets = data;
-                //console.log('-----> targets', self.targets);
-              }
-            });
-            //let data = Object.assign({}, self.targets, self.normalizeTargets(getItData));
-            //self.targets = data;
+          getItData.forEach(getIt => {
+            if (/sfx/.test(getIt.target_url)) {
+              Helper.http.get("https://libis.celik.be", {
+                headers: {
+                  'Access-Control-Allow-Origin': '*'
+                },
+                params: {
+                  ip: self.ipAddress,
+                  url: getIt.target_url
+                }
+              }).then(rawTargets => {
+                console.log(rawTargets.data);
+                let data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
+                if (data) {
+                  self.targets = data;
+                }
+              }).catch(e => {
+                console.log(e);
+              });
+            } else {
+                let data = Object.assign({}, self.targets, self.normalizeTargets([getIt]));
+                if (data) {
+                  self.targets = data;                  
+                }
+            }
           })
         }
 
@@ -107,7 +121,7 @@ class SfxLinksController {
     let self = this;
     let normalizedTargets = {};
 
-    if (targets) {      
+    if (targets) {
       targets.reduce((t, c) => {
         let d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
         c['target_url_proxy'] = this.proxyUrl(c['target_url'], c.facility);
@@ -134,7 +148,7 @@ class SfxLinksController {
       }
     }
 
-    if (self.item && self.item.linkElement) {      
+    if (self.item && self.item.linkElement) {
       let openUrlList = self.item.linkElement.links.filter(f => /^openurl/.test(f.displayText)).map(m => m.link);
       if (openUrlList.length > 0) {
         list = list.concat(openUrlList);
@@ -160,7 +174,7 @@ class SfxLinksController {
     if (/zhb|uni|ph/.test(facility.toLowerCase()) && /ezpublic.unilu.ch/.test(currentHost)) {
       return `https://ezpublic.unilu.ch/login?url=${url}`
     }
-    
+
     return url;
   }
 

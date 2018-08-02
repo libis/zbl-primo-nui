@@ -877,26 +877,41 @@ var SfxLinksController = function () {
               return null;
             }
 
-            return { target_url: m.link, facility: facility, target_name: targetName };
+            return {
+              target_url: m.link,
+              facility: facility,
+              target_name: targetName
+            };
           }).filter(function (f) {
             return f !== null;
           });
 
           if (getItData) {
-            getItData.forEach(function (gitIt) {
-              _helper2.default.http.get("https://libis.celik.be", { headers: { 'Access-Control-Allow-Origin': '*' },
-                params: { ip: self.ipAddress,
-                  url: gitIt.target_url } }).then(function (rawTargets) {
-                //console.log(rawTargets.data);
-                var data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
-                //console.log(data);
+            getItData.forEach(function (getIt) {
+              if (/sfx/.test(getIt.target_url)) {
+                _helper2.default.http.get("https://libis.celik.be", {
+                  headers: {
+                    'Access-Control-Allow-Origin': '*'
+                  },
+                  params: {
+                    ip: self.ipAddress,
+                    url: getIt.target_url
+                  }
+                }).then(function (rawTargets) {
+                  console.log(rawTargets.data);
+                  var data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
+                  if (data) {
+                    self.targets = data;
+                  }
+                }).catch(function (e) {
+                  console.log(e);
+                });
+              } else {
+                var data = Object.assign({}, self.targets, self.normalizeTargets([getIt]));
                 if (data) {
                   self.targets = data;
-                  //console.log('-----> targets', self.targets);
                 }
-              });
-              //let data = Object.assign({}, self.targets, self.normalizeTargets(getItData));
-              //self.targets = data;
+              }
             });
           }
 
