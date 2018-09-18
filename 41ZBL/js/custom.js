@@ -476,7 +476,7 @@ var searchAlsoConfig = exports.searchAlsoConfig = {
 };
 
 },{}],8:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -486,7 +486,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var searchAlsoBodyHTML = "<div ng-if=\"$ctrl.name === 'search_also'\" class=\"idslu-furthersearch\">\n  <div ng-hide=\"$ctrl.parentCtrl.parentCtrl.facetGroup.facetGroupCollapsed\">\n    <div class=\"section-content animate-max-height-variable\">\n      <div class=\"md-chips md-chips-wrap\">\n        <div ng-repeat=\"target in $ctrl.targets\" aria-live=\"polite\" class=\"md-chip animate-opacity-and-scale facet-element-marker-local4\">\n          <div class=\"md-chip-content layout-row\" role=\"button\" tabindex=\"9\">\n            <strong dir=\"auto\" title=\"{{ target.name }}\">\n              <a ng-href=\"{{ target.url + target.mapping($ctrl.search) }}\" target=\"_blank\"  title=\"{{ (target.tooltip | translate )}}\">\n                <img ng-src=\"{{ target.img }}\" width=\"22\" height=\"22\" style=\"vertical-align:middle;padding-right:2px;\"> {{ target.name }}\n              </a>\n            </strong>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
+var searchAlsoBodyHTML = '<div ng-if="$ctrl.name === \'search_also\'" class="idslu-furthersearch">\n  <div ng-hide="$ctrl.parentCtrl.parentCtrl.facetGroup.facetGroupCollapsed">\n    <div class="section-content animate-max-height-variable">\n      <div class="md-chips md-chips-wrap">\n        <div ng-repeat="target in $ctrl.targets" aria-live="polite" class="md-chip animate-opacity-and-scale facet-element-marker-local4">\n          <div class="md-chip-content layout-row" role="button" tabindex="9">\n            <strong dir="auto" title="{{ target.name }}">\n              <a ng-href="{{ target.url + target.mapping($ctrl.search) }}" target="_blank"  title="{{ (target.tooltip | translate )}}">\n                <img ng-src="{{ target.img }}" width="22" height="22" style="vertical-align:middle;padding-right:2px;"> {{ target.name }}\n              </a>\n            </strong>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n';
 
 var SearchAlsoBodyController = function () {
   function SearchAlsoBodyController($location) {
@@ -497,7 +497,7 @@ var SearchAlsoBodyController = function () {
   }
 
   _createClass(SearchAlsoBodyController, [{
-    key: "_targets",
+    key: '_targets',
     value: function _targets() {
       return [{
         "name": "Swissbib",
@@ -537,12 +537,12 @@ var SearchAlsoBodyController = function () {
       }];
     }
   }, {
-    key: "search",
+    key: 'search',
     get: function get() {
-      return this.location.search().query;
+      return this.location.search().query || '';
     }
   }, {
-    key: "name",
+    key: 'name',
     get: function get() {
       return this.parentCtrl.parentCtrl.facetGroup.name;
     }
@@ -793,6 +793,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var sfxLinksHTML = '<div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">\n  <p class="fulltext-item sfx-links-facility">\n      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> {{targetFacility}}\n  </p>\n  <div ng-repeat="target in normalizedTargets">\n    <p class="fulltext-item sfx-links-target">\n      <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>\n      <a href="{{target.target_url_proxy}}" target="_blank">{{(target.target_name | translate)}}</a>\n    </p>\n  </div>\n</div>\n\n<p class="fulltext-item sfx-links-on-campus">\n  <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>\n  <span class="sfx-links-on-campus-url">\n        <a href="http://www.zhbluzern.ch/index.php?id=3992" target="_blank">\n        <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>\n  </a>\n  </span>\n\n  <zbl-link class="idslu-ehelp" url="{{(\'nui.customizing.idslu.ehelpurl\' | translate)}}" text="{{(\'nui.customizing.idslu.ehelptext\' | translate)}}"></zbl-link>\n  <zbl-link class="idslu-feedback" url="{{(\'nui.customizing.idslu.feedbackurl\' | translate)}}" text="{{(\'nui.customizing.idslu.feedbacktext\' | translate)}}"></zbl-link>\n</p>\n';
 
+/**
+ * Controller class to find and parse sfx resources
+ * @class
+ */
 var SfxLinksController = function () {
   function SfxLinksController($scope, $translate) {
     _classCallCheck(this, SfxLinksController);
@@ -802,6 +806,12 @@ var SfxLinksController = function () {
     self.translate = $translate;
     self.targets = {};
   }
+
+  /**
+   * Lifecyle hook for AngularJS
+   * Wait for all components are rendered and linked before we lookup and inject the SFX links
+   */
+
 
   _createClass(SfxLinksController, [{
     key: '$postLink',
@@ -821,9 +831,17 @@ var SfxLinksController = function () {
         self.updateTargetsWhenOpenURLAvailable();
       });
     }
+
+    /**
+     * Wait for openurl method to find data in item.delivery.link or item.linkElement.links
+     * Then extract, resolve and normalize the openURL
+     */
+
   }, {
     key: 'updateTargetsWhenOpenURLAvailable',
     value: function updateTargetsWhenOpenURLAvailable() {
+      var _this = this;
+
       var self = this;
       var watcher = self.scope.$watch(function () {
         try {
@@ -837,92 +855,128 @@ var SfxLinksController = function () {
         }
       }, function (n, o) {
         if (n == true) {
-          //console.log(self.targetsUrls);
-          self.targetsUrls.forEach(function (targetsUrl) {
-            //console.log(targetsUrl);
-            _helper2.default.http.get(targetsUrl).then(function (rawTargets) {
-              //console.log("=======> ",rawTargets.data);
-              if (rawTargets.data && rawTargets.data.length > 0) {
-                var data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
-                //console.log(data);
-                if (data) {
-                  self.targets = data;
-                  //console.log('-----> targets', self.targets);
-                }
-              }
-            });
-          });
+          //Resolve target urls extracted from the openURL
+          _this.resolveAndNormalizeTargetUrls(self);
 
-          var getItData = self.item.delivery.GetIt1.filter(function (f) {
-            return (/^online resource|remote search resource/i.test(f.category.toLowerCase())
-            );
-          }).map(function (m) {
-            return m.links;
-          })[0].map(function (m) {
-            var targetName = m.displayText;
-            var facility = m.hyperlinkText;
-            if (/\$\$E/.test(targetName)) {
-              targetName = 'fulldisplay.' + targetName.match(/\$\$E(.*)/)[1].trim();
-            }
-
-            if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
-              targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
-            }
-
-            if (/Campusnetz (.*?):/.test(facility)) {
-              facility = facility.match(/Campusnetz (.*?):/)[1].trim();
-            }
-
-            if (/nicht am campus/i.test(targetName)) {
-              return null;
-            }
-
-            return {
-              target_url: m.link,
-              facility: facility,
-              target_name: targetName
-            };
-          }).filter(function (f) {
-            return f !== null;
-          });
-
-          if (getItData) {
-            getItData.forEach(function (getIt) {
-              if (/sfx/.test(getIt.target_url)) {
-                _helper2.default.http.get("https://libis.celik.be", {
-                  headers: {
-                    'Access-Control-Allow-Origin': '*'
-                  },
-                  params: {
-                    ip: self.ipAddress,
-                    url: getIt.target_url
-                  }
-                }).then(function (rawTargets) {
-                  console.log(rawTargets.data);
-                  var data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
-                  if (data) {
-                    self.targets = data;
-                  }
-                }).catch(function (e) {
-                  console.log(e);
-                });
-              } else {
-                var data = Object.assign({}, self.targets, self.normalizeTargets([getIt]));
-                if (data) {
-                  self.targets = data;
-                }
-              }
-            });
-          }
+          //Normalize GetIt1 links REMARK: not sure if we should resolve these if target URLs exist
+          _this.findGetIt1TargetUrlsAndNormalize(self);
 
           watcher();
         }
       });
     }
+
+    /**
+     * Get GetIt1 urls from self.item.delivery, filter for online or remote resources
+     * and normalize the data
+     * @param {context} self 
+     */
+
+  }, {
+    key: 'findGetIt1TargetUrlsAndNormalize',
+    value: function findGetIt1TargetUrlsAndNormalize(self) {
+      console.log(self.item.delivery.GetIt1);
+      var getItData = (self.item.delivery.GetIt1.filter(function (f) {
+        return (/^online resource|remote search resource/i.test(f.category.toLowerCase())
+        );
+      }).map(function (m) {
+        return m.links;
+      })[0] || []).map(function (m) {
+        var targetName = m.displayText;
+        //let translatedFacility = `nui.getit_full.${m.hyperlinkText}`;
+
+        var facility = self.item.pnx.display.source.map(function (m) {
+          var f = m.match(/\$\$V(.*)\$\$O/);
+          if (!f) {
+            f = m;
+          } else {
+            f = f[1];
+          }
+          return f;
+        }).join(" / ") || '';
+
+        if (/\$\$E/.test(targetName)) {
+          targetName = 'fulldisplay.' + targetName.match(/\$\$E(.*)/)[1].trim();
+        }
+        if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
+          targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
+        }
+        if (/Campusnetz (.*?):/.test(facility)) {
+          facility = facility.match(/Campusnetz (.*?):/)[1].trim();
+        }
+        if (/nicht am campus/i.test(targetName)) {
+          return null;
+        }
+
+        return {
+          target_url: m.link,
+          facility: facility,
+          target_name: targetName
+        };
+      }).filter(function (f) {
+        return f !== null;
+      });
+
+      if (getItData) {
+        getItData.forEach(function (getIt) {
+          if (/sfx/.test(getIt.target_url)) {
+            _helper2.default.http.get("https://libis.celik.be", {
+              //Helper.http.get("http://127.0.0.1:3000", {
+              headers: {
+                'Access-Control-Allow-Origin': '*'
+              },
+              params: {
+                ip: self.ipAddress,
+                url: getIt.target_url
+              }
+            }).then(function (rawTargets) {
+              var data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
+              if (data) {
+                self.targets = data;
+              }
+            }).catch(function (e) {
+              console.log(e);
+            });
+          } else {
+            var data = Object.assign({}, self.targets, self.normalizeTargets([getIt]));
+            if (data) {
+              self.targets = data;
+            }
+          }
+        });
+      }
+    }
+
+    /**
+     * Get the targetUrls resolve them and normalize the result
+     * @param {context} self 
+     */
+
+  }, {
+    key: 'resolveAndNormalizeTargetUrls',
+    value: function resolveAndNormalizeTargetUrls(self) {
+      self.targetsUrls.forEach(function (targetsUrl) {
+        _helper2.default.http.get(targetsUrl).then(function (rawTargets) {
+          if (rawTargets.data && rawTargets.data.length > 0) {
+            var data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
+            if (data) {
+              self.targets = data;
+            }
+          }
+        });
+      });
+    }
+
+    /**
+     * Normalize all targetUrls. 
+     * Group them together on facility and create proxy urls
+     * @param {arrar of targetUrls} targets 
+     */
+
   }, {
     key: 'normalizeTargets',
     value: function normalizeTargets(targets) {
-      var _this = this;
+      var _this2 = this;
 
       var self = this;
       var normalizedTargets = {};
@@ -930,7 +984,7 @@ var SfxLinksController = function () {
       if (targets) {
         targets.reduce(function (t, c) {
           var d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
-          c['target_url_proxy'] = _this.proxyUrl(c['target_url'], c.facility);
+          c['target_url_proxy'] = _this2.proxyUrl(c['target_url'], c.facility);
           d.push(c);
           t[c.facility] = d;
 
@@ -939,14 +993,27 @@ var SfxLinksController = function () {
       }
       return normalizedTargets;
     }
+
+    /**
+     * Prepare for openURL lookup on sfxService from advesta
+     */
+
   }, {
     key: 'proxyUrl',
+
+
+    /**
+     * Proxy urls and cleanup in needed.
+     * When url belongs to a proxyable facility
+     * @param {string} url   
+     * @param {string} facility 
+     */
     value: function proxyUrl(url, facility) {
       var currentHost = window.location.host;
       var ip = this.ipAddress.split('.');
       var inRange = ip[0] == '147' && ip[1] == '88' && parseInt(ip[2], 10) >= 207 && parseInt(ip[2], 10) <= 254 ? true : false;
 
-      url = url.replace(/^https:\/\/ezproxy.unilu.chhttp/, 'https://ezproxy.unilu.ch/login?url=http');
+      url = url ? url.replace(/^https:\/\/ezproxy.unilu.chhttp/, 'https://ezproxy.unilu.ch/login?url=http') : '';
 
       //if (!/ezproxy.unilu.ch/.test(currentHost) && /zhb|uni|ph/.test(facility.toLowerCase()) && !inRange) {
       //if (/zhb|uni|ph/.test(facility.toLowerCase())) {
@@ -960,15 +1027,26 @@ var SfxLinksController = function () {
 
       return url;
     }
+
+    /**
+     * @deprecated
+     */
+
   }, {
     key: 'targetsUrls',
     get: function get() {
-      var _this2 = this;
+      var _this3 = this;
 
+      //return this.openurl.map(m => (`${this.lookupURL}?type=targets&sourceURL=${encodeURIComponent(m)}&proxySuffix=${encodeURIComponent(this.proxySuffix)}`));
       return this.openurl.map(function (m) {
-        return _this2.lookupURL + '?type=targets&sourceURL=' + encodeURIComponent(m) + '&proxySuffix=' + encodeURIComponent(_this2.proxySuffix);
+        return _this3.lookupURL + '?ip=' + _this3.ipAddress + '&url=' + encodeURIComponent(m);
       });
     }
+
+    /**
+     * Extract all openURLs from item.delivery.link and item.linkElement.links
+     */
+
   }, {
     key: 'openurl',
     get: function get() {
@@ -1014,7 +1092,8 @@ var SfxLinksController = function () {
   }, {
     key: 'lookupURL',
     get: function get() {
-      return document.location.protocol + '//primo.advesta.com/index.php';
+      //return document.location.protocol + '//primo.advesta.com/index.php';
+      return 'https://libis.celik.be'; //'http://127.0.0.1:3000'
     }
   }]);
 
