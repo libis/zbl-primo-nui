@@ -875,7 +875,6 @@ var SfxLinksController = function () {
   }, {
     key: 'findGetIt1TargetUrlsAndNormalize',
     value: function findGetIt1TargetUrlsAndNormalize(self) {
-      console.log(self.item.delivery.GetIt1);
       var getItData = (self.item.delivery.GetIt1.filter(function (f) {
         return (/^online resource|remote search resource/i.test(f.category.toLowerCase())
         );
@@ -920,8 +919,7 @@ var SfxLinksController = function () {
       if (getItData) {
         getItData.forEach(function (getIt) {
           if (/sfx/.test(getIt.target_url)) {
-            _helper2.default.http.get("https://libis.celik.be", {
-              //Helper.http.get("http://127.0.0.1:3000", {
+            _helper2.default.http.get(lookupURL, {
               headers: {
                 'Access-Control-Allow-Origin': '*'
               },
@@ -932,6 +930,7 @@ var SfxLinksController = function () {
             }).then(function (rawTargets) {
               var data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
               if (data) {
+                console.log('Adding target link from GetIt1');
                 self.targets = data;
               }
             }).catch(function (e) {
@@ -940,6 +939,7 @@ var SfxLinksController = function () {
           } else {
             var data = Object.assign({}, self.targets, self.normalizeTargets([getIt]));
             if (data) {
+              console.log('Adding target link from GetIt1');
               self.targets = data;
             }
           }
@@ -960,11 +960,45 @@ var SfxLinksController = function () {
           if (rawTargets.data && rawTargets.data.length > 0) {
             var data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
             if (data) {
+              console.log('Adding target link from OpenUrl');
               self.targets = data;
             }
           }
         });
       });
+    }
+  }, {
+    key: 'reClassify',
+    value: function reClassify(facility, targetName, targetUrl) {
+      console.log(targetUrl);
+      if (/http:\/\/site.ebrary.com\/lib\/zhbluzern\//.test(targetUrl)) {
+        facility = 'ZHB / Uni / PH';
+        targetName = 'Ebrary';
+        targetUrl = targetUrl;
+      } else if (/www.dibizentral.ch/.test(targetUrl)) {
+        facility = '';
+        targetName = 'DiBiZentral';
+        targetUrl = targetUrl;
+        //} else if (/univportal.naxosmusiclibrary.com/.test(targetUrl)) {
+      } else if (/naxosmusiclibrary.com/.test(targetUrl)) {
+        facility = 'HSLU';
+        targetName = 'Naxos Music Library';
+        targetUrl = targetUrl;
+      } else if (/imslp.org/.test(targetUrl)) {
+        facility = '';
+        targetName = 'International Music Score Library Project';
+        targetUrl = targetUrl;
+      } else if (/rzblx10.uni-regensburg.de/.test(targetUrl)) {
+        facility = 'ZHB / Uni / PH';
+        targetName = 'Datenbank-Infosystem';
+        targetUrl = targetUrl;
+      }
+
+      return {
+        target_url: targetUrl,
+        facility: facility,
+        target_name: targetName
+      };
     }
 
     /**
@@ -983,6 +1017,8 @@ var SfxLinksController = function () {
 
       if (targets) {
         targets.reduce(function (t, c) {
+          c = self.reClassify(c.facility, c.target_name, c.target_url);
+
           var d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
           c['target_url_proxy'] = _this2.proxyUrl(c['target_url'], c.facility);
           d.push(c);
@@ -1027,11 +1063,6 @@ var SfxLinksController = function () {
 
       return url;
     }
-
-    /**
-     * @deprecated
-     */
-
   }, {
     key: 'targetsUrls',
     get: function get() {
@@ -1079,21 +1110,10 @@ var SfxLinksController = function () {
       return list;
     }
   }, {
-    key: 'proxySuffix',
-    get: function get() {
-      var currentHost = window.location.host;
-      var proxySuffix = '';
-      if (currentHost.match(/exlibrisgroup.com/g) != null) {
-        proxySuffix = currentHost.replace(/.+\.exlibrisgroup\.com/g, '');
-      }
-
-      return proxySuffix;
-    }
-  }, {
     key: 'lookupURL',
     get: function get() {
-      //return document.location.protocol + '//primo.advesta.com/index.php';
-      return 'https://libis.celik.be'; //'http://127.0.0.1:3000'
+      //return 'https://libis.celik.be'; 
+      return 'http://127.0.0.1:3000';
     }
   }]);
 

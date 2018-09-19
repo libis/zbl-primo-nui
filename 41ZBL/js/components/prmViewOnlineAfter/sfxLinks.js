@@ -70,7 +70,6 @@ class SfxLinksController {
    * @param {context} self 
    */
   findGetIt1TargetUrlsAndNormalize(self) {
-    console.log(self.item.delivery.GetIt1);
     let getItData = (self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase()))
         .map(m => m.links)[0] || [])
       .map(m => {
@@ -110,8 +109,7 @@ class SfxLinksController {
     if (getItData) {
       getItData.forEach(getIt => {
         if (/sfx/.test(getIt.target_url)) {
-          Helper.http.get("https://libis.celik.be", {
-            //Helper.http.get("http://127.0.0.1:3000", {
+          Helper.http.get(lookupURL, {
             headers: {
               'Access-Control-Allow-Origin': '*'
             },
@@ -122,6 +120,7 @@ class SfxLinksController {
           }).then(rawTargets => {
             let data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
             if (data) {
+              console.log('Adding target link from GetIt1');
               self.targets = data;
             }
           }).catch(e => {
@@ -130,6 +129,7 @@ class SfxLinksController {
         } else {
           let data = Object.assign({}, self.targets, self.normalizeTargets([getIt]));
           if (data) {
+            console.log('Adding target link from GetIt1');
             self.targets = data;
           }
         }
@@ -147,11 +147,44 @@ class SfxLinksController {
         if (rawTargets.data && rawTargets.data.length > 0) {
           let data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
           if (data) {
+            console.log('Adding target link from OpenUrl');
             self.targets = data;
           }
         }
       });
     });
+  }
+
+  reClassify(facility, targetName, targetUrl) {
+    console.log(targetUrl);
+    if (/http:\/\/site.ebrary.com\/lib\/zhbluzern\//.test(targetUrl)) {
+      facility = 'ZHB / Uni / PH';
+      targetName = 'Ebrary';
+      targetUrl = targetUrl;
+    } else if (/www.dibizentral.ch/.test(targetUrl)) {
+      facility = '';
+      targetName = 'DiBiZentral';
+      targetUrl = targetUrl;
+    //} else if (/univportal.naxosmusiclibrary.com/.test(targetUrl)) {
+    } else if (/naxosmusiclibrary.com/.test(targetUrl)) {
+      facility = 'HSLU';
+      targetName = 'Naxos Music Library';
+      targetUrl = targetUrl;
+    } else if (/imslp.org/.test(targetUrl)) {
+      facility = '';
+      targetName = 'International Music Score Library Project';
+      targetUrl = targetUrl;
+    } else if (/rzblx10.uni-regensburg.de/.test(targetUrl)) {
+      facility = 'ZHB / Uni / PH';
+      targetName = 'Datenbank-Infosystem';
+      targetUrl = targetUrl;
+    }
+
+    return {
+      target_url: targetUrl,
+      facility: facility,
+      target_name: targetName
+    }
   }
 
   /**
@@ -165,6 +198,8 @@ class SfxLinksController {
 
     if (targets) {
       targets.reduce((t, c) => {
+        c = self.reClassify(c.facility, c.target_name, c.target_url);
+
         let d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
         c['target_url_proxy'] = this.proxyUrl(c['target_url'], c.facility);
         d.push(c);
@@ -233,22 +268,9 @@ class SfxLinksController {
     return url;
   }
 
-  /**
-   * @deprecated
-   */
-  get proxySuffix() {
-    let currentHost = window.location.host;
-    let proxySuffix = '';
-    if (currentHost.match(/exlibrisgroup.com/g) != null) {
-      proxySuffix = currentHost.replace(/.+\.exlibrisgroup\.com/g, '');
-    }
-
-    return proxySuffix;
-  }
-
   get lookupURL() {
-    //return document.location.protocol + '//primo.advesta.com/index.php';
-    return 'https://libis.celik.be'; //'http://127.0.0.1:3000'
+    //return 'https://libis.celik.be'; 
+    return 'http://127.0.0.1:3000';
   }
 }
 
