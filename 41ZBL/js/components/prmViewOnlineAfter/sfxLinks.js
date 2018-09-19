@@ -269,8 +269,8 @@ class SfxLinksController {
   }
 
   get lookupURL() {
-    //return 'https://libis.celik.be'; 
-    return 'http://127.0.0.1:3000';
+    return 'https://libis.celik.be'; 
+    //return 'http://127.0.0.1:3000';
   }
 }
 
