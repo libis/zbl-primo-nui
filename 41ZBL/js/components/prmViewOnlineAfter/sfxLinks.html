@@ -1,11 +1,15 @@
 <div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">
   <p class="fulltext-item sfx-links-facility">
-      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> {{targetFacility}}
+      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> 
+      <span ng-bind-html="targetFacility"></span>
   </p>
   <div ng-repeat="target in normalizedTargets">
     <p class="fulltext-item sfx-links-target">
       <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>
-      <a href="{{target.target_url_proxy}}" target="_blank">{{(target.target_name | translate)}}</a>
+      <a href="{{target.target_url_proxy}}" target="_blank">
+          <span ng-bind-html="(target.target_name | translate)"></span>
+      </a>
+        
     </p>
   </div>
 </div>

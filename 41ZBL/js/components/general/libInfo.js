@@ -14,7 +14,7 @@ class LibInfoController{
   }
 
   get sourceURL() {
-    return encodeURIComponent(`http://ilu.zhbluzern.ch/F?func=library&sub_library=${this.locationCode}`)
+    return `http://ilu.zhbluzern.ch/F?func=library&sub_library=${this.locationCode}`;
   }
 }
 

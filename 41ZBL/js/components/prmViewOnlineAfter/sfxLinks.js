@@ -6,31 +6,44 @@ import Helper from '../../primo-explore-dom/js/primo/explore/helper'
  * @class
  */
 class SfxLinksController {
-  constructor($scope, $translate) {
+  constructor($scope, $translate, $sanitize, $sce, $timeout) {
     let self = this;
     self.scope = $scope;
     self.translate = $translate;
+    self.sanitize = $sanitize;
+    self.timeout = $timeout;
+    self.sce = $sce
     self.targets = {};
+  }
+
+  get lookupURL() {
+    return 'https://libis.celik.be';
+    //return 'http://127.0.0.1:3000';
   }
 
   /**
    * Lifecyle hook for AngularJS
    * Wait for all components are rendered and linked before we lookup and inject the SFX links
    */
-  $postLink() {
-    let self = this;
-    let containers = Primo.explore.components.get('prm-full-view-service-container');
-    if (!self.item && containers && containers.length > 0) {
-      self.item = containers[containers.length - 1].ctrl().item;
-    }
+  $onInit() {
+    this.timeout(() => {
+      let self = this;
 
-    if (!self.item && angular.element(document.querySelector('prm-full-view-service-container'))) {
-      self.item = angular.element(document.querySelector('prm-full-view-service-container')).controller('prm-full-view-service-container').item;
-    }
+      self.item = angular.element(document.querySelector('prm-full-view')).controller('prm-full-view').item;
 
-    Primo.view.then(v => {
-      self.ipAddress = v.ip.address;
-      self.updateTargetsWhenOpenURLAvailable();
+      // let containers = Primo.explore.components.get('prm-full-view-service-container');
+      // if (!self.item && containers && containers.length > 0) {
+      //   self.item = containers[containers.length - 1].ctrl().item;
+      // }
+
+      // if (!self.item && angular.element(document.querySelector('prm-full-view-service-container'))) {
+      //   self.item = angular.element(document.querySelector('prm-full-view-service-container')).controller('prm-full-view-service-container').item;
+      // }
+
+      Primo.view.then(v => {
+        self.ipAddress = v.ip.address;
+        self.updateTargetsWhenOpenURLAvailable();
+      });
     });
   }
 
@@ -73,6 +86,9 @@ class SfxLinksController {
     let getItData = (self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase()))
         .map(m => m.links)[0] || [])
       .map(m => {
+        if (m.link.length == 0) { //do not bother with empty links
+          return null;
+        }
         let targetName = m.displayText;
         //let translatedFacility = `nui.getit_full.${m.hyperlinkText}`;
 
@@ -109,7 +125,7 @@ class SfxLinksController {
     if (getItData) {
       getItData.forEach(getIt => {
         if (/sfx/.test(getIt.target_url)) {
-          Helper.http.get(lookupURL, {
+          Helper.http.get(this.lookupURL, {
             headers: {
               'Access-Control-Allow-Origin': '*'
             },
@@ -155,8 +171,13 @@ class SfxLinksController {
     });
   }
 
-  reClassify(facility, targetName, targetUrl) {
-    console.log(targetUrl);
+  /**
+   * Rewrite metadata according to url
+   * @param {String} facility 
+   * @param {String} targetName 
+   * @param {String} targetUrl 
+   */
+  reClassify(facility, targetName, targetUrl) {    
     if (/http:\/\/site.ebrary.com\/lib\/zhbluzern\//.test(targetUrl)) {
       facility = 'ZHB / Uni / PH';
       targetName = 'Ebrary';
@@ -165,7 +186,6 @@ class SfxLinksController {
       facility = '';
       targetName = 'DiBiZentral';
       targetUrl = targetUrl;
-    //} else if (/univportal.naxosmusiclibrary.com/.test(targetUrl)) {
     } else if (/naxosmusiclibrary.com/.test(targetUrl)) {
       facility = 'HSLU';
       targetName = 'Naxos Music Library';
@@ -198,7 +218,7 @@ class SfxLinksController {
 
     if (targets) {
       targets.reduce((t, c) => {
-        c = self.reClassify(c.facility, c.target_name, c.target_url);
+        //c = self.reClassify(c.facility, c.target_name, c.target_url);
 
         let d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
         c['target_url_proxy'] = this.proxyUrl(c['target_url'], c.facility);
@@ -267,14 +287,9 @@ class SfxLinksController {
 
     return url;
   }
-
-  get lookupURL() {
-    return 'https://libis.celik.be'; 
-    //return 'http://127.0.0.1:3000';
-  }
 }
 
-SfxLinksController.$inject = ['$scope', '$translate'];
+SfxLinksController.$inject = ['$scope', '$translate', '$sanitize', '$sce', '$timeout'];
 
 export let sfxLinksConfig = {
   bindings: {

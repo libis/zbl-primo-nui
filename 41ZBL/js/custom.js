@@ -161,7 +161,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var libInfoHTML = '<a href="http://primo.advesta.com/index.php?type=getLibURL&sourceURL={{$ctrl.sourceURL}}" target="_blank">\n  <img ng-src="{{$ctrl.iconUrl}}" title="{{(\'nui.customizing.idslu.informationtooltip\' | translate)}}" border="0">\n</a>\n';
+var libInfoHTML = '<a ng-href="{{$ctrl.sourceURL}}" target="_blank">\n  <img ng-src="{{$ctrl.iconUrl}}" title="{{(\'nui.customizing.idslu.informationtooltip\' | translate)}}" border="0">\n</a>\n';
 
 var LibInfoController = function () {
   function LibInfoController($translate) {
@@ -181,7 +181,7 @@ var LibInfoController = function () {
   _createClass(LibInfoController, [{
     key: 'sourceURL',
     get: function get() {
-      return encodeURIComponent('http://ilu.zhbluzern.ch/F?func=library&sub_library=' + this.locationCode);
+      return 'http://ilu.zhbluzern.ch/F?func=library&sub_library=' + this.locationCode;
     }
   }]);
 
@@ -791,44 +791,54 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var sfxLinksHTML = '<div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">\n  <p class="fulltext-item sfx-links-facility">\n      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> {{targetFacility}}\n  </p>\n  <div ng-repeat="target in normalizedTargets">\n    <p class="fulltext-item sfx-links-target">\n      <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>\n      <a href="{{target.target_url_proxy}}" target="_blank">{{(target.target_name | translate)}}</a>\n    </p>\n  </div>\n</div>\n\n<p class="fulltext-item sfx-links-on-campus">\n  <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>\n  <span class="sfx-links-on-campus-url">\n        <a href="http://www.zhbluzern.ch/index.php?id=3992" target="_blank">\n        <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>\n  </a>\n  </span>\n\n  <zbl-link class="idslu-ehelp" url="{{(\'nui.customizing.idslu.ehelpurl\' | translate)}}" text="{{(\'nui.customizing.idslu.ehelptext\' | translate)}}"></zbl-link>\n  <zbl-link class="idslu-feedback" url="{{(\'nui.customizing.idslu.feedbackurl\' | translate)}}" text="{{(\'nui.customizing.idslu.feedbacktext\' | translate)}}"></zbl-link>\n</p>\n';
+var sfxLinksHTML = '<div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">\n  <p class="fulltext-item sfx-links-facility">\n      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> \n      <span ng-bind-html="targetFacility"></span>\n  </p>\n  <div ng-repeat="target in normalizedTargets">\n    <p class="fulltext-item sfx-links-target">\n      <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>\n      <a href="{{target.target_url_proxy}}" target="_blank">\n          <span ng-bind-html="(target.target_name | translate)"></span>\n      </a>\n        \n    </p>\n  </div>\n</div>\n\n<p class="fulltext-item sfx-links-on-campus">\n  <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>\n  <span class="sfx-links-on-campus-url">\n        <a href="http://www.zhbluzern.ch/index.php?id=3992" target="_blank">\n        <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>\n  </a>\n  </span>\n\n  <zbl-link class="idslu-ehelp" url="{{(\'nui.customizing.idslu.ehelpurl\' | translate)}}" text="{{(\'nui.customizing.idslu.ehelptext\' | translate)}}"></zbl-link>\n  <zbl-link class="idslu-feedback" url="{{(\'nui.customizing.idslu.feedbackurl\' | translate)}}" text="{{(\'nui.customizing.idslu.feedbacktext\' | translate)}}"></zbl-link>\n</p>\n';
 
 /**
  * Controller class to find and parse sfx resources
  * @class
  */
 var SfxLinksController = function () {
-  function SfxLinksController($scope, $translate) {
+  function SfxLinksController($scope, $translate, $sanitize, $sce, $timeout) {
     _classCallCheck(this, SfxLinksController);
 
     var self = this;
     self.scope = $scope;
     self.translate = $translate;
+    self.sanitize = $sanitize;
+    self.timeout = $timeout;
+    self.sce = $sce;
     self.targets = {};
   }
 
-  /**
-   * Lifecyle hook for AngularJS
-   * Wait for all components are rendered and linked before we lookup and inject the SFX links
-   */
-
-
   _createClass(SfxLinksController, [{
-    key: '$postLink',
-    value: function $postLink() {
-      var self = this;
-      var containers = Primo.explore.components.get('prm-full-view-service-container');
-      if (!self.item && containers && containers.length > 0) {
-        self.item = containers[containers.length - 1].ctrl().item;
-      }
+    key: '$onInit',
 
-      if (!self.item && angular.element(document.querySelector('prm-full-view-service-container'))) {
-        self.item = angular.element(document.querySelector('prm-full-view-service-container')).controller('prm-full-view-service-container').item;
-      }
 
-      Primo.view.then(function (v) {
-        self.ipAddress = v.ip.address;
-        self.updateTargetsWhenOpenURLAvailable();
+    /**
+     * Lifecyle hook for AngularJS
+     * Wait for all components are rendered and linked before we lookup and inject the SFX links
+     */
+    value: function $onInit() {
+      var _this = this;
+
+      this.timeout(function () {
+        var self = _this;
+
+        self.item = angular.element(document.querySelector('prm-full-view')).controller('prm-full-view').item;
+
+        // let containers = Primo.explore.components.get('prm-full-view-service-container');
+        // if (!self.item && containers && containers.length > 0) {
+        //   self.item = containers[containers.length - 1].ctrl().item;
+        // }
+
+        // if (!self.item && angular.element(document.querySelector('prm-full-view-service-container'))) {
+        //   self.item = angular.element(document.querySelector('prm-full-view-service-container')).controller('prm-full-view-service-container').item;
+        // }
+
+        Primo.view.then(function (v) {
+          self.ipAddress = v.ip.address;
+          self.updateTargetsWhenOpenURLAvailable();
+        });
       });
     }
 
@@ -840,7 +850,7 @@ var SfxLinksController = function () {
   }, {
     key: 'updateTargetsWhenOpenURLAvailable',
     value: function updateTargetsWhenOpenURLAvailable() {
-      var _this = this;
+      var _this2 = this;
 
       var self = this;
       var watcher = self.scope.$watch(function () {
@@ -856,10 +866,10 @@ var SfxLinksController = function () {
       }, function (n, o) {
         if (n == true) {
           //Resolve target urls extracted from the openURL
-          _this.resolveAndNormalizeTargetUrls(self);
+          _this2.resolveAndNormalizeTargetUrls(self);
 
           //Normalize GetIt1 links REMARK: not sure if we should resolve these if target URLs exist
-          _this.findGetIt1TargetUrlsAndNormalize(self);
+          _this2.findGetIt1TargetUrlsAndNormalize(self);
 
           watcher();
         }
@@ -875,12 +885,18 @@ var SfxLinksController = function () {
   }, {
     key: 'findGetIt1TargetUrlsAndNormalize',
     value: function findGetIt1TargetUrlsAndNormalize(self) {
+      var _this3 = this;
+
       var getItData = (self.item.delivery.GetIt1.filter(function (f) {
         return (/^online resource|remote search resource/i.test(f.category.toLowerCase())
         );
       }).map(function (m) {
         return m.links;
       })[0] || []).map(function (m) {
+        if (m.link.length == 0) {
+          //do not bother with empty links
+          return null;
+        }
         var targetName = m.displayText;
         //let translatedFacility = `nui.getit_full.${m.hyperlinkText}`;
 
@@ -919,7 +935,7 @@ var SfxLinksController = function () {
       if (getItData) {
         getItData.forEach(function (getIt) {
           if (/sfx/.test(getIt.target_url)) {
-            _helper2.default.http.get(lookupURL, {
+            _helper2.default.http.get(_this3.lookupURL, {
               headers: {
                 'Access-Control-Allow-Origin': '*'
               },
@@ -967,10 +983,17 @@ var SfxLinksController = function () {
         });
       });
     }
+
+    /**
+     * Rewrite metadata according to url
+     * @param {String} facility 
+     * @param {String} targetName 
+     * @param {String} targetUrl 
+     */
+
   }, {
     key: 'reClassify',
     value: function reClassify(facility, targetName, targetUrl) {
-      console.log(targetUrl);
       if (/http:\/\/site.ebrary.com\/lib\/zhbluzern\//.test(targetUrl)) {
         facility = 'ZHB / Uni / PH';
         targetName = 'Ebrary';
@@ -979,7 +1002,6 @@ var SfxLinksController = function () {
         facility = '';
         targetName = 'DiBiZentral';
         targetUrl = targetUrl;
-        //} else if (/univportal.naxosmusiclibrary.com/.test(targetUrl)) {
       } else if (/naxosmusiclibrary.com/.test(targetUrl)) {
         facility = 'HSLU';
         targetName = 'Naxos Music Library';
@@ -1010,17 +1032,17 @@ var SfxLinksController = function () {
   }, {
     key: 'normalizeTargets',
     value: function normalizeTargets(targets) {
-      var _this2 = this;
+      var _this4 = this;
 
       var self = this;
       var normalizedTargets = {};
 
       if (targets) {
         targets.reduce(function (t, c) {
-          c = self.reClassify(c.facility, c.target_name, c.target_url);
+          //c = self.reClassify(c.facility, c.target_name, c.target_url);
 
           var d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
-          c['target_url_proxy'] = _this2.proxyUrl(c['target_url'], c.facility);
+          c['target_url_proxy'] = _this4.proxyUrl(c['target_url'], c.facility);
           d.push(c);
           t[c.facility] = d;
 
@@ -1064,13 +1086,19 @@ var SfxLinksController = function () {
       return url;
     }
   }, {
+    key: 'lookupURL',
+    get: function get() {
+      return 'https://libis.celik.be';
+      //return 'http://127.0.0.1:3000';
+    }
+  }, {
     key: 'targetsUrls',
     get: function get() {
-      var _this3 = this;
+      var _this5 = this;
 
       //return this.openurl.map(m => (`${this.lookupURL}?type=targets&sourceURL=${encodeURIComponent(m)}&proxySuffix=${encodeURIComponent(this.proxySuffix)}`));
       return this.openurl.map(function (m) {
-        return _this3.lookupURL + '?ip=' + _this3.ipAddress + '&url=' + encodeURIComponent(m);
+        return _this5.lookupURL + '?ip=' + _this5.ipAddress + '&url=' + encodeURIComponent(m);
       });
     }
 
@@ -1109,18 +1137,12 @@ var SfxLinksController = function () {
 
       return list;
     }
-  }, {
-    key: 'lookupURL',
-    get: function get() {
-      return 'https://libis.celik.be';
-      //return 'http://127.0.0.1:3000';
-    }
   }]);
 
   return SfxLinksController;
 }();
 
-SfxLinksController.$inject = ['$scope', '$translate'];
+SfxLinksController.$inject = ['$scope', '$translate', '$sanitize', '$sce', '$timeout'];
 
 var sfxLinksConfig = exports.sfxLinksConfig = {
   bindings: {
