@@ -18,28 +18,17 @@ class SfxLinksController {
 
   get lookupURL() {
     return 'https://libis.celik.be';
-    //return 'http://127.0.0.1:3000';
   }
 
   /**
    * Lifecyle hook for AngularJS
-   * Wait for all components are rendered and linked before we lookup and inject the SFX links
+   * Wait for all components to be rendered and linked before we lookup and inject the SFX links
    */
   $onInit() {
     this.timeout(() => {
       let self = this;
 
       self.item = angular.element(document.querySelector('prm-full-view')).controller('prm-full-view').item;
-
-      // let containers = Primo.explore.components.get('prm-full-view-service-container');
-      // if (!self.item && containers && containers.length > 0) {
-      //   self.item = containers[containers.length - 1].ctrl().item;
-      // }
-
-      // if (!self.item && angular.element(document.querySelector('prm-full-view-service-container'))) {
-      //   self.item = angular.element(document.querySelector('prm-full-view-service-container')).controller('prm-full-view-service-container').item;
-      // }
-
       Primo.view.then(v => {
         self.ipAddress = v.ip.address;
         self.updateTargetsWhenOpenURLAvailable();
@@ -65,12 +54,14 @@ class SfxLinksController {
         return false;
       }
     }, (n, o) => {
-      if (n == true) {
-        //Resolve target urls extracted from the openURL
-        this.resolveAndNormalizeTargetUrls(self);
 
-        //Normalize GetIt1 links REMARK: not sure if we should resolve these if target URLs exist
+      if (n == true) {
+        //order is important
+        //Normalize GetIt1 links REMARK
         this.findGetIt1TargetUrlsAndNormalize(self);
+
+        //Overwrite GetIt1 resolve target urls extracted from the openURL
+        this.resolveAndNormalizeTargetUrls(self);
 
         watcher();
       }
@@ -101,6 +92,10 @@ class SfxLinksController {
           }
           return f;
         }).join(" / ") || '';
+
+        if (Object.keys(self.item.pnx.addata).includes("lad10")) {
+          facility = self.item.pnx.addata.lad10;
+        }
 
         if (/\$\$E/.test(targetName)) {
           targetName = `fulldisplay.${targetName.match(/\$\$E(.*)/)[1].trim()}`;
@@ -161,7 +156,8 @@ class SfxLinksController {
     self.targetsUrls.forEach(targetsUrl => {
       Helper.http.get(targetsUrl).then(rawTargets => {
         if (rawTargets.data && rawTargets.data.length > 0) {
-          let data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
+          //let data = Object.assign({}, self.targets, self.normalizeTargets(rawTargets.data));
+          let data = self.normalizeTargets(rawTargets.data);
           if (data) {
             console.log('Adding target link from OpenUrl');
             self.targets = data;
@@ -177,7 +173,7 @@ class SfxLinksController {
    * @param {String} targetName 
    * @param {String} targetUrl 
    */
-  reClassify(facility, targetName, targetUrl) {    
+  reClassify(facility, targetName, targetUrl) {
     if (/http:\/\/site.ebrary.com\/lib\/zhbluzern\//.test(targetUrl)) {
       facility = 'ZHB / Uni / PH';
       targetName = 'Ebrary';
@@ -210,7 +206,7 @@ class SfxLinksController {
   /**
    * Normalize all targetUrls. 
    * Group them together on facility and create proxy urls
-   * @param {arrar of targetUrls} targets 
+   * @param {array of targetUrls} targets 
    */
   normalizeTargets(targets) {
     let self = this;
