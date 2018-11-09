@@ -94,7 +94,7 @@ class SfxLinksController {
         }).join(" / ") || '';
 
         if (Object.keys(self.item.pnx.addata).includes("lad10")) {
-          facility = self.item.pnx.addata.lad10;
+          facility = self.item.pnx.addata.lad10[0];
         }
 
         if (/\$\$E/.test(targetName)) {
