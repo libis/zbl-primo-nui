@@ -18,6 +18,8 @@ class SfxLinksController {
 
   get lookupURL() {
     return 'https://libis.celik.be';
+    //return 'http://147.88.247.124';
+    //return 'http://127.0.0.1:3000';
   }
 
   /**
@@ -224,14 +226,14 @@ class SfxLinksController {
         return t;
       }, normalizedTargets);
     }
+    //console.log(normalizedTargets);
     return normalizedTargets;
   }
 
   /**
    * Prepare for openURL lookup on sfxService from advesta
    */
-  get targetsUrls() {
-    //return this.openurl.map(m => (`${this.lookupURL}?type=targets&sourceURL=${encodeURIComponent(m)}&proxySuffix=${encodeURIComponent(this.proxySuffix)}`));
+  get targetsUrls() {    
     return this.openurl.map(m => (`${this.lookupURL}?ip=${this.ipAddress}&url=${encodeURIComponent(m)}`));
   }
 
@@ -283,7 +285,35 @@ class SfxLinksController {
 
     return url;
   }
+
+
+  valueExistsForObjectPath(object, path){    
+    try {
+      let nodes = path.split('.');      
+      let node = nodes.shift();
+      if ((node) && (object.hasOwnProperty(node))) {
+        if (nodes.length > 0) {
+          return this.valueExistsForObjectPath(object[node], nodes.join('.'));
+        } else {
+          if (Object.keys(object[node]).length > 0) {
+            return true;
+          }
+          return false;
+          //return object[node];
+        }
+      } else {
+        return false;
+        //return undefined;
+      }
+    } catch (e) {
+      console.log(e);
+      return false;
+      //return undefined
+    }
+  }  
 }
+
+
 
 SfxLinksController.$inject = ['$scope', '$translate', '$sanitize', '$sce', '$timeout'];
 

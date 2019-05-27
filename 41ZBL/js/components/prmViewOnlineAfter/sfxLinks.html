@@ -3,14 +3,39 @@
       <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> 
       <span ng-bind-html="targetFacility"></span>
   </p>
-  <div ng-repeat="target in normalizedTargets">
+  <div ng-repeat="target in normalizedTargets">    
     <p class="fulltext-item sfx-links-target">
       <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>
       <a href="{{target.target_url_proxy}}" target="_blank">
           <span ng-bind-html="(target.target_name | translate)"></span>
-      </a>
-        
+      </a>        
+
+      <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.coverage')">
+        <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.coverage')">
+          <span style='font-weight: bold' translate="nui.customizing.idslu.sfxlinks.coverage"></span>
+          <span translate="nui.customizing.idslu.sfxlinks.coverage.available"></span>
+          <span ng-if='$ctrl.valueExistsForObjectPath(target, 'coverage.coverage.year.from')></span>
+            <span translate="nui.customizing.idslu.sfxlinks.coverage.from"></span>
+            <span>{{target.coverage.coverage.year.from}}</span>
+          </span>
+          <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.coverage.year.to')">
+            <span translate="nui.customizing.idslu.sfxlinks.coverage.to"></span>          
+            <span>{{target.coverage.coverage.year.to}}</span>        
+          </span>
+        </span>
+        <span ng-if="!$ctrl.valueExistsForObjectPath(target, 'coverage.coverage')">
+         {{target.coverage.coverage.statement}}
+        </span>
+
+        <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.embargo')">
+            <span style='font-weight: bold' translate="nui.customizing.idslu.sfxlinks.embargo"></span>
+            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.status}}"></span>
+            <span>{{target.coverage.embargo.availability.value}}</span>
+            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.unit}}"></span>
+        </span>
+      </span>      
     </p>
+    
   </div>
 </div>
 

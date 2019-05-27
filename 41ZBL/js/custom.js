@@ -45,6 +45,8 @@ var _vScout = require('./components/general/vScout');
 
 var _libInfo = require('./components/general/libInfo');
 
+var _browzine = require('./components/prmSearchResultAvailabilityLineAfterController/browzine');
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var AfterComponents = function () {
@@ -76,7 +78,6 @@ var AfterComponents = function () {
         name: 'zbl-sfx-links',
         config: _sfxLinks.sfxLinksConfig,
         enabled: true,
-        //        appendTo: 'prm-brief-result-container-after',
         appendTo: 'prm-view-online-after',
         enableInView: '.*'
       }, {
@@ -114,7 +115,7 @@ var AfterComponents = function () {
         config: _browseButton.browseButtonConfig,
         enabled: true,
         appendTo: 'prm-search-bar-after',
-        enableInView: '.*'
+        enableInView: '^41ZBL'
       }, {
         name: 'zbl-alert-message',
         config: _alertMessage.alertMessageConfig,
@@ -139,6 +140,12 @@ var AfterComponents = function () {
         enabled: true,
         appendTo: null,
         enableInView: '.*'
+      }, {
+        name: 'browzine',
+        config: _browzine.browzineConfig,
+        enabled: true,
+        appendTo: 'prm-search-result-availability-line-after',
+        enableInView: '^41ZBL'
       }].filter(function (component) {
         return component.enabled && new RegExp(component.enableInView).test(window.appConfig.vid);
       });
@@ -150,7 +157,7 @@ var AfterComponents = function () {
 
 exports.default = AfterComponents;
 
-},{"./components/general/libInfo":2,"./components/general/links":3,"./components/general/locationLinks":4,"./components/general/vScout":5,"./components/prmBriefResultAfter/altmetric":6,"./components/prmFacetAfter/searchAlso":7,"./components/prmFacetExactAfter/searchAlsoBody":8,"./components/prmSearchBarAfter/browseButton":9,"./components/prmSearchResultThumbnailContainerAfter/pnxXml":10,"./components/prmTopBarBefore/alertMessage":11,"./components/prmTopBarBefore/finesMessage":12,"./components/prmViewOnlineAfter/sfxLinks.js":13,"./utils":24}],2:[function(require,module,exports){
+},{"./components/general/libInfo":2,"./components/general/links":3,"./components/general/locationLinks":4,"./components/general/vScout":5,"./components/prmBriefResultAfter/altmetric":6,"./components/prmFacetAfter/searchAlso":7,"./components/prmFacetExactAfter/searchAlsoBody":8,"./components/prmSearchBarAfter/browseButton":9,"./components/prmSearchResultAvailabilityLineAfterController/browzine":10,"./components/prmSearchResultThumbnailContainerAfter/pnxXml":11,"./components/prmTopBarBefore/alertMessage":12,"./components/prmTopBarBefore/finesMessage":13,"./components/prmViewOnlineAfter/sfxLinks.js":14,"./utils":25}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -610,6 +617,54 @@ var browseButtonConfig = exports.browseButtonConfig = {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var browzineHTML = 'browzine';
+
+var BrowzineController = function BrowzineController($scope) {
+    _classCallCheck(this, BrowzineController);
+
+    var self = this;
+    var item = self.parentCtrl.parentCtrl.result;
+
+    self.recordid = '';
+
+    if (item && item.pnx && item.pnx.addata) {
+        self.recordid = item.pnx.control.recordid[0];
+    }
+
+    var browzineWatcher = $scope.$watch(function () {
+        return _typeof(browzine.primo) === 'object';
+    }, function (n, o) {
+        if (n == true) {
+            console.log("trigger browzine for:", self.recordid);
+            var scope = {
+                $ctrl: self.parentCtrl
+            };
+            window.browzine.primo.searchResult(scope);
+            browzineWatcher();
+        }
+    });
+};
+
+BrowzineController.$inject = ['$scope'];
+
+var browzineConfig = exports.browzineConfig = {
+    bindings: {
+        parentCtrl: '<'
+    },
+    controller: BrowzineController
+};
+
+},{}],11:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
@@ -712,7 +767,7 @@ var pnxXmlConfig = exports.pnxXmlConfig = {
   template: pnxXmlHTML
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -735,7 +790,7 @@ var alertMessageConfig = exports.alertMessageConfig = {
   template: ''
 };
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -773,7 +828,7 @@ var finesMessageConfig = exports.finesMessageConfig = {
   template: ''
 };
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -791,7 +846,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var sfxLinksHTML = '<div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">\n  <p class="fulltext-item sfx-links-facility">\n      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> \n      <span ng-bind-html="targetFacility"></span>\n  </p>\n  <div ng-repeat="target in normalizedTargets">\n    <p class="fulltext-item sfx-links-target">\n      <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>\n      <a href="{{target.target_url_proxy}}" target="_blank">\n          <span ng-bind-html="(target.target_name | translate)"></span>\n      </a>\n        \n    </p>\n  </div>\n</div>\n\n<p class="fulltext-item sfx-links-on-campus">\n  <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>\n  <span class="sfx-links-on-campus-url">\n        <a href="http://www.zhbluzern.ch/index.php?id=3992" target="_blank">\n        <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>\n  </a>\n  </span>\n\n  <zbl-link class="idslu-ehelp" url="{{(\'nui.customizing.idslu.ehelpurl\' | translate)}}" text="{{(\'nui.customizing.idslu.ehelptext\' | translate)}}"></zbl-link>\n  <zbl-link class="idslu-feedback" url="{{(\'nui.customizing.idslu.feedbackurl\' | translate)}}" text="{{(\'nui.customizing.idslu.feedbacktext\' | translate)}}"></zbl-link>\n</p>\n';
+var sfxLinksHTML = '<div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">\n  <p class="fulltext-item sfx-links-facility">\n      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> \n      <span ng-bind-html="targetFacility"></span>\n  </p>\n  <div ng-repeat="target in normalizedTargets">    \n    <p class="fulltext-item sfx-links-target">\n      <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>\n      <a href="{{target.target_url_proxy}}" target="_blank">\n          <span ng-bind-html="(target.target_name | translate)"></span>\n      </a>        \n\n      <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n        <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n          <span style=\'font-weight: bold\' translate="nui.customizing.idslu.sfxlinks.coverage"></span>\n          <span translate="nui.customizing.idslu.sfxlinks.coverage.available"></span>\n          <span ng-if=\'$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.year.from\')></span>\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.from"></span>\n            <span>{{target.coverage.coverage.year.from}}</span>\n          </span>\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.year.to\')">\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.to"></span>          \n            <span>{{target.coverage.coverage.year.to}}</span>        \n          </span>\n        </span>\n        <span ng-if="!$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n         {{target.coverage.coverage.statement}}\n        </span>\n\n        <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.embargo\')">\n            <span style=\'font-weight: bold\' translate="nui.customizing.idslu.sfxlinks.embargo"></span>\n            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.status}}"></span>\n            <span>{{target.coverage.embargo.availability.value}}</span>\n            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.unit}}"></span>\n        </span>\n      </span>      \n    </p>\n    \n  </div>\n</div>\n\n<p class="fulltext-item sfx-links-on-campus">\n  <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>\n  <span class="sfx-links-on-campus-url">\n        <a href="http://www.zhbluzern.ch/index.php?id=3992" target="_blank">\n        <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>\n  </a>\n  </span>\n\n  <zbl-link class="idslu-ehelp" url="{{(\'nui.customizing.idslu.ehelpurl\' | translate)}}" text="{{(\'nui.customizing.idslu.ehelptext\' | translate)}}"></zbl-link>\n  <zbl-link class="idslu-feedback" url="{{(\'nui.customizing.idslu.feedbackurl\' | translate)}}" text="{{(\'nui.customizing.idslu.feedbacktext\' | translate)}}"></zbl-link>\n</p>\n';
 
 /**
  * Controller class to find and parse sfx resources
@@ -1046,6 +1101,7 @@ var SfxLinksController = function () {
           return t;
         }, normalizedTargets);
       }
+      //console.log(normalizedTargets);
       return normalizedTargets;
     }
 
@@ -1083,16 +1139,43 @@ var SfxLinksController = function () {
       return url;
     }
   }, {
+    key: 'valueExistsForObjectPath',
+    value: function valueExistsForObjectPath(object, path) {
+      try {
+        var nodes = path.split('.');
+        var node = nodes.shift();
+        if (node && object.hasOwnProperty(node)) {
+          if (nodes.length > 0) {
+            return this.valueExistsForObjectPath(object[node], nodes.join('.'));
+          } else {
+            if (Object.keys(object[node]).length > 0) {
+              return true;
+            }
+            return false;
+            //return object[node];
+          }
+        } else {
+          return false;
+          //return undefined;
+        }
+      } catch (e) {
+        console.log(e);
+        return false;
+        //return undefined
+      }
+    }
+  }, {
     key: 'lookupURL',
     get: function get() {
       return 'https://libis.celik.be';
+      //return 'http://147.88.247.124';
+      //return 'http://127.0.0.1:3000';
     }
   }, {
     key: 'targetsUrls',
     get: function get() {
       var _this5 = this;
 
-      //return this.openurl.map(m => (`${this.lookupURL}?type=targets&sourceURL=${encodeURIComponent(m)}&proxySuffix=${encodeURIComponent(this.proxySuffix)}`));
       return this.openurl.map(function (m) {
         return _this5.lookupURL + '?ip=' + _this5.ipAddress + '&url=' + encodeURIComponent(m);
       });
@@ -1148,7 +1231,7 @@ var sfxLinksConfig = exports.sfxLinksConfig = {
   template: sfxLinksHTML
 };
 
-},{"../../primo-explore-dom/js/primo/explore/helper":18}],14:[function(require,module,exports){
+},{"../../primo-explore-dom/js/primo/explore/helper":19}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1244,7 +1327,7 @@ exports.default = MessageService;
 
 MessageService.$inject = ['$rootScope', '$compile', '$mdToast', '$sce', '$translate', '$timeout'];
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1405,7 +1488,7 @@ var Primo = function () {
 
 exports.default = Primo;
 
-},{"./primo/explore":16,"./primo/explore/helper":18,"./primo/facets":19,"./primo/records":20,"./primo/user":21,"./primo/view":22}],16:[function(require,module,exports){
+},{"./primo/explore":17,"./primo/explore/helper":19,"./primo/facets":20,"./primo/records":21,"./primo/user":22,"./primo/view":23}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1462,7 +1545,7 @@ var Explore = function () {
 
 exports.default = Explore;
 
-},{"./explore/components":17,"./explore/helper":18}],17:[function(require,module,exports){
+},{"./explore/components":18,"./explore/helper":19}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1582,7 +1665,7 @@ var Components = function () {
 
 exports.default = Components;
 
-},{"../../vendor/css-selector-generator.js":23,"./helper":18}],18:[function(require,module,exports){
+},{"../../vendor/css-selector-generator.js":24,"./helper":19}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1859,7 +1942,7 @@ var Helper = function () {
 
 exports.default = Helper;
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1916,7 +1999,7 @@ var Facets = function () {
 
 exports.default = Facets;
 
-},{"./explore/components":17,"./explore/helper":18}],20:[function(require,module,exports){
+},{"./explore/components":18,"./explore/helper":19}],21:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1976,7 +2059,7 @@ var Records = function () {
 
 exports.default = Records;
 
-},{"./explore/components":17,"./explore/helper":18}],21:[function(require,module,exports){
+},{"./explore/components":18,"./explore/helper":19}],22:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2035,7 +2118,7 @@ var User = function () {
 
 exports.default = User;
 
-},{"./explore/helper":18}],22:[function(require,module,exports){
+},{"./explore/helper":19}],23:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2071,7 +2154,7 @@ var View = function View() {
 
 exports.default = View;
 
-},{"./explore/helper":18}],23:[function(require,module,exports){
+},{"./explore/helper":19}],24:[function(require,module,exports){
 'use strict';
 
 (function () {
@@ -2387,7 +2470,7 @@ exports.default = View;
   }
 }).call(undefined);
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2402,7 +2485,7 @@ String.prototype.toCamelCase = function () {
   }).join('');
 };
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 
 var _primo = require('./primo-explore-dom/js/primo');
@@ -2474,6 +2557,37 @@ var app = angular.module('viewCustom', ['ngMaterial']).constant('feedbackService
   _helper2.default.loadScript('https://recommender.bibtip.de/js/bibtip_zhb_luzern.js').then(function () {
     console.log('bibtip.js loaded');
   });
+
+  if (window.appConfig.vid.includes('41ZBL')) {
+    var locale = window.appConfig['primo-view']['attributes-map'].interfaceLanguage;
+    ///primo_library/libweb/webservices/rest/v1/translations/41ZBL?lang=de_DE
+    //nui.customization.browzine.journal
+    var locale_text = {
+      'de_DE': {
+        'journal': "View Journal Contents",
+        'issue': "View Issue Contents",
+        'download': "Download PDF"
+      },
+      'en_US': {
+        'journal': "View Journal Contents",
+        'issue': "View Issue Contents",
+        'download': "Download PDF"
+      }
+    };
+
+    window.browzine = {
+      api: "https://public-api.thirdiron.com/public/v1/libraries/1455",
+      apiKey: "d39176de-a559-4e54-801d-2a8eb423a862",
+      journalBrowZineWebLinkText: locale_text[locale]['journal'],
+      articleBrowZineWebLinkText: locale_text[locale]['issue'],
+      articlePDFDownloadLinkEnabled: true,
+      articlePDFDownloadLinkText: locale_text[locale]['download']
+    };
+  }
+
+  _helper2.default.loadScript('https://s3.amazonaws.com/browzine-adapters/primo/browzine-primo-adapter.js').then(function () {
+    console.log('browzine-primo-adapter.js loaded');
+  });
 }).run(['$rootScope', '$location', '$window', function ($rootScope, $location, $window) {
   //send to GA every time the URL changes
   $rootScope.$on('$locationChangeSuccess', function (event) {
@@ -2518,7 +2632,7 @@ Object.keys(afterComponents).forEach(function (component, i) {
   });
 });
 
-},{"./components":1,"./factories/messageService":14,"./primo-explore-dom/js/primo":15,"./primo-explore-dom/js/primo/explore/helper":18}]},{},[25])
+},{"./components":1,"./factories/messageService":15,"./primo-explore-dom/js/primo":16,"./primo-explore-dom/js/primo/explore/helper":19}]},{},[26])
 
 
 //# sourceMappingURL=custom.js.map
