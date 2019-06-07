@@ -91,6 +91,16 @@ let app = angular.module('viewCustom', ['ngMaterial'])
       console.log('browzine-primo-adapter.js loaded');
     });
 
+    //fetch(`http://127.0.0.1:3000/reclassify`).then(response => {
+    fetch(`https://libis.celik.be/reclassify`).then(response => {
+      if (!response.ok) {
+        throw new Error('HTTP error, status = ' + response.status);
+      }
+      return response.json()
+    }).then(data => {
+      console.log("reClassify data loaded");
+      window.reclassifyData = data;
+    });
   }).run(['$rootScope', '$location', '$window', function ($rootScope, $location, $window) {
     //send to GA every time the URL changes
     $rootScope.$on('$locationChangeSuccess', function (event) {

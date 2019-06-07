@@ -1,5 +1,5 @@
 <div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">
-  <p class="fulltext-item sfx-links-facility">
+  <p ng-show="targetFacility.length > 0" class="fulltext-item sfx-links-facility">
       <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> 
       <span ng-bind-html="targetFacility"></span>
   </p>
@@ -14,7 +14,7 @@
         <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.coverage')">
           <span style='font-weight: bold' translate="nui.customizing.idslu.sfxlinks.coverage"></span>
           <span translate="nui.customizing.idslu.sfxlinks.coverage.available"></span>
-          <span ng-if='$ctrl.valueExistsForObjectPath(target, 'coverage.coverage.year.from')></span>
+          <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.coverage.year.from')"></span>
             <span translate="nui.customizing.idslu.sfxlinks.coverage.from"></span>
             <span>{{target.coverage.coverage.year.from}}</span>
           </span>

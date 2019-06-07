@@ -14,6 +14,7 @@ class SfxLinksController {
     self.timeout = $timeout;
     self.sce = $sce
     self.targets = {};
+    self.reclassifyData = {};
   }
 
   get lookupURL() {
@@ -75,52 +76,59 @@ class SfxLinksController {
    * and normalize the data
    * @param {context} self 
    */
-  findGetIt1TargetUrlsAndNormalize(self) {
-    let getItData = (self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase()))
-        .map(m => m.links)[0] || [])
-      .map(m => {
-        if (m.link.length == 0) { //do not bother with empty links
-          return null;
-        }
-        let targetName = m.displayText;
-        //let translatedFacility = `nui.getit_full.${m.hyperlinkText}`;
-
-        let facility = self.item.pnx.display.source.map((m) => {
-          let f = m.match(/\$\$V(.*)\$\$O/);
-          if (!f) {
-            f = m
-          } else {
-            f = f[1]
+  findGetIt1TargetUrlsAndNormalize(self) {        
+    let getItData = (self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase()))    
+    .map(getit => getit.links) || [])
+    .map(links => {
+      let result = [];
+      
+      links.forEach((link, i, a) => {
+        
+// Determine targetName        
+          let targetName = link.displayText;
+          if (/\$\$E/.test(targetName)) {
+            targetName = `fulldisplay.${targetName.match(/\$\$E(.*)/)[1].trim()}`;
           }
-          return f;
-        }).join(" / ") || '';
+          if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
+            targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
+          }
+    
+          if (/nicht am campus/i.test(targetName)) {
+            return null;
+          }          
+// Determine facility
+          let facility = self.item.pnx.display.source.map((m) => {
+            let f = m.match(/\$\$V(.*)\$\$O/);
+            if (!f) {
+              f = m
+            } else {
+              f = f[1]
+            }
+            return f;
+          }).join(" / ") || '';
 
-        if (Object.keys(self.item.pnx.addata).includes("lad10")) {
-          facility = self.item.pnx.addata.lad10[0];
-        }
+          if (Object.keys(self.item.pnx.addata).includes("lad10")) {
+            self.item.pnx.addata.lad10.forEach((lad, i, a)=>{
+              if (new RegExp(lad).test(link.displayText)) {
+                facility = lad;
+              }
+            });
+          } else if (/Campusnetz (.*?):/.test(link.displayText)) {
+            facility = link.displayText.match(/Campusnetz (.*?):/)[1].trim();
+          }
+    
+          result.push( {
+           facility: facility,
+           target_url: link.link,
+           target_name: targetName}       
+          );        
+      });
 
-        if (/\$\$E/.test(targetName)) {
-          targetName = `fulldisplay.${targetName.match(/\$\$E(.*)/)[1].trim()}`;
-        }
-        if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
-          targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
-        }
-        if (/Campusnetz (.*?):/.test(facility)) {
-          facility = facility.match(/Campusnetz (.*?):/)[1].trim();
-        }
-        if (/nicht am campus/i.test(targetName)) {
-          return null;
-        }
-
-        return {
-          target_url: m.link,
-          facility: facility,
-          target_name: targetName
-        };
-      }).filter(f => f !== null);
+      return result;
+    }).filter(f => f !== null).flat();
 
     if (getItData) {
-      getItData.forEach(getIt => {
+      getItData.forEach(getIt => {        
         if (/sfx/.test(getIt.target_url)) {
           Helper.http.get(this.lookupURL, {
             headers: {
@@ -175,35 +183,31 @@ class SfxLinksController {
    * @param {String} targetName 
    * @param {String} targetUrl 
    */
-  reClassify(facility, targetName, targetUrl) {
-    if (/http:\/\/site.ebrary.com\/lib\/zhbluzern\//.test(targetUrl)) {
-      facility = 'ZHB / Uni / PH';
-      targetName = 'Ebrary';
-      targetUrl = targetUrl;
-    } else if (/www.dibizentral.ch/.test(targetUrl)) {
-      facility = '';
-      targetName = 'DiBiZentral';
-      targetUrl = targetUrl;
-    } else if (/naxosmusiclibrary.com/.test(targetUrl)) {
-      facility = 'HSLU';
-      targetName = 'Naxos Music Library';
-      targetUrl = targetUrl;
-    } else if (/imslp.org/.test(targetUrl)) {
-      facility = '';
-      targetName = 'International Music Score Library Project';
-      targetUrl = targetUrl;
-    } else if (/rzblx10.uni-regensburg.de/.test(targetUrl)) {
-      facility = 'ZHB / Uni / PH';
-      targetName = 'Datenbank-Infosystem';
-      targetUrl = targetUrl;
+  reClassify(facility, targetName, targetUrl, coverage) {
+    try {
+      Object.keys(window.reclassifyData).forEach((c, i, a) => {
+        if (new RegExp(c).test(targetUrl)) {
+          facility = window.reclassifyData[c].facility;
+          targetName = window.reclassifyData[c].name;
+          if (window.reclassifyData[c].hasOwnProperty('url') && window.reclassifyData[c].url.length > 0) {
+            targetUrl = window.reclassifyData[c].url;
+          }
+          //throw BreakException;
+        }
+      })
+    } catch (e) {
+      //if (e !== BreakException) 
+      throw e;
     }
 
     return {
       target_url: targetUrl,
       facility: facility,
-      target_name: targetName
+      target_name: targetName,
+      coverage: coverage
     }
   }
+
 
   /**
    * Normalize all targetUrls. 
@@ -216,7 +220,7 @@ class SfxLinksController {
 
     if (targets) {
       targets.reduce((t, c) => {
-        //c = self.reClassify(c.facility, c.target_name, c.target_url);
+        c = self.reClassify(c.facility, c.target_name, c.target_url, c.coverage);
 
         let d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
         c['target_url_proxy'] = this.proxyUrl(c['target_url'], c.facility);
@@ -233,7 +237,7 @@ class SfxLinksController {
   /**
    * Prepare for openURL lookup on sfxService from advesta
    */
-  get targetsUrls() {    
+  get targetsUrls() {
     return this.openurl.map(m => (`${this.lookupURL}?ip=${this.ipAddress}&url=${encodeURIComponent(m)}`));
   }
 
@@ -287,9 +291,10 @@ class SfxLinksController {
   }
 
 
-  valueExistsForObjectPath(object, path){    
+  valueExistsForObjectPath(object, path) {
+    //console.log(object, path);
     try {
-      let nodes = path.split('.');      
+      let nodes = path.split('.');
       let node = nodes.shift();
       if ((node) && (object.hasOwnProperty(node))) {
         if (nodes.length > 0) {
@@ -310,7 +315,7 @@ class SfxLinksController {
       return false;
       //return undefined
     }
-  }  
+  }
 }
 
 

@@ -846,7 +846,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var sfxLinksHTML = '<div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">\n  <p class="fulltext-item sfx-links-facility">\n      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> \n      <span ng-bind-html="targetFacility"></span>\n  </p>\n  <div ng-repeat="target in normalizedTargets">    \n    <p class="fulltext-item sfx-links-target">\n      <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>\n      <a href="{{target.target_url_proxy}}" target="_blank">\n          <span ng-bind-html="(target.target_name | translate)"></span>\n      </a>        \n\n      <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n        <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n          <span style=\'font-weight: bold\' translate="nui.customizing.idslu.sfxlinks.coverage"></span>\n          <span translate="nui.customizing.idslu.sfxlinks.coverage.available"></span>\n          <span ng-if=\'$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.year.from\')></span>\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.from"></span>\n            <span>{{target.coverage.coverage.year.from}}</span>\n          </span>\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.year.to\')">\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.to"></span>          \n            <span>{{target.coverage.coverage.year.to}}</span>        \n          </span>\n        </span>\n        <span ng-if="!$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n         {{target.coverage.coverage.statement}}\n        </span>\n\n        <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.embargo\')">\n            <span style=\'font-weight: bold\' translate="nui.customizing.idslu.sfxlinks.embargo"></span>\n            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.status}}"></span>\n            <span>{{target.coverage.embargo.availability.value}}</span>\n            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.unit}}"></span>\n        </span>\n      </span>      \n    </p>\n    \n  </div>\n</div>\n\n<p class="fulltext-item sfx-links-on-campus">\n  <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>\n  <span class="sfx-links-on-campus-url">\n        <a href="http://www.zhbluzern.ch/index.php?id=3992" target="_blank">\n        <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>\n  </a>\n  </span>\n\n  <zbl-link class="idslu-ehelp" url="{{(\'nui.customizing.idslu.ehelpurl\' | translate)}}" text="{{(\'nui.customizing.idslu.ehelptext\' | translate)}}"></zbl-link>\n  <zbl-link class="idslu-feedback" url="{{(\'nui.customizing.idslu.feedbackurl\' | translate)}}" text="{{(\'nui.customizing.idslu.feedbacktext\' | translate)}}"></zbl-link>\n</p>\n';
+var sfxLinksHTML = '<div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">\n  <p ng-show="targetFacility.length > 0" class="fulltext-item sfx-links-facility">\n      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> \n      <span ng-bind-html="targetFacility"></span>\n  </p>\n  <div ng-repeat="target in normalizedTargets">    \n    <p class="fulltext-item sfx-links-target">\n      <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>\n      <a href="{{target.target_url_proxy}}" target="_blank">\n          <span ng-bind-html="(target.target_name | translate)"></span>\n      </a>        \n\n      <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n        <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n          <span style=\'font-weight: bold\' translate="nui.customizing.idslu.sfxlinks.coverage"></span>\n          <span translate="nui.customizing.idslu.sfxlinks.coverage.available"></span>\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.year.from\')"></span>\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.from"></span>\n            <span>{{target.coverage.coverage.year.from}}</span>\n          </span>\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.year.to\')">\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.to"></span>          \n            <span>{{target.coverage.coverage.year.to}}</span>        \n          </span>\n        </span>\n        <span ng-if="!$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n         {{target.coverage.coverage.statement}}\n        </span>\n\n        <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.embargo\')">\n            <span style=\'font-weight: bold\' translate="nui.customizing.idslu.sfxlinks.embargo"></span>\n            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.status}}"></span>\n            <span>{{target.coverage.embargo.availability.value}}</span>\n            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.unit}}"></span>\n        </span>\n      </span>      \n    </p>\n    \n  </div>\n</div>\n\n<p class="fulltext-item sfx-links-on-campus">\n  <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>\n  <span class="sfx-links-on-campus-url">\n        <a href="http://www.zhbluzern.ch/index.php?id=3992" target="_blank">\n        <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>\n  </a>\n  </span>\n\n  <zbl-link class="idslu-ehelp" url="{{(\'nui.customizing.idslu.ehelpurl\' | translate)}}" text="{{(\'nui.customizing.idslu.ehelptext\' | translate)}}"></zbl-link>\n  <zbl-link class="idslu-feedback" url="{{(\'nui.customizing.idslu.feedbackurl\' | translate)}}" text="{{(\'nui.customizing.idslu.feedbacktext\' | translate)}}"></zbl-link>\n</p>\n';
 
 /**
  * Controller class to find and parse sfx resources
@@ -863,6 +863,7 @@ var SfxLinksController = function () {
     self.timeout = $timeout;
     self.sce = $sce;
     self.targets = {};
+    self.reclassifyData = {};
   }
 
   _createClass(SfxLinksController, [{
@@ -937,51 +938,56 @@ var SfxLinksController = function () {
       var getItData = (self.item.delivery.GetIt1.filter(function (f) {
         return (/^online resource|remote search resource/i.test(f.category.toLowerCase())
         );
-      }).map(function (m) {
-        return m.links;
-      })[0] || []).map(function (m) {
-        if (m.link.length == 0) {
-          //do not bother with empty links
-          return null;
-        }
-        var targetName = m.displayText;
-        //let translatedFacility = `nui.getit_full.${m.hyperlinkText}`;
+      }).map(function (getit) {
+        return getit.links;
+      }) || []).map(function (links) {
+        var result = [];
 
-        var facility = self.item.pnx.display.source.map(function (m) {
-          var f = m.match(/\$\$V(.*)\$\$O/);
-          if (!f) {
-            f = m;
-          } else {
-            f = f[1];
+        links.forEach(function (link, i, a) {
+
+          // Determine targetName        
+          var targetName = link.displayText;
+          if (/\$\$E/.test(targetName)) {
+            targetName = 'fulldisplay.' + targetName.match(/\$\$E(.*)/)[1].trim();
           }
-          return f;
-        }).join(" / ") || '';
+          if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
+            targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
+          }
 
-        if (Object.keys(self.item.pnx.addata).includes("lad10")) {
-          facility = self.item.pnx.addata.lad10[0];
-        }
+          if (/nicht am campus/i.test(targetName)) {
+            return null;
+          }
+          // Determine facility
+          var facility = self.item.pnx.display.source.map(function (m) {
+            var f = m.match(/\$\$V(.*)\$\$O/);
+            if (!f) {
+              f = m;
+            } else {
+              f = f[1];
+            }
+            return f;
+          }).join(" / ") || '';
 
-        if (/\$\$E/.test(targetName)) {
-          targetName = 'fulldisplay.' + targetName.match(/\$\$E(.*)/)[1].trim();
-        }
-        if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
-          targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
-        }
-        if (/Campusnetz (.*?):/.test(facility)) {
-          facility = facility.match(/Campusnetz (.*?):/)[1].trim();
-        }
-        if (/nicht am campus/i.test(targetName)) {
-          return null;
-        }
+          if (Object.keys(self.item.pnx.addata).includes("lad10")) {
+            self.item.pnx.addata.lad10.forEach(function (lad, i, a) {
+              if (new RegExp(lad).test(link.displayText)) {
+                facility = lad;
+              }
+            });
+          } else if (/Campusnetz (.*?):/.test(link.displayText)) {
+            facility = link.displayText.match(/Campusnetz (.*?):/)[1].trim();
+          }
 
-        return {
-          target_url: m.link,
-          facility: facility,
-          target_name: targetName
-        };
+          result.push({
+            facility: facility,
+            target_url: link.link,
+            target_name: targetName });
+        });
+
+        return result;
       }).filter(function (f) {
         return f !== null;
-      });
+      }).flat();
 
       if (getItData) {
         getItData.forEach(function (getIt) {
@@ -1045,33 +1051,28 @@ var SfxLinksController = function () {
 
   }, {
     key: 'reClassify',
-    value: function reClassify(facility, targetName, targetUrl) {
-      if (/http:\/\/site.ebrary.com\/lib\/zhbluzern\//.test(targetUrl)) {
-        facility = 'ZHB / Uni / PH';
-        targetName = 'Ebrary';
-        targetUrl = targetUrl;
-      } else if (/www.dibizentral.ch/.test(targetUrl)) {
-        facility = '';
-        targetName = 'DiBiZentral';
-        targetUrl = targetUrl;
-      } else if (/naxosmusiclibrary.com/.test(targetUrl)) {
-        facility = 'HSLU';
-        targetName = 'Naxos Music Library';
-        targetUrl = targetUrl;
-      } else if (/imslp.org/.test(targetUrl)) {
-        facility = '';
-        targetName = 'International Music Score Library Project';
-        targetUrl = targetUrl;
-      } else if (/rzblx10.uni-regensburg.de/.test(targetUrl)) {
-        facility = 'ZHB / Uni / PH';
-        targetName = 'Datenbank-Infosystem';
-        targetUrl = targetUrl;
+    value: function reClassify(facility, targetName, targetUrl, coverage) {
+      try {
+        Object.keys(window.reclassifyData).forEach(function (c, i, a) {
+          if (new RegExp(c).test(targetUrl)) {
+            facility = window.reclassifyData[c].facility;
+            targetName = window.reclassifyData[c].name;
+            if (window.reclassifyData[c].hasOwnProperty('url') && window.reclassifyData[c].url.length > 0) {
+              targetUrl = window.reclassifyData[c].url;
+            }
+            //throw BreakException;
+          }
+        });
+      } catch (e) {
+        //if (e !== BreakException) 
+        throw e;
       }
 
       return {
         target_url: targetUrl,
         facility: facility,
-        target_name: targetName
+        target_name: targetName,
+        coverage: coverage
       };
     }
 
@@ -1091,7 +1092,7 @@ var SfxLinksController = function () {
 
       if (targets) {
         targets.reduce(function (t, c) {
-          //c = self.reClassify(c.facility, c.target_name, c.target_url);
+          c = self.reClassify(c.facility, c.target_name, c.target_url, c.coverage);
 
           var d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
           c['target_url_proxy'] = _this4.proxyUrl(c['target_url'], c.facility);
@@ -1141,6 +1142,7 @@ var SfxLinksController = function () {
   }, {
     key: 'valueExistsForObjectPath',
     value: function valueExistsForObjectPath(object, path) {
+      //console.log(object, path);
       try {
         var nodes = path.split('.');
         var node = nodes.shift();
@@ -2587,6 +2589,17 @@ var app = angular.module('viewCustom', ['ngMaterial']).constant('feedbackService
 
   _helper2.default.loadScript('https://s3.amazonaws.com/browzine-adapters/primo/browzine-primo-adapter.js').then(function () {
     console.log('browzine-primo-adapter.js loaded');
+  });
+
+  //fetch(`http://127.0.0.1:3000/reclassify`).then(response => {
+  fetch('https://libis.celik.be/reclassify').then(function (response) {
+    if (!response.ok) {
+      throw new Error('HTTP error, status = ' + response.status);
+    }
+    return response.json();
+  }).then(function (data) {
+    console.log("reClassify data loaded");
+    window.reclassifyData = data;
   });
 }).run(['$rootScope', '$location', '$window', function ($rootScope, $location, $window) {
   //send to GA every time the URL changes
