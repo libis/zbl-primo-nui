@@ -846,7 +846,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var sfxLinksHTML = '<div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">\n  <p ng-show="targetFacility.length > 0" class="fulltext-item sfx-links-facility">\n      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> \n      <span ng-bind-html="targetFacility"></span>\n  </p>\n  <div ng-repeat="target in normalizedTargets">    \n    <p class="fulltext-item sfx-links-target">\n      <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>\n      <a href="{{target.target_url_proxy}}" target="_blank">\n          <span ng-bind-html="(target.target_name | translate)"></span>\n      </a>        \n\n      <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n        <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n          <span style=\'font-weight: bold\' translate="nui.customizing.idslu.sfxlinks.coverage"></span>\n          <span translate="nui.customizing.idslu.sfxlinks.coverage.available"></span>\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.year.from\')"></span>\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.from"></span>\n            <span>{{target.coverage.coverage.year.from}}</span>\n          </span>\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.year.to\')">\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.to"></span>          \n            <span>{{target.coverage.coverage.year.to}}</span>        \n          </span>\n        </span>\n        <span ng-if="!$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n         {{target.coverage.coverage.statement}}\n        </span>\n\n        <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.embargo\')">\n            <span style=\'font-weight: bold\' translate="nui.customizing.idslu.sfxlinks.embargo"></span>\n            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.status}}"></span>\n            <span>{{target.coverage.embargo.availability.value}}</span>\n            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.unit}}"></span>\n        </span>\n      </span>      \n    </p>\n    \n  </div>\n</div>\n\n<p class="fulltext-item sfx-links-on-campus">\n  <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>\n  <span class="sfx-links-on-campus-url">\n        <a href="http://www.zhbluzern.ch/index.php?id=3992" target="_blank">\n        <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>\n  </a>\n  </span>\n\n  <zbl-link class="idslu-ehelp" url="{{(\'nui.customizing.idslu.ehelpurl\' | translate)}}" text="{{(\'nui.customizing.idslu.ehelptext\' | translate)}}"></zbl-link>\n  <zbl-link class="idslu-feedback" url="{{(\'nui.customizing.idslu.feedbackurl\' | translate)}}" text="{{(\'nui.customizing.idslu.feedbacktext\' | translate)}}"></zbl-link>\n</p>\n';
+var sfxLinksHTML = '<div class="sfx-links" ng-repeat="(targetFacility, normalizedTargets) in $ctrl.targets">\n  <p ng-show="targetFacility.length > 0" class="fulltext-item sfx-links-facility">\n      <span translate="nui.customizing.idslu.sfxlinks.campusnet"></span> \n      <span ng-bind-html="targetFacility"></span>\n  </p>\n  <div ng-repeat="target in normalizedTargets">    \n    <p class="fulltext-item sfx-links-target">\n      <span translate="nui.customizing.idslu.sfxlinks.fulltext_through"></span>\n      <a href="{{target.target_url_proxy}}" target="_blank">\n          <span ng-bind-html="(target.target_name | translate)"></span>\n      </a>        \n\n      <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n        <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n          <span style=\'font-weight: bold\' translate="nui.customizing.idslu.sfxlinks.coverage"></span>\n          <span translate="nui.customizing.idslu.sfxlinks.coverage.available"></span>\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.year.from\')"></span>\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.from"></span>\n            <span>{{target.coverage.coverage.year.from}}</span>\n          </span>\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.year.to\')">\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.to"></span>          \n            <span>{{target.coverage.coverage.year.to}}</span>        \n          </span>\n\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.volume.from\')">\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.volume"></span>          \n            <span>{{target.coverage.coverage.volume.from}}</span>        \n          </span>\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.volume.to\')">\n            <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.volume.from\')"> - </span>          \n            <span>{{target.coverage.coverage.volume.to}}</span>        \n          </span>\n\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.issue.from\')">\n            <span translate="nui.customizing.idslu.sfxlinks.coverage.issue"></span>          \n            <span>{{target.coverage.coverage.issue.from}}</span>        \n          </span>\n          <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.issue.to\')">\n            <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.coverage.issue.from\')"> - </span>          \n            <span>{{target.coverage.coverage.issue.to}}</span>        \n          </span>\n\n        </span>\n        <span ng-if="!$ctrl.valueExistsForObjectPath(target, \'coverage.coverage\')">\n         {{target.coverage.coverage.statement}}\n        </span>\n\n        <span ng-if="$ctrl.valueExistsForObjectPath(target, \'coverage.embargo\')">\n            <span style=\'font-weight: bold\' translate="nui.customizing.idslu.sfxlinks.embargo"></span>\n            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.status}}"></span>\n            <span>{{target.coverage.embargo.availability.value}}</span>\n            <span translate="nui.customizing.idslu.sfxlinks.embargo.{{target.coverage.embargo.availability.unit}}"></span>\n        </span>\n      </span>      \n    </p>\n    \n  </div>\n</div>\n\n<p class="fulltext-item sfx-links-on-campus">\n  <span translate="nui.customizing.idslu.sfxlinks.on_campus"></span>\n  <span class="sfx-links-on-campus-url">\n        <a href="http://www.zhbluzern.ch/index.php?id=3992" target="_blank">\n        <span translate="nui.customizing.idslu.sfxlinks.external_campus_access"></span>\n  </a>\n  </span>\n\n  <zbl-link class="idslu-ehelp" url="{{(\'nui.customizing.idslu.ehelpurl\' | translate)}}" text="{{(\'nui.customizing.idslu.ehelptext\' | translate)}}"></zbl-link>\n  <zbl-link class="idslu-feedback" url="{{(\'nui.customizing.idslu.feedbackurl\' | translate)}}" text="{{(\'nui.customizing.idslu.feedbacktext\' | translate)}}"></zbl-link>\n</p>\n';
 
 /**
  * Controller class to find and parse sfx resources
@@ -1146,7 +1146,7 @@ var SfxLinksController = function () {
       try {
         var nodes = path.split('.');
         var node = nodes.shift();
-        if (node && object.hasOwnProperty(node)) {
+        if (node && object && object.hasOwnProperty(node)) {
           if (nodes.length > 0) {
             return this.valueExistsForObjectPath(object[node], nodes.join('.'));
           } else {
@@ -2547,7 +2547,7 @@ ga('send', 'pageview');
 //Create the centralCustom module;
 var app = angular.module('viewCustom', ['ngMaterial']).constant('feedbackServiceURL', 'https://services.libis.be/feedback').config(function ($sceDelegateProvider) {
   $sceDelegateProvider.resourceUrlWhitelist(['**']);
-}).run(function ($templateCache) {
+}).run(function ($translate, $rootScope) {
   _helper2.default.loadScript('https://unpkg.com/hotkeys-js@2.0.8/dist/hotkeys.min.js').then(function () {
     console.log('hotkeys.js loaded');
   });
@@ -2564,32 +2564,44 @@ var app = angular.module('viewCustom', ['ngMaterial']).constant('feedbackService
     var locale = window.appConfig['primo-view']['attributes-map'].interfaceLanguage;
     ///primo_library/libweb/webservices/rest/v1/translations/41ZBL?lang=de_DE
     //nui.customization.browzine.journal
-    var locale_text = {
-      'de_DE': {
-        'journal': "View Journal Contents",
-        'issue': "View Issue Contents",
-        'download': "Download PDF"
-      },
-      'en_US': {
-        'journal': "View Journal Contents",
-        'issue': "View Issue Contents",
-        'download': "Download PDF"
+    var watcher = $rootScope.$watch(function () {
+      try {
+        if ($translate.instant('nui.customization.browzine.id') == 'nui.customization.browzine.id') {
+          return false;
+        } else {
+          console.log($translate.instant('nui.customization.browzine.id'));
+          return true;
+        }
+      } catch (e) {
+        return false;
       }
-    };
+    }, function (n, o) {
+      if (n == true) {
+        var api = $translate.instant('nui.customization.browzine.id');
+        var apikey = $translate.instant('nui.customization.browzine.apikey');
+        var journal = $translate.instant('nui.customization.browzine.journal');
+        var issue = $translate.instant('nui.customization.browzine.issue');
+        var downloadEnabled = $translate.instant('nui.customization.browzine.download_enable') == '1';
+        var download = $translate.instant('nui.customization.browzine.download');
+        console.log(downloadEnabled, download);
 
-    window.browzine = {
-      api: "https://public-api.thirdiron.com/public/v1/libraries/1455",
-      apiKey: "d39176de-a559-4e54-801d-2a8eb423a862",
-      journalBrowZineWebLinkText: locale_text[locale]['journal'],
-      articleBrowZineWebLinkText: locale_text[locale]['issue'],
-      articlePDFDownloadLinkEnabled: true,
-      articlePDFDownloadLinkText: locale_text[locale]['download']
-    };
+        window.browzine = {
+          api: 'https://public-api.thirdiron.com/public/v1/libraries/' + api,
+          apiKey: apikey,
+          journalBrowZineWebLinkText: journal,
+          articleBrowZineWebLinkText: issue,
+          articlePDFDownloadLinkEnabled: downloadEnabled,
+          articlePDFDownloadLinkText: download
+        };
+
+        _helper2.default.loadScript('https://s3.amazonaws.com/browzine-adapters/primo/browzine-primo-adapter.js').then(function () {
+          console.log('browzine-primo-adapter.js loaded');
+        });
+
+        watcher();
+      }
+    });
   }
-
-  _helper2.default.loadScript('https://s3.amazonaws.com/browzine-adapters/primo/browzine-primo-adapter.js').then(function () {
-    console.log('browzine-primo-adapter.js loaded');
-  });
 
   //fetch(`http://127.0.0.1:3000/reclassify`).then(response => {
   fetch('https://libis.celik.be/reclassify').then(function (response) {

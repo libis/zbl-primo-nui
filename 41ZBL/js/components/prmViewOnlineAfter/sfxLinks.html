@@ -22,6 +22,25 @@
             <span translate="nui.customizing.idslu.sfxlinks.coverage.to"></span>          
             <span>{{target.coverage.coverage.year.to}}</span>        
           </span>
+
+          <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.coverage.volume.from')">
+            <span translate="nui.customizing.idslu.sfxlinks.coverage.volume"></span>          
+            <span>{{target.coverage.coverage.volume.from}}</span>        
+          </span>
+          <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.coverage.volume.to')">
+            <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.coverage.volume.from')"> - </span>          
+            <span>{{target.coverage.coverage.volume.to}}</span>        
+          </span>
+
+          <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.coverage.issue.from')">
+            <span translate="nui.customizing.idslu.sfxlinks.coverage.issue"></span>          
+            <span>{{target.coverage.coverage.issue.from}}</span>        
+          </span>
+          <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.coverage.issue.to')">
+            <span ng-if="$ctrl.valueExistsForObjectPath(target, 'coverage.coverage.issue.from')"> - </span>          
+            <span>{{target.coverage.coverage.issue.to}}</span>        
+          </span>
+
         </span>
         <span ng-if="!$ctrl.valueExistsForObjectPath(target, 'coverage.coverage')">
          {{target.coverage.coverage.statement}}

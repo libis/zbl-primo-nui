@@ -296,7 +296,7 @@ class SfxLinksController {
     try {
       let nodes = path.split('.');
       let node = nodes.shift();
-      if ((node) && (object.hasOwnProperty(node))) {
+      if ((node) && (object) && (object.hasOwnProperty(node))) {
         if (nodes.length > 0) {
           return this.valueExistsForObjectPath(object[node], nodes.join('.'));
         } else {

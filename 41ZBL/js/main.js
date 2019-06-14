@@ -47,7 +47,7 @@ let app = angular.module('viewCustom', ['ngMaterial'])
       '**'
     ]);
   })
-  .run(($templateCache) => {
+  .run(($translate, $rootScope) => {
     Helper.loadScript('https://unpkg.com/hotkeys-js@2.0.8/dist/hotkeys.min.js').then(() => {
       console.log('hotkeys.js loaded');
     });
@@ -64,32 +64,44 @@ let app = angular.module('viewCustom', ['ngMaterial'])
       var locale = window.appConfig['primo-view']['attributes-map'].interfaceLanguage;
       ///primo_library/libweb/webservices/rest/v1/translations/41ZBL?lang=de_DE
       //nui.customization.browzine.journal
-      var locale_text = {
-        'de_DE': {
-          'journal': "View Journal Contents",
-          'issue': "View Issue Contents",
-          'download': "Download PDF"
-        },
-        'en_US': {
-          'journal': "View Journal Contents",
-          'issue': "View Issue Contents",
-          'download': "Download PDF"
+      let watcher = $rootScope.$watch(() => {
+        try {
+          if ($translate.instant('nui.customization.browzine.id') == 'nui.customization.browzine.id'){
+            return false;            
+          } else {
+            console.log($translate.instant('nui.customization.browzine.id'))
+            return true;
+          }
+        }catch(e) {
+          return false;
         }
-      }
+      }, (n,o) => {
+        if (n == true) {
+          let api = $translate.instant('nui.customization.browzine.id');
+          let apikey = $translate.instant('nui.customization.browzine.apikey');
+          let journal = $translate.instant('nui.customization.browzine.journal');
+          let issue = $translate.instant('nui.customization.browzine.issue');
+          let downloadEnabled = $translate.instant('nui.customization.browzine.download_enable') == '1';
+          let download = $translate.instant('nui.customization.browzine.download');
+          console.log(downloadEnabled, download);
+    
+          window.browzine = {
+            api: `https://public-api.thirdiron.com/public/v1/libraries/${api}`,
+            apiKey: apikey,
+            journalBrowZineWebLinkText: journal,
+            articleBrowZineWebLinkText: issue,
+            articlePDFDownloadLinkEnabled: downloadEnabled,
+            articlePDFDownloadLinkText: download,
+          };
 
-      window.browzine = {
-        api: "https://public-api.thirdiron.com/public/v1/libraries/1455",
-        apiKey: "d39176de-a559-4e54-801d-2a8eb423a862",
-        journalBrowZineWebLinkText: locale_text[locale]['journal'],
-        articleBrowZineWebLinkText: locale_text[locale]['issue'],
-        articlePDFDownloadLinkEnabled: true,
-        articlePDFDownloadLinkText: locale_text[locale]['download'],
-      };
+          Helper.loadScript('https://s3.amazonaws.com/browzine-adapters/primo/browzine-primo-adapter.js').then(() => {
+            console.log('browzine-primo-adapter.js loaded');
+          });
+                
+          watcher();
+        }
+      });
     }
-
-    Helper.loadScript('https://s3.amazonaws.com/browzine-adapters/primo/browzine-primo-adapter.js').then(() => {
-      console.log('browzine-primo-adapter.js loaded');
-    });
 
     //fetch(`http://127.0.0.1:3000/reclassify`).then(response => {
     fetch(`https://libis.celik.be/reclassify`).then(response => {
