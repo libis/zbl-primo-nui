@@ -76,15 +76,16 @@ class SfxLinksController {
    * and normalize the data
    * @param {context} self 
    */
-  findGetIt1TargetUrlsAndNormalize(self) {        
-    let getItData = (self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase()))    
-    .map(getit => getit.links) || [])
-    .map(links => {
-      let result = [];
-      
-      links.forEach((link, i, a) => {
-        
-// Determine targetName        
+  findGetIt1TargetUrlsAndNormalize(self) {
+
+//process getit 1 data
+    let getItData = (self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase()))
+      .map(getit => getit.links) || [])
+      .map(links => {
+        let result = [];
+
+        links.forEach((link, i, a) => {
+          // Determine targetName        
           let targetName = link.displayText;
           if (/\$\$E/.test(targetName)) {
             targetName = `fulldisplay.${targetName.match(/\$\$E(.*)/)[1].trim()}`;
@@ -92,11 +93,11 @@ class SfxLinksController {
           if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
             targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
           }
-    
+
           if (/nicht am campus/i.test(targetName)) {
             return null;
-          }          
-// Determine facility
+          }
+          // Determine facility
           let facility = self.item.pnx.display.source.map((m) => {
             let f = m.match(/\$\$V(.*)\$\$O/);
             if (!f) {
@@ -108,7 +109,7 @@ class SfxLinksController {
           }).join(" / ") || '';
 
           if (Object.keys(self.item.pnx.addata).includes("lad10")) {
-            self.item.pnx.addata.lad10.forEach((lad, i, a)=>{
+            self.item.pnx.addata.lad10.forEach((lad, i, a) => {
               if (new RegExp(lad).test(link.displayText)) {
                 facility = lad;
               }
@@ -116,19 +117,34 @@ class SfxLinksController {
           } else if (/Campusnetz (.*?):/.test(link.displayText)) {
             facility = link.displayText.match(/Campusnetz (.*?):/)[1].trim();
           }
-    
-          result.push( {
-           facility: facility,
-           target_url: link.link,
-           target_name: targetName}       
-          );        
-      });
 
-      return result;
-    }).filter(f => f !== null).flat();
+          result.push({
+            facility: facility,
+            target_url: link.link,
+            target_name: targetName
+          }
+          );
+        });
+
+        return result;
+      }).filter(f => f !== null).flat();
+
+//process linktorsrc data in PNX record
+      if (self.item.pnx.links.hasOwnProperty('linktorsrc')) {
+        self.item.pnx.links['linktorsrc'].forEach((link, i, a) => {
+          let facility = '';
+    
+          getItData.push({
+            facility: '',
+            target_url: link.match(/\$\$U(.*)\$\$/)[1].trim(),
+            target_name: `fulldisplay.${link.match(/\$\$E(.*)/)[1].trim()}`
+          });
+        });
+      }
+
 
     if (getItData) {
-      getItData.forEach(getIt => {        
+      getItData.forEach(getIt => {
         if (/sfx/.test(getIt.target_url)) {
           Helper.http.get(this.lookupURL, {
             headers: {

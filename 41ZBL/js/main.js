@@ -77,16 +77,15 @@ let app = angular.module('viewCustom', ['ngMaterial'])
         }
       }, (n,o) => {
         if (n == true) {
-          let api = $translate.instant('nui.customization.browzine.id');
+          let apiId = $translate.instant('nui.customization.browzine.id');
           let apikey = $translate.instant('nui.customization.browzine.apikey');
           let journal = $translate.instant('nui.customization.browzine.journal');
           let issue = $translate.instant('nui.customization.browzine.issue');
           let downloadEnabled = $translate.instant('nui.customization.browzine.download_enable') == '1';
           let download = $translate.instant('nui.customization.browzine.download');
-          console.log(downloadEnabled, download);
     
           window.browzine = {
-            api: `https://public-api.thirdiron.com/public/v1/libraries/${api}`,
+            api: `https://public-api.thirdiron.com/public/v1/libraries/${apiId}`,
             apiKey: apikey,
             journalBrowZineWebLinkText: journal,
             articleBrowZineWebLinkText: issue,
