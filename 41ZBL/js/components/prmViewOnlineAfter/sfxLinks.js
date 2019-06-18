@@ -134,14 +134,21 @@ class SfxLinksController {
         self.item.pnx.links['linktorsrc'].forEach((link, i, a) => {
           let facility = '';
     
-          getItData.push({
-            facility: '',
-            target_url: link.match(/\$\$U(.*)\$\$/)[1].trim(),
-            target_name: `fulldisplay.${link.match(/\$\$E(.*)/)[1].trim()}`
-          });
+          if (link.match(/\$\$U(.*?)\$\$/) && link.match(/\$\$E(.*)(\$\$)?/)) {
+            let targetUrl= link.match(/\$\$U(.*?)\$\$/)[1].trim();
+            let targetName = 'unknown';
+            if (link.match(/\$\$E(.*)(\$\$)+/)) {
+              targetName = `fulldisplay.${link.match(/\$\$E(.*)(\$\$)?/)[1].trim()}`;
+            }
+
+            getItData.push({
+              facility: '',
+              target_url: targetUrl,
+              target_name: targetName
+            });
+          }
         });
       }
-
 
     if (getItData) {
       getItData.forEach(getIt => {
