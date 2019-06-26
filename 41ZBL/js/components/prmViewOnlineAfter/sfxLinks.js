@@ -78,77 +78,91 @@ class SfxLinksController {
    */
   findGetIt1TargetUrlsAndNormalize(self) {
 
-//process getit 1 data
-    let getItData = (self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase()))
-      .map(getit => getit.links) || [])
-      .map(links => {
-        let result = [];
+    //process getit 1 data
+    let getItData = [];
+    if (!Object.keys(self.item.pnx.addata).includes("lad10")) {
+      getItData = (self.item.delivery.GetIt1.filter(f => /^online resource|remote search resource/i.test(f.category.toLowerCase()))
+        .map(getit => getit.links) || [])
+        .map(links => {
+          let result = [];
 
-        links.forEach((link, i, a) => {
-          // Determine targetName        
-          let targetName = link.displayText;
-          if (/\$\$E/.test(targetName)) {
-            targetName = `fulldisplay.${targetName.match(/\$\$E(.*)/)[1].trim()}`;
-          }
-          if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
-            targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
-          }
-
-          if (/nicht am campus/i.test(targetName)) {
-            return null;
-          }
-          // Determine facility
-          let facility = self.item.pnx.display.source.map((m) => {
-            let f = m.match(/\$\$V(.*)\$\$O/);
-            if (!f) {
-              f = m
-            } else {
-              f = f[1]
+          links.forEach((link, i, a) => {
+            // Determine targetName        
+            let targetName = link.displayText;
+            if (/\$\$E/.test(targetName)) {
+              targetName = `fulldisplay.${targetName.match(/\$\$E(.*)/)[1].trim()}`;
             }
-            return f;
-          }).join(" / ") || '';
+            if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
+              targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
+            }
 
-          if (Object.keys(self.item.pnx.addata).includes("lad10")) {
-            self.item.pnx.addata.lad10.forEach((lad, i, a) => {
-              if (new RegExp(lad).test(link.displayText)) {
-                facility = lad;
+            if (/nicht am campus/i.test(targetName)) {
+              return null;
+            }
+            // Determine facility
+            let facility = self.item.pnx.display.source.map((m) => {
+              let f = m.match(/\$\$V(.*)\$\$O/);
+              if (!f) {
+                f = m
+              } else {
+                f = f[1]
               }
-            });
-          } else if (/Campusnetz (.*?):/.test(link.displayText)) {
-            facility = link.displayText.match(/Campusnetz (.*?):/)[1].trim();
-          }
+              return f;
+            }).join(" / ") || '';
 
-          result.push({
-            facility: facility,
-            target_url: link.link,
-            target_name: targetName
-          }
-          );
-        });
-
-        return result;
-      }).filter(f => f !== null).flat();
-
-//process linktorsrc data in PNX record
-      if (self.item.pnx.links.hasOwnProperty('linktorsrc')) {
-        self.item.pnx.links['linktorsrc'].forEach((link, i, a) => {
-          let facility = '';
-    
-          if (link.match(/\$\$U(.*?)\$\$/) && link.match(/\$\$E(.*)(\$\$)?/)) {
-            let targetUrl= link.match(/\$\$U(.*?)\$\$/)[1].trim();
-            let targetName = 'unknown';
-            if (link.match(/\$\$E(.*)(\$\$)+/)) {
-              targetName = `fulldisplay.${link.match(/\$\$E(.*)(\$\$)?/)[1].trim()}`;
-            }
-
-            getItData.push({
-              facility: '',
-              target_url: targetUrl,
+            result.push({
+              facility: facility,
+              target_url: link.link,
               target_name: targetName
-            });
+            }
+            );
+          });
+
+          return result;
+        }).filter(f => f !== null).flat();
+    }
+    //process linktorsrc data in PNX record
+    if (self.item.pnx.links.hasOwnProperty('linktorsrc')) {
+      self.item.pnx.links['linktorsrc'].forEach((link, i, a) => {
+        let facility = '';//`unknown ${ Math.floor(Math.random() * Math.floor(10))}`;
+
+        if (Object.keys(self.item.pnx.addata).includes("lad10")) {
+          self.item.pnx.addata.lad10.forEach((lad, i, a) => {
+            if (new RegExp(lad.split(' ')[0], "i").test(link) && facility == "") {
+              facility = lad;
+            }
+          });
+        }
+
+        if (link.match(/\$\$U(.*?)\$\$/)) { // && link.match(/\$\$E(.*)(\$\$)?/)) {
+          let targetUrl = link.match(/\$\$U(.*?)\$\$/)[1].trim();
+          let targetName = 'unknown';
+          let localDataSourceName = '';
+          if (link.match(/\$\$E(.*)(\$\$)+/)) {
+            targetName = `fulldisplay.${link.match(/\$\$E(.*)(\$\$)?/)[1].trim()}`;
           }
-        });
-      }
+          if (link.match(/\$\$O(.*)(\$\$)?/)) {
+            localDataSourceName = link.match(/\$\$O(.*)(\$\$)?/)[1].trim();
+            targetName = `fulldisplay.${localDataSourceName}`;
+          }
+
+          if (localDataSourceName.length > 0) {
+            targetName = self.item.pnx.display.source.map((m) => {
+              let f = m.match(/\$\$V(.*)\$\$O(.*)/);
+              if (f[2] == localDataSourceName) {
+                return f[1];
+              }
+            }).filter(f => f !== null).join(" / ") || '';
+          }
+            
+          getItData.push({
+            facility: facility,
+            target_url: targetUrl,
+            target_name: targetName
+          });
+        }
+      });
+    }
 
     if (getItData) {
       getItData.forEach(getIt => {

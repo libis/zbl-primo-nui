@@ -936,74 +936,91 @@ var SfxLinksController = function () {
       var _this3 = this;
 
       //process getit 1 data
-      var getItData = (self.item.delivery.GetIt1.filter(function (f) {
-        return (/^online resource|remote search resource/i.test(f.category.toLowerCase())
-        );
-      }).map(function (getit) {
-        return getit.links;
-      }) || []).map(function (links) {
-        var result = [];
+      var getItData = [];
+      if (!Object.keys(self.item.pnx.addata).includes("lad10")) {
+        getItData = (self.item.delivery.GetIt1.filter(function (f) {
+          return (/^online resource|remote search resource/i.test(f.category.toLowerCase())
+          );
+        }).map(function (getit) {
+          return getit.links;
+        }) || []).map(function (links) {
+          var result = [];
 
-        links.forEach(function (link, i, a) {
-          // Determine targetName        
-          var targetName = link.displayText;
-          if (/\$\$E/.test(targetName)) {
-            targetName = 'fulldisplay.' + targetName.match(/\$\$E(.*)/)[1].trim();
-          }
-          if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
-            targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
-          }
-
-          if (/nicht am campus/i.test(targetName)) {
-            return null;
-          }
-          // Determine facility
-          var facility = self.item.pnx.display.source.map(function (m) {
-            var f = m.match(/\$\$V(.*)\$\$O/);
-            if (!f) {
-              f = m;
-            } else {
-              f = f[1];
+          links.forEach(function (link, i, a) {
+            // Determine targetName        
+            var targetName = link.displayText;
+            if (/\$\$E/.test(targetName)) {
+              targetName = 'fulldisplay.' + targetName.match(/\$\$E(.*)/)[1].trim();
             }
-            return f;
-          }).join(" / ") || '';
+            if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
+              targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
+            }
 
-          if (Object.keys(self.item.pnx.addata).includes("lad10")) {
-            self.item.pnx.addata.lad10.forEach(function (lad, i, a) {
-              if (new RegExp(lad).test(link.displayText)) {
-                facility = lad;
+            if (/nicht am campus/i.test(targetName)) {
+              return null;
+            }
+            // Determine facility
+            var facility = self.item.pnx.display.source.map(function (m) {
+              var f = m.match(/\$\$V(.*)\$\$O/);
+              if (!f) {
+                f = m;
+              } else {
+                f = f[1];
               }
+              return f;
+            }).join(" / ") || '';
+
+            result.push({
+              facility: facility,
+              target_url: link.link,
+              target_name: targetName
             });
-          } else if (/Campusnetz (.*?):/.test(link.displayText)) {
-            facility = link.displayText.match(/Campusnetz (.*?):/)[1].trim();
-          }
-
-          result.push({
-            facility: facility,
-            target_url: link.link,
-            target_name: targetName
           });
-        });
 
-        return result;
-      }).filter(function (f) {
-        return f !== null;
-      }).flat();
-
+          return result;
+        }).filter(function (f) {
+          return f !== null;
+        }).flat();
+      }
       //process linktorsrc data in PNX record
       if (self.item.pnx.links.hasOwnProperty('linktorsrc')) {
         self.item.pnx.links['linktorsrc'].forEach(function (link, i, a) {
-          var facility = '';
+          var facility = ''; //`unknown ${ Math.floor(Math.random() * Math.floor(10))}`;
 
-          if (link.match(/\$\$U(.*?)\$\$/) && link.match(/\$\$E(.*)(\$\$)?/)) {
+          if (Object.keys(self.item.pnx.addata).includes("lad10")) {
+            self.item.pnx.addata.lad10.forEach(function (lad, i, a) {
+              if (new RegExp(lad.split(' ')[0], "i").test(link) && facility == "") {
+                facility = lad;
+              }
+            });
+          }
+
+          if (link.match(/\$\$U(.*?)\$\$/)) {
+            // && link.match(/\$\$E(.*)(\$\$)?/)) {
             var targetUrl = link.match(/\$\$U(.*?)\$\$/)[1].trim();
             var targetName = 'unknown';
+            var localDataSourceName = '';
             if (link.match(/\$\$E(.*)(\$\$)+/)) {
               targetName = 'fulldisplay.' + link.match(/\$\$E(.*)(\$\$)?/)[1].trim();
             }
+            if (link.match(/\$\$O(.*)(\$\$)?/)) {
+              localDataSourceName = link.match(/\$\$O(.*)(\$\$)?/)[1].trim();
+              targetName = 'fulldisplay.' + localDataSourceName;
+            }
+
+            if (localDataSourceName.length > 0) {
+              targetName = self.item.pnx.display.source.map(function (m) {
+                var f = m.match(/\$\$V(.*)\$\$O(.*)/);
+                if (f[2] == localDataSourceName) {
+                  return f[1];
+                }
+              }).filter(function (f) {
+                return f !== null;
+              }).join(" / ") || '';
+            }
 
             getItData.push({
-              facility: '',
+              facility: facility,
               target_url: targetUrl,
               target_name: targetName
             });
