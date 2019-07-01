@@ -985,7 +985,8 @@ var SfxLinksController = function () {
       //process linktorsrc data in PNX record
       if (self.item.pnx.links.hasOwnProperty('linktorsrc')) {
         self.item.pnx.links['linktorsrc'].forEach(function (link, i, a) {
-          var facility = ''; //`unknown ${ Math.floor(Math.random() * Math.floor(10))}`;
+          var tags = self.makeTags(link);
+          var facility = '';
 
           if (Object.keys(self.item.pnx.addata).includes("lad10")) {
             self.item.pnx.addata.lad10.forEach(function (lad, i, a) {
@@ -995,28 +996,40 @@ var SfxLinksController = function () {
             });
           }
 
-          if (link.match(/\$\$U(.*?)\$\$/)) {
-            // && link.match(/\$\$E(.*)(\$\$)?/)) {
-            var targetUrl = link.match(/\$\$U(.*?)\$\$/)[1].trim();
-            var targetName = 'unknown';
-            var localDataSourceName = '';
-            if (link.match(/\$\$E(.*)(\$\$)+/)) {
-              targetName = 'fulldisplay.' + link.match(/\$\$E(.*)(\$\$)?/)[1].trim();
+          if (facility == '') {
+            if (Object.keys(tags).includes('F')) {
+              facility = tags.F;
             }
-            if (link.match(/\$\$O(.*)(\$\$)?/)) {
-              localDataSourceName = link.match(/\$\$O(.*)(\$\$)?/)[1].trim();
-              targetName = 'fulldisplay.' + localDataSourceName;
+          }
+
+          // If a link exists
+          if (Object.keys(tags).includes('U')) {
+            var targetUrl = tags.U;
+            var targetName = 'unknown';
+
+            // this is the order of importance check E, D, O link with display.source for tagName as a fallback
+            if (Object.keys(tags).includes('E')) {
+              targetName = 'fulldisplay.' + tags.E.trim();
             }
 
-            if (localDataSourceName.length > 0) {
+            if (Object.keys(tags).includes('D')) {
+              targetName = tags.D;
+              if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
+                targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
+              }
+            } else if (Object.keys(tags).includes('O')) {
+              var localDataSourceName = tags.O;
+
               targetName = self.item.pnx.display.source.map(function (m) {
-                var f = m.match(/\$\$V(.*)\$\$O(.*)/);
-                if (f[2] == localDataSourceName) {
-                  return f[1];
+                var f = self.makeTags(m);
+                if (f.O == localDataSourceName) {
+                  return f.V;
                 }
-              }).filter(function (f) {
-                return f !== null;
-              }).join(" / ") || '';
+              });
+              targetName = targetName.filter(function (f) {
+                return f !== null && f !== undefined;
+              });
+              targetName = targetName.join(" / ") || '';
             }
 
             getItData.push({
@@ -1178,6 +1191,13 @@ var SfxLinksController = function () {
 
       return url;
     }
+
+    /**
+     * find an object in a path a.b.c.d
+     * @param {*} object 
+     * @param {*} path 
+     */
+
   }, {
     key: 'valueExistsForObjectPath',
     value: function valueExistsForObjectPath(object, path) {
@@ -1204,6 +1224,21 @@ var SfxLinksController = function () {
         return false;
         //return undefined
       }
+    }
+
+    /**
+     * Convert a tag based line into an object
+     * @param {*} data 
+     */
+
+  }, {
+    key: 'makeTags',
+    value: function makeTags(data) {
+      return data.split('$$').filter(function (f) {
+        return f.length > 0;
+      }).reduce(function (acc, value) {
+        acc[value.substring(0, 1)] = value.substring(1);return acc;
+      }, {});
     }
   }, {
     key: 'lookupURL',

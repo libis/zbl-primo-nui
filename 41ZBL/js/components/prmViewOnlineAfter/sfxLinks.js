@@ -124,7 +124,8 @@ class SfxLinksController {
     //process linktorsrc data in PNX record
     if (self.item.pnx.links.hasOwnProperty('linktorsrc')) {
       self.item.pnx.links['linktorsrc'].forEach((link, i, a) => {
-        let facility = '';//`unknown ${ Math.floor(Math.random() * Math.floor(10))}`;
+        let tags = self.makeTags(link);
+        let facility = '';
 
         if (Object.keys(self.item.pnx.addata).includes("lad10")) {
           self.item.pnx.addata.lad10.forEach((lad, i, a) => {
@@ -134,27 +135,40 @@ class SfxLinksController {
           });
         }
 
-        if (link.match(/\$\$U(.*?)\$\$/)) { // && link.match(/\$\$E(.*)(\$\$)?/)) {
-          let targetUrl = link.match(/\$\$U(.*?)\$\$/)[1].trim();
-          let targetName = 'unknown';
-          let localDataSourceName = '';
-          if (link.match(/\$\$E(.*)(\$\$)+/)) {
-            targetName = `fulldisplay.${link.match(/\$\$E(.*)(\$\$)?/)[1].trim()}`;
+        if (facility == '') {
+          if (Object.keys(tags).includes('F')) {
+            facility = tags.F;
           }
-          if (link.match(/\$\$O(.*)(\$\$)?/)) {
-            localDataSourceName = link.match(/\$\$O(.*)(\$\$)?/)[1].trim();
-            targetName = `fulldisplay.${localDataSourceName}`;
+        }
+
+        // If a link exists
+        if (Object.keys(tags).includes('U')) {
+          let targetUrl = tags.U;
+          let targetName = 'unknown';
+          
+          // this is the order of importance check E, D, O link with display.source for tagName as a fallback
+          if (Object.keys(tags).includes('E')) {
+            targetName = `fulldisplay.${tags.E.trim()}`;
+          }
+          
+          if (Object.keys(tags).includes('D')) {
+            targetName = tags.D;
+            if (/Campusnetz .*?:<\/b><br ?\/>(.*)/.test(targetName)) {
+              targetName = targetName.match(/Campusnetz .*?:<\/b><br ?\/>(.*)/)[1].trim();
+            }            
+          } else if (Object.keys(tags).includes('O')) {            
+            let localDataSourceName = tags.O;
+
+            targetName = self.item.pnx.display.source.map((m) => {
+              let f = self.makeTags(m);
+              if (f.O == localDataSourceName) {
+                return f.V;
+              }
+            }).filter(f => {
+              return (f !== null && f !== undefined);
+            }).join(" / ") || '';
           }
 
-          if (localDataSourceName.length > 0) {
-            targetName = self.item.pnx.display.source.map((m) => {
-              let f = m.match(/\$\$V(.*)\$\$O(.*)/);
-              if (f[2] == localDataSourceName) {
-                return f[1];
-              }
-            }).filter(f => f !== null).join(" / ") || '';
-          }
-            
           getItData.push({
             facility: facility,
             target_url: targetUrl,
@@ -327,7 +341,11 @@ class SfxLinksController {
     return url;
   }
 
-
+  /**
+   * find an object in a path a.b.c.d
+   * @param {*} object 
+   * @param {*} path 
+   */
   valueExistsForObjectPath(object, path) {
     //console.log(object, path);
     try {
@@ -353,9 +371,15 @@ class SfxLinksController {
       //return undefined
     }
   }
+
+  /**
+   * Convert a tag based line into an object
+   * @param {*} data 
+   */
+  makeTags(data) {
+    return data.split('$$').filter(f => f.length > 0).reduce((acc, value) => { acc[value.substring(0, 1)] = value.substring(1); return acc }, {});
+  }
 }
-
-
 
 SfxLinksController.$inject = ['$scope', '$translate', '$sanitize', '$sce', '$timeout'];
 
