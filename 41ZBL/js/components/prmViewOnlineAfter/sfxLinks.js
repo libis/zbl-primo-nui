@@ -128,11 +128,15 @@ class SfxLinksController {
         let facility = '';
 
         if (Object.keys(self.item.pnx.addata).includes("lad10")) {
+          if (self.item.pnx.addata.lad10.length == 1) {
+            facility = self.item.pnx.addata.lad10[0];
+          } else {
           self.item.pnx.addata.lad10.forEach((lad, i, a) => {
             if (new RegExp(lad.split(' ')[0], "i").test(link) && facility == "") {
               facility = lad;
             }
           });
+        }
         }
 
         if (facility == '') {
@@ -146,6 +150,7 @@ class SfxLinksController {
           let targetUrl = tags.U;
           let targetName = 'unknown';
           
+          //Extract a target name
           // this is the order of importance check E, D, O link with display.source for tagName as a fallback
           if (Object.keys(tags).includes('E')) {
             targetName = `fulldisplay.${tags.E.trim()}`;

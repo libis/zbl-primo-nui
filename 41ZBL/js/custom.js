@@ -989,11 +989,15 @@ var SfxLinksController = function () {
           var facility = '';
 
           if (Object.keys(self.item.pnx.addata).includes("lad10")) {
-            self.item.pnx.addata.lad10.forEach(function (lad, i, a) {
-              if (new RegExp(lad.split(' ')[0], "i").test(link) && facility == "") {
-                facility = lad;
-              }
-            });
+            if (self.item.pnx.addata.lad10.length == 1) {
+              facility = self.item.pnx.addata.lad10[0];
+            } else {
+              self.item.pnx.addata.lad10.forEach(function (lad, i, a) {
+                if (new RegExp(lad.split(' ')[0], "i").test(link) && facility == "") {
+                  facility = lad;
+                }
+              });
+            }
           }
 
           if (facility == '') {
@@ -1007,6 +1011,7 @@ var SfxLinksController = function () {
             var targetUrl = tags.U;
             var targetName = 'unknown';
 
+            //Extract a target name
             // this is the order of importance check E, D, O link with display.source for tagName as a fallback
             if (Object.keys(tags).includes('E')) {
               targetName = 'fulldisplay.' + tags.E.trim();
@@ -1025,11 +1030,9 @@ var SfxLinksController = function () {
                 if (f.O == localDataSourceName) {
                   return f.V;
                 }
-              });
-              targetName = targetName.filter(function (f) {
+              }).filter(function (f) {
                 return f !== null && f !== undefined;
-              });
-              targetName = targetName.join(" / ") || '';
+              }).join(" / ") || '';
             }
 
             getItData.push({
