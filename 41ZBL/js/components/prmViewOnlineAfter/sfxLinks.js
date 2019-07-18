@@ -1,5 +1,6 @@
 import sfxLinksHTML from './sfxLinks.html'
 import Helper from '../../primo-explore-dom/js/primo/explore/helper'
+import 'array-flat-polyfill'
 
 /**
  * Controller class to find and parse sfx resources
@@ -241,7 +242,7 @@ class SfxLinksController {
    */
   reClassify(facility, targetName, targetUrl, coverage) {
     try {
-      Object.keys(window.reclassifyData).forEach((c, i, a) => {
+      Object.keys(window.reclassifyData).forEach((c, i, a) => {        
         if (new RegExp(c).test(targetUrl)) {
           facility = window.reclassifyData[c].facility;
           targetName = window.reclassifyData[c].name;
@@ -275,11 +276,10 @@ class SfxLinksController {
     let normalizedTargets = {};
 
     if (targets) {
-      targets.reduce((t, c) => {
+      targets.reduce((t, c) => {        
         c = self.reClassify(c.facility, c.target_name, c.target_url, c.coverage);
-
-        let d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
-        c['target_url_proxy'] = this.proxyUrl(c['target_url'], c.facility);
+        let d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];        
+        c['target_url_proxy'] = self.proxyUrl(c['target_url'], c.facility);
         d.push(c);
         t[c.facility] = d;
 
@@ -327,6 +327,9 @@ class SfxLinksController {
    * @param {string} facility 
    */
   proxyUrl(url, facility) {
+    if (!facility) {       
+      facility = '';
+    }
     let currentHost = window.location.host;
     let ip = this.ipAddress.split('.')
     let inRange = (ip[0] == '147' && ip[1] == '88' && parseInt(ip[2], 10) >= 207 && parseInt(ip[2], 10) <= 254) ? true : false;

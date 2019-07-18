@@ -1,4 +1,7 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+Array.prototype.flat||Object.defineProperty(Array.prototype,"flat",{configurable:!0,value:function r(){var t=isNaN(arguments[0])?1:Number(arguments[0]);return t?Array.prototype.reduce.call(this,function(a,e){return Array.isArray(e)?a.push.apply(a,r.call(e,t-1)):a.push(e),a},[]):Array.prototype.slice.call(this)},writable:!0}),Array.prototype.flatMap||Object.defineProperty(Array.prototype,"flatMap",{configurable:!0,value:function(r){return Array.prototype.map.apply(this,arguments).flat()},writable:!0})
+
+},{}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -157,7 +160,7 @@ var AfterComponents = function () {
 
 exports.default = AfterComponents;
 
-},{"./components/general/libInfo":2,"./components/general/links":3,"./components/general/locationLinks":4,"./components/general/vScout":5,"./components/prmBriefResultAfter/altmetric":6,"./components/prmFacetAfter/searchAlso":7,"./components/prmFacetExactAfter/searchAlsoBody":8,"./components/prmSearchBarAfter/browseButton":9,"./components/prmSearchResultAvailabilityLineAfterController/browzine":10,"./components/prmSearchResultThumbnailContainerAfter/pnxXml":11,"./components/prmTopBarBefore/alertMessage":12,"./components/prmTopBarBefore/finesMessage":13,"./components/prmViewOnlineAfter/sfxLinks.js":14,"./utils":25}],2:[function(require,module,exports){
+},{"./components/general/libInfo":3,"./components/general/links":4,"./components/general/locationLinks":5,"./components/general/vScout":6,"./components/prmBriefResultAfter/altmetric":7,"./components/prmFacetAfter/searchAlso":8,"./components/prmFacetExactAfter/searchAlsoBody":9,"./components/prmSearchBarAfter/browseButton":10,"./components/prmSearchResultAvailabilityLineAfterController/browzine":11,"./components/prmSearchResultThumbnailContainerAfter/pnxXml":12,"./components/prmTopBarBefore/alertMessage":13,"./components/prmTopBarBefore/finesMessage":14,"./components/prmViewOnlineAfter/sfxLinks.js":15,"./utils":26}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -203,7 +206,7 @@ var libInfoConfig = exports.libInfoConfig = {
   template: libInfoHTML
 };
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -281,7 +284,7 @@ var linksConfig = exports.linksConfig = {
   template: linksHMTL
 };
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -292,7 +295,7 @@ var locationLinksConfig = exports.locationLinksConfig = {
   template: locationLinksHTML
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -353,7 +356,7 @@ var vScoutConfig = exports.vScoutConfig = {
   template: vScoutHTML
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -441,7 +444,7 @@ var altmetricConfig = exports.altmetricConfig = {
   template: altmetricHTML
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -482,7 +485,7 @@ var searchAlsoConfig = exports.searchAlsoConfig = {
   controller: SearchAlsoController
 };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -566,7 +569,7 @@ var searchAlsoBodyConfig = exports.searchAlsoBodyConfig = {
   template: searchAlsoBodyHTML
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -613,7 +616,7 @@ var browseButtonConfig = exports.browseButtonConfig = {
   template: ''
 };
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -661,7 +664,7 @@ var browzineConfig = exports.browzineConfig = {
     controller: BrowzineController
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -767,7 +770,7 @@ var pnxXmlConfig = exports.pnxXmlConfig = {
   template: pnxXmlHTML
 };
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -790,7 +793,7 @@ var alertMessageConfig = exports.alertMessageConfig = {
   template: ''
 };
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -828,7 +831,7 @@ var finesMessageConfig = exports.finesMessageConfig = {
   template: ''
 };
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -841,6 +844,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _helper = require('../../primo-explore-dom/js/primo/explore/helper');
 
 var _helper2 = _interopRequireDefault(_helper);
+
+require('array-flat-polyfill');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1140,17 +1145,14 @@ var SfxLinksController = function () {
   }, {
     key: 'normalizeTargets',
     value: function normalizeTargets(targets) {
-      var _this4 = this;
-
       var self = this;
       var normalizedTargets = {};
 
       if (targets) {
         targets.reduce(function (t, c) {
           c = self.reClassify(c.facility, c.target_name, c.target_url, c.coverage);
-
           var d = t.hasOwnProperty(c.facility) ? t[c.facility] : [];
-          c['target_url_proxy'] = _this4.proxyUrl(c['target_url'], c.facility);
+          c['target_url_proxy'] = self.proxyUrl(c['target_url'], c.facility);
           d.push(c);
           t[c.facility] = d;
 
@@ -1176,6 +1178,9 @@ var SfxLinksController = function () {
      * @param {string} facility 
      */
     value: function proxyUrl(url, facility) {
+      if (!facility) {
+        facility = '';
+      }
       var currentHost = window.location.host;
       var ip = this.ipAddress.split('.');
       var inRange = ip[0] == '147' && ip[1] == '88' && parseInt(ip[2], 10) >= 207 && parseInt(ip[2], 10) <= 254 ? true : false;
@@ -1253,10 +1258,10 @@ var SfxLinksController = function () {
   }, {
     key: 'targetsUrls',
     get: function get() {
-      var _this5 = this;
+      var _this4 = this;
 
       return this.openurl.map(function (m) {
-        return _this5.lookupURL + '?ip=' + _this5.ipAddress + '&url=' + encodeURIComponent(m);
+        return _this4.lookupURL + '?ip=' + _this4.ipAddress + '&url=' + encodeURIComponent(m);
       });
     }
 
@@ -1310,7 +1315,7 @@ var sfxLinksConfig = exports.sfxLinksConfig = {
   template: sfxLinksHTML
 };
 
-},{"../../primo-explore-dom/js/primo/explore/helper":19}],15:[function(require,module,exports){
+},{"../../primo-explore-dom/js/primo/explore/helper":20,"array-flat-polyfill":1}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1406,7 +1411,7 @@ exports.default = MessageService;
 
 MessageService.$inject = ['$rootScope', '$compile', '$mdToast', '$sce', '$translate', '$timeout'];
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1567,7 +1572,7 @@ var Primo = function () {
 
 exports.default = Primo;
 
-},{"./primo/explore":17,"./primo/explore/helper":19,"./primo/facets":20,"./primo/records":21,"./primo/user":22,"./primo/view":23}],17:[function(require,module,exports){
+},{"./primo/explore":18,"./primo/explore/helper":20,"./primo/facets":21,"./primo/records":22,"./primo/user":23,"./primo/view":24}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1624,7 +1629,7 @@ var Explore = function () {
 
 exports.default = Explore;
 
-},{"./explore/components":18,"./explore/helper":19}],18:[function(require,module,exports){
+},{"./explore/components":19,"./explore/helper":20}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1744,7 +1749,7 @@ var Components = function () {
 
 exports.default = Components;
 
-},{"../../vendor/css-selector-generator.js":24,"./helper":19}],19:[function(require,module,exports){
+},{"../../vendor/css-selector-generator.js":25,"./helper":20}],20:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2021,7 +2026,7 @@ var Helper = function () {
 
 exports.default = Helper;
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2078,7 +2083,7 @@ var Facets = function () {
 
 exports.default = Facets;
 
-},{"./explore/components":18,"./explore/helper":19}],21:[function(require,module,exports){
+},{"./explore/components":19,"./explore/helper":20}],22:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2138,7 +2143,7 @@ var Records = function () {
 
 exports.default = Records;
 
-},{"./explore/components":18,"./explore/helper":19}],22:[function(require,module,exports){
+},{"./explore/components":19,"./explore/helper":20}],23:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2197,7 +2202,7 @@ var User = function () {
 
 exports.default = User;
 
-},{"./explore/helper":19}],23:[function(require,module,exports){
+},{"./explore/helper":20}],24:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2233,7 +2238,7 @@ var View = function View() {
 
 exports.default = View;
 
-},{"./explore/helper":19}],24:[function(require,module,exports){
+},{"./explore/helper":20}],25:[function(require,module,exports){
 'use strict';
 
 (function () {
@@ -2549,7 +2554,7 @@ exports.default = View;
   }
 }).call(undefined);
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 
 /*
@@ -2564,7 +2569,7 @@ String.prototype.toCamelCase = function () {
   }).join('');
 };
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 
 var _primo = require('./primo-explore-dom/js/primo');
@@ -2646,7 +2651,6 @@ var app = angular.module('viewCustom', ['ngMaterial']).constant('feedbackService
         if ($translate.instant('nui.customization.browzine.id') == 'nui.customization.browzine.id') {
           return false;
         } else {
-          console.log($translate.instant('nui.customization.browzine.id'));
           return true;
         }
       } catch (e) {
@@ -2679,16 +2683,29 @@ var app = angular.module('viewCustom', ['ngMaterial']).constant('feedbackService
     });
   }
 
-  //fetch(`http://127.0.0.1:3000/reclassify`).then(response => {
-  fetch('https://libis.celik.be/reclassify').then(function (response) {
-    if (!response.ok) {
-      throw new Error('HTTP error, status = ' + response.status);
-    }
-    return response.json();
-  }).then(function (data) {
-    console.log("reClassify data loaded");
-    window.reclassifyData = data;
-  });
+  if (window.fetch) {
+    fetch('https://libis.celik.be/reclassify').then(function (response) {
+      if (!response.ok) {
+        throw new Error('HTTP error, status = ' + response.status);
+      }
+      return response.json();
+    }).then(function (data) {
+      console.log("reClassify data loaded");
+      window.reclassifyData = data;
+    });
+  } else {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log("reClassify data loaded IE <=11 workaround");
+        window.reclassifyData = JSON.parse(this.responseText);
+      }
+    };
+
+    xhttp.open("GET", "https://libis.celik.be/reclassify", false);
+    //xhttp.open("GET", "http://10.46.153.59:3000/reclassify", false);
+    xhttp.send();
+  }
 }).run(['$rootScope', '$location', '$window', function ($rootScope, $location, $window) {
   //send to GA every time the URL changes
   $rootScope.$on('$locationChangeSuccess', function (event) {
@@ -2733,7 +2750,7 @@ Object.keys(afterComponents).forEach(function (component, i) {
   });
 });
 
-},{"./components":1,"./factories/messageService":15,"./primo-explore-dom/js/primo":16,"./primo-explore-dom/js/primo/explore/helper":19}]},{},[26])
+},{"./components":2,"./factories/messageService":16,"./primo-explore-dom/js/primo":17,"./primo-explore-dom/js/primo/explore/helper":20}]},{},[27])
 
 
 //# sourceMappingURL=custom.js.map

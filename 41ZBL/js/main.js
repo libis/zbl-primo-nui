@@ -9,7 +9,6 @@
 import Primo from './primo-explore-dom/js/primo'
 import Helper from './primo-explore-dom/js/primo/explore/helper'
 import Components from './components'
-
 import MessageService from './factories/messageService'
 
 import locationItemsHTML from 'components/prmLocationItems/location-items.html'
@@ -69,7 +68,6 @@ let app = angular.module('viewCustom', ['ngMaterial'])
           if ($translate.instant('nui.customization.browzine.id') == 'nui.customization.browzine.id'){
             return false;            
           } else {
-            console.log($translate.instant('nui.customization.browzine.id'))
             return true;
           }
         }catch(e) {
@@ -102,16 +100,30 @@ let app = angular.module('viewCustom', ['ngMaterial'])
       });
     }
 
-    //fetch(`http://127.0.0.1:3000/reclassify`).then(response => {
-    fetch(`https://libis.celik.be/reclassify`).then(response => {
-      if (!response.ok) {
-        throw new Error('HTTP error, status = ' + response.status);
+    if (window.fetch) {
+      fetch(`https://libis.celik.be/reclassify`).then(response => {
+        if (!response.ok) {
+          throw new Error('HTTP error, status = ' + response.status);
+        }
+        return response.json()
+      }).then(data => {
+        console.log("reClassify data loaded");
+        window.reclassifyData = data;
+      });
+    } else {
+     let xhttp = new XMLHttpRequest();
+     xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log("reClassify data loaded IE <=11 workaround");        
+        window.reclassifyData = JSON.parse(this.responseText);
       }
-      return response.json()
-    }).then(data => {
-      console.log("reClassify data loaded");
-      window.reclassifyData = data;
-    });
+    };
+
+     xhttp.open("GET", "https://libis.celik.be/reclassify", false);
+     //xhttp.open("GET", "http://10.46.153.59:3000/reclassify", false);
+     xhttp.send();
+    }
+
   }).run(['$rootScope', '$location', '$window', function ($rootScope, $location, $window) {
     //send to GA every time the URL changes
     $rootScope.$on('$locationChangeSuccess', function (event) {
