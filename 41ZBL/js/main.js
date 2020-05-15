@@ -101,7 +101,7 @@ let app = angular.module('viewCustom', ['ngMaterial'])
     }
 
     if (window.fetch) {
-      fetch(`https://libis.celik.be/reclassify`).then(response => {
+      fetch(`https://sfx.unilu.ch/reclassify`).then(response => {
         if (!response.ok) {
           throw new Error('HTTP error, status = ' + response.status);
         }
@@ -119,7 +119,8 @@ let app = angular.module('viewCustom', ['ngMaterial'])
       }
     };
 
-     xhttp.open("GET", "https://libis.celik.be/reclassify", false);
+    xhttp.open("GET", "https://sfx.unilu.ch/reclassify", false);
+     //xhttp.open("GET", "https://libis.celik.be/reclassify", false);
      //xhttp.open("GET", "http://10.46.153.59:3000/reclassify", false);
      xhttp.send();
     }

@@ -1251,7 +1251,8 @@ var SfxLinksController = function () {
   }, {
     key: 'lookupURL',
     get: function get() {
-      return 'https://libis.celik.be';
+      return 'https://sfx.unilu.ch';
+      //return 'https://libis.celik.be';
       //return 'http://147.88.247.124';
       //return 'http://127.0.0.1:3000';
     }
@@ -2684,7 +2685,7 @@ var app = angular.module('viewCustom', ['ngMaterial']).constant('feedbackService
   }
 
   if (window.fetch) {
-    fetch('https://libis.celik.be/reclassify').then(function (response) {
+    fetch('https://sfx.unilu.ch/reclassify').then(function (response) {
       if (!response.ok) {
         throw new Error('HTTP error, status = ' + response.status);
       }
@@ -2702,7 +2703,8 @@ var app = angular.module('viewCustom', ['ngMaterial']).constant('feedbackService
       }
     };
 
-    xhttp.open("GET", "https://libis.celik.be/reclassify", false);
+    xhttp.open("GET", "https://sfx.unilu.ch/reclassify", false);
+    //xhttp.open("GET", "https://libis.celik.be/reclassify", false);
     //xhttp.open("GET", "http://10.46.153.59:3000/reclassify", false);
     xhttp.send();
   }

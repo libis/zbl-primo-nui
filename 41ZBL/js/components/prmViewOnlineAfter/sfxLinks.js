@@ -19,7 +19,8 @@ class SfxLinksController {
   }
 
   get lookupURL() {
-    return 'https://libis.celik.be';
+    return 'https://sfx.unilu.ch';
+    //return 'https://libis.celik.be';
     //return 'http://147.88.247.124';
     //return 'http://127.0.0.1:3000';
   }
